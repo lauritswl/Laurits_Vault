@@ -110,7 +110,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Code/R/Bayesian/Bayesian.md"
+                "file": "Organization/203 Methods 3.md"
               }
             }
           },
@@ -151,7 +151,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Code/R/Bayesian/Bayesian.md",
+                "file": "Organization/203 Methods 3.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -168,7 +168,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Code/R/Bayesian/Bayesian.md",
+                "file": "Organization/203 Methods 3.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -181,11 +181,11 @@
     "width": 280.5,
     "collapsed": true
   },
-  "active": "51b9f9bdb70558e1",
+  "active": "0bf793281c6701d3",
   "lastOpenFiles": [
+    "Code/R/Bayesian/Bayesian.md",
     "Organization/203 Methods 3.md",
     "Organization/000 Index.md",
-    "Code/R/Bayesian/Bayesian.md",
     "Methods3/Assignment_1_Meth3.md",
     "Organization/201 Perception and Action.md",
     "Methods3/Back to statistical basics.md",
