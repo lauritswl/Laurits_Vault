@@ -1,0 +1,411 @@
+,id,age,gender,condition,word1,word2
+0,1.0 Mina,21,Female,1,flower,grass
+1,1.0 Mina,21,Female,1,flower,petal
+2,1.0 Mina,21,Female,1,flower,tree
+3,1.0 Mina,21,Female,1,flower,bush
+4,1.0 Mina,21,Female,1,flower,dirt
+5,1.0 Mina,21,Female,1,flower,mouse
+6,1.0 Mina,21,Female,1,grass,petal
+7,1.0 Mina,21,Female,1,grass,tree
+8,1.0 Mina,21,Female,1,grass,bush
+9,1.0 Mina,21,Female,1,grass,dirt
+10,1.0 Mina,21,Female,1,grass,mouse
+11,1.0 Mina,21,Female,1,petal,tree
+12,1.0 Mina,21,Female,1,petal,bush
+13,1.0 Mina,21,Female,1,petal,dirt
+14,1.0 Mina,21,Female,1,petal,mouse
+15,1.0 Mina,21,Female,1,tree,bush
+16,1.0 Mina,21,Female,1,tree,dirt
+17,1.0 Mina,21,Female,1,tree,mouse
+18,1.0 Mina,21,Female,1,bush,dirt
+19,1.0 Mina,21,Female,1,bush,mouse
+20,1.0 Mina,21,Female,1,dirt,mouse
+0,1Katrine,24,Female,1,flower,brick
+1,1Katrine,24,Female,1,flower,gardener
+2,1Katrine,24,Female,1,flower,rose
+3,1Katrine,24,Female,1,flower,tulip
+4,1Katrine,24,Female,1,flower,grass
+5,1Katrine,24,Female,1,flower,bird
+6,1Katrine,24,Female,1,brick,gardener
+7,1Katrine,24,Female,1,brick,rose
+8,1Katrine,24,Female,1,brick,tulip
+9,1Katrine,24,Female,1,brick,grass
+10,1Katrine,24,Female,1,brick,bird
+11,1Katrine,24,Female,1,gardener,rose
+12,1Katrine,24,Female,1,gardener,tulip
+13,1Katrine,24,Female,1,gardener,grass
+14,1Katrine,24,Female,1,gardener,bird
+15,1Katrine,24,Female,1,rose,tulip
+16,1Katrine,24,Female,1,rose,grass
+17,1Katrine,24,Female,1,rose,bird
+18,1Katrine,24,Female,1,tulip,grass
+19,1Katrine,24,Female,1,tulip,bird
+20,1Katrine,24,Female,1,grass,bird
+0,2.0,22,Female,2,bird,tree
+1,2.0,22,Female,2,bird,flower
+2,2.0,22,Female,2,bird,plant
+3,2.0,22,Female,2,bird,lake
+4,2.0,22,Female,2,tree,flower
+5,2.0,22,Female,2,tree,plant
+6,2.0,22,Female,2,tree,lake
+7,2.0,22,Female,2,flower,plant
+8,2.0,22,Female,2,flower,lake
+9,2.0,22,Female,2,plant,lake
+0,2.1 Ditlev,20,Male,2,flower,tree
+1,2.1 Ditlev,20,Male,2,flower,grass
+2,2.1 Ditlev,20,Male,2,flower,fox
+3,2.1 Ditlev,20,Male,2,flower,bird
+4,2.1 Ditlev,20,Male,2,flower,fountain
+5,2.1 Ditlev,20,Male,2,flower,weed
+6,2.1 Ditlev,20,Male,2,tree,grass
+7,2.1 Ditlev,20,Male,2,tree,fox
+8,2.1 Ditlev,20,Male,2,tree,bird
+9,2.1 Ditlev,20,Male,2,tree,fountain
+10,2.1 Ditlev,20,Male,2,tree,weed
+11,2.1 Ditlev,20,Male,2,grass,fox
+12,2.1 Ditlev,20,Male,2,grass,bird
+13,2.1 Ditlev,20,Male,2,grass,fountain
+14,2.1 Ditlev,20,Male,2,grass,weed
+15,2.1 Ditlev,20,Male,2,fox,bird
+16,2.1 Ditlev,20,Male,2,fox,fountain
+17,2.1 Ditlev,20,Male,2,fox,weed
+18,2.1 Ditlev,20,Male,2,bird,fountain
+19,2.1 Ditlev,20,Male,2,bird,weed
+20,2.1 Ditlev,20,Male,2,fountain,weed
+0,3. Frederik,22,Male,3,grass,flower
+1,3. Frederik,22,Male,3,grass,carrot
+2,3. Frederik,22,Male,3,grass,tree
+3,3. Frederik,22,Male,3,grass,dandelion
+4,3. Frederik,22,Male,3,flower,carrot
+5,3. Frederik,22,Male,3,flower,tree
+6,3. Frederik,22,Male,3,flower,dandelion
+7,3. Frederik,22,Male,3,carrot,tree
+8,3. Frederik,22,Male,3,carrot,dandelion
+9,3. Frederik,22,Male,3,tree,dandelion
+0,3.0 s,22,Female,3,carrot,flower
+1,3.0 s,22,Female,3,carrot,grass
+2,3.0 s,22,Female,3,carrot,tree
+3,3.0 s,22,Female,3,carrot,food
+4,3.0 s,22,Female,3,carrot,herb
+5,3.0 s,22,Female,3,carrot,green
+6,3.0 s,22,Female,3,flower,grass
+7,3.0 s,22,Female,3,flower,tree
+8,3.0 s,22,Female,3,flower,food
+9,3.0 s,22,Female,3,flower,herb
+10,3.0 s,22,Female,3,flower,green
+11,3.0 s,22,Female,3,grass,tree
+12,3.0 s,22,Female,3,grass,food
+13,3.0 s,22,Female,3,grass,herb
+14,3.0 s,22,Female,3,grass,green
+15,3.0 s,22,Female,3,tree,food
+16,3.0 s,22,Female,3,tree,herb
+17,3.0 s,22,Female,3,tree,green
+18,3.0 s,22,Female,3,food,herb
+19,3.0 s,22,Female,3,food,green
+20,3.0 s,22,Female,3,herb,green
+0,3.2 Niels,25,Male,3,grass,lawn
+1,3.2 Niels,25,Male,3,grass,nummy
+2,3.2 Niels,25,Male,3,grass,tree
+3,3.2 Niels,25,Male,3,grass,arch
+4,3.2 Niels,25,Male,3,grass,lawnmower
+5,3.2 Niels,25,Male,3,grass,flower
+6,3.2 Niels,25,Male,3,grass,bush
+7,3.2 Niels,25,Male,3,grass,rabbit
+8,3.2 Niels,25,Male,3,lawn,nummy
+9,3.2 Niels,25,Male,3,lawn,tree
+10,3.2 Niels,25,Male,3,lawn,arch
+11,3.2 Niels,25,Male,3,lawn,lawnmower
+12,3.2 Niels,25,Male,3,lawn,flower
+13,3.2 Niels,25,Male,3,lawn,bush
+14,3.2 Niels,25,Male,3,lawn,rabbit
+15,3.2 Niels,25,Male,3,nummy,tree
+16,3.2 Niels,25,Male,3,nummy,arch
+17,3.2 Niels,25,Male,3,nummy,lawnmower
+18,3.2 Niels,25,Male,3,nummy,flower
+19,3.2 Niels,25,Male,3,nummy,bush
+20,3.2 Niels,25,Male,3,nummy,rabbit
+21,3.2 Niels,25,Male,3,tree,arch
+22,3.2 Niels,25,Male,3,tree,lawnmower
+23,3.2 Niels,25,Male,3,tree,flower
+24,3.2 Niels,25,Male,3,tree,bush
+25,3.2 Niels,25,Male,3,tree,rabbit
+26,3.2 Niels,25,Male,3,arch,lawnmower
+27,3.2 Niels,25,Male,3,arch,flower
+28,3.2 Niels,25,Male,3,arch,bush
+29,3.2 Niels,25,Male,3,arch,rabbit
+30,3.2 Niels,25,Male,3,lawnmower,flower
+31,3.2 Niels,25,Male,3,lawnmower,bush
+32,3.2 Niels,25,Male,3,lawnmower,rabbit
+33,3.2 Niels,25,Male,3,flower,bush
+34,3.2 Niels,25,Male,3,flower,rabbit
+35,3.2 Niels,25,Male,3,bush,rabbit
+0,aaron,26,Male,3,tree,grass
+1,aaron,26,Male,3,tree,house
+2,aaron,26,Male,3,tree,water
+3,aaron,26,Male,3,grass,house
+4,aaron,26,Male,3,grass,water
+5,aaron,26,Male,3,house,water
+0,Alina,19,Female,2,rose,gardener
+1,Alina,19,Female,2,rose,soul
+2,Alina,19,Female,2,rose,green
+3,Alina,19,Female,2,gardener,soul
+4,Alina,19,Female,2,gardener,green
+5,Alina,19,Female,2,soul,green
+0,Aske,20,Male,3,dirt,tomato
+1,Aske,20,Male,3,dirt,flower
+2,Aske,20,Male,3,tomato,flower
+0,balazs,21,Male,1,flower,weed
+1,balazs,21,Male,1,flower,dog
+2,balazs,21,Male,1,flower,lamp
+3,balazs,21,Male,1,flower,postman
+4,balazs,21,Male,1,weed,dog
+5,balazs,21,Male,1,weed,lamp
+6,balazs,21,Male,1,weed,postman
+7,balazs,21,Male,1,dog,lamp
+8,balazs,21,Male,1,dog,postman
+9,balazs,21,Male,1,lamp,postman
+0,bryan,24,Male,1,flower,bush
+1,bryan,24,Male,1,flower,bird
+2,bryan,24,Male,1,flower,rose
+3,bryan,24,Male,1,flower,grandma
+4,bryan,24,Male,1,flower,mother
+5,bryan,24,Male,1,flower,bee
+6,bryan,24,Male,1,flower,bird
+7,bryan,24,Male,1,bush,bird
+8,bryan,24,Male,1,bush,rose
+9,bryan,24,Male,1,bush,grandma
+10,bryan,24,Male,1,bush,mother
+11,bryan,24,Male,1,bush,bee
+12,bryan,24,Male,1,bush,bird
+13,bryan,24,Male,1,bird,rose
+14,bryan,24,Male,1,bird,grandma
+15,bryan,24,Male,1,bird,mother
+16,bryan,24,Male,1,bird,bee
+17,bryan,24,Male,1,bird,bird
+18,bryan,24,Male,1,rose,grandma
+19,bryan,24,Male,1,rose,mother
+20,bryan,24,Male,1,rose,bee
+21,bryan,24,Male,1,rose,bird
+22,bryan,24,Male,1,grandma,mother
+23,bryan,24,Male,1,grandma,bee
+24,bryan,24,Male,1,grandma,bird
+25,bryan,24,Male,1,mother,bee
+26,bryan,24,Male,1,mother,bird
+27,bryan,24,Male,1,bee,bird
+0,Cupcake,20,Female,2,flower,tree
+1,Cupcake,20,Female,2,flower,bush
+2,Cupcake,20,Female,2,flower,brick
+3,Cupcake,20,Female,2,flower,bird
+4,Cupcake,20,Female,2,flower,sun
+5,Cupcake,20,Female,2,flower,cloud
+6,Cupcake,20,Female,2,flower,grass
+7,Cupcake,20,Female,2,tree,bush
+8,Cupcake,20,Female,2,tree,brick
+9,Cupcake,20,Female,2,tree,bird
+10,Cupcake,20,Female,2,tree,sun
+11,Cupcake,20,Female,2,tree,cloud
+12,Cupcake,20,Female,2,tree,grass
+13,Cupcake,20,Female,2,bush,brick
+14,Cupcake,20,Female,2,bush,bird
+15,Cupcake,20,Female,2,bush,sun
+16,Cupcake,20,Female,2,bush,cloud
+17,Cupcake,20,Female,2,bush,grass
+18,Cupcake,20,Female,2,brick,bird
+19,Cupcake,20,Female,2,brick,sun
+20,Cupcake,20,Female,2,brick,cloud
+21,Cupcake,20,Female,2,brick,grass
+22,Cupcake,20,Female,2,bird,sun
+23,Cupcake,20,Female,2,bird,cloud
+24,Cupcake,20,Female,2,bird,grass
+25,Cupcake,20,Female,2,sun,cloud
+26,Cupcake,20,Female,2,sun,grass
+27,Cupcake,20,Female,2,cloud,grass
+0,Emilie,19,Female,2,flower,water
+1,Emilie,19,Female,2,flower,grass
+2,Emilie,19,Female,2,flower,rose
+3,Emilie,19,Female,2,flower,bush
+4,Emilie,19,Female,2,water,grass
+5,Emilie,19,Female,2,water,rose
+6,Emilie,19,Female,2,water,bush
+7,Emilie,19,Female,2,grass,rose
+8,Emilie,19,Female,2,grass,bush
+9,Emilie,19,Female,2,rose,bush
+0,Gergana,19,Female,3,soil,animal
+1,Gergana,19,Female,3,soil,ant
+2,Gergana,19,Female,3,soil,vegetables
+3,Gergana,19,Female,3,soil,pumpkin
+4,Gergana,19,Female,3,soil,scarecrow
+5,Gergana,19,Female,3,animal,ant
+6,Gergana,19,Female,3,animal,vegetables
+7,Gergana,19,Female,3,animal,pumpkin
+8,Gergana,19,Female,3,animal,scarecrow
+9,Gergana,19,Female,3,ant,vegetables
+10,Gergana,19,Female,3,ant,pumpkin
+11,Gergana,19,Female,3,ant,scarecrow
+12,Gergana,19,Female,3,vegetables,pumpkin
+13,Gergana,19,Female,3,vegetables,scarecrow
+14,Gergana,19,Female,3,pumpkin,scarecrow
+0,Gustav,24,Male,3,grass,bee
+1,Gustav,24,Male,3,grass,plant
+2,Gustav,24,Male,3,grass,bellpebber
+3,Gustav,24,Male,3,grass,cellery
+4,Gustav,24,Male,3,grass,football
+5,Gustav,24,Male,3,bee,plant
+6,Gustav,24,Male,3,bee,bellpebber
+7,Gustav,24,Male,3,bee,cellery
+8,Gustav,24,Male,3,bee,football
+9,Gustav,24,Male,3,plant,bellpebber
+10,Gustav,24,Male,3,plant,cellery
+11,Gustav,24,Male,3,plant,football
+12,Gustav,24,Male,3,bellpebber,cellery
+13,Gustav,24,Male,3,bellpebber,football
+14,Gustav,24,Male,3,cellery,football
+0,jacob_thygesen,21,Male,1,plant,flower
+1,jacob_thygesen,21,Male,1,plant,grass
+2,jacob_thygesen,21,Male,1,plant,water
+3,jacob_thygesen,21,Male,1,flower,grass
+4,jacob_thygesen,21,Male,1,flower,water
+5,jacob_thygesen,21,Male,1,grass,water
+0,Jeppe,21,Female,1,hoe,grass
+1,Jeppe,21,Female,1,hoe,flower
+2,Jeppe,21,Female,1,hoe,rib
+3,Jeppe,21,Female,1,hoe,dirt
+4,Jeppe,21,Female,1,grass,flower
+5,Jeppe,21,Female,1,grass,rib
+6,Jeppe,21,Female,1,grass,dirt
+7,Jeppe,21,Female,1,flower,rib
+8,Jeppe,21,Female,1,flower,dirt
+9,Jeppe,21,Female,1,rib,dirt
+0,Lasse,24,Male,1,tree,leaf
+1,Lasse,24,Male,1,tree,wood
+2,Lasse,24,Male,1,tree,axe
+3,Lasse,24,Male,1,tree,wheelbarrel
+4,Lasse,24,Male,1,tree,hose
+5,Lasse,24,Male,1,tree,olive
+6,Lasse,24,Male,1,leaf,wood
+7,Lasse,24,Male,1,leaf,axe
+8,Lasse,24,Male,1,leaf,wheelbarrel
+9,Lasse,24,Male,1,leaf,hose
+10,Lasse,24,Male,1,leaf,olive
+11,Lasse,24,Male,1,wood,axe
+12,Lasse,24,Male,1,wood,wheelbarrel
+13,Lasse,24,Male,1,wood,hose
+14,Lasse,24,Male,1,wood,olive
+15,Lasse,24,Male,1,axe,wheelbarrel
+16,Lasse,24,Male,1,axe,hose
+17,Lasse,24,Male,1,axe,olive
+18,Lasse,24,Male,1,wheelbarrel,hose
+19,Lasse,24,Male,1,wheelbarrel,olive
+20,Lasse,24,Male,1,hose,olive
+0,laura,22,Female,1,green,flower
+1,laura,22,Female,1,green,bench
+2,laura,22,Female,1,green,grass
+3,laura,22,Female,1,green,bush
+4,laura,22,Female,1,green,furniture
+5,laura,22,Female,1,green,flowerbed
+6,laura,22,Female,1,flower,bench
+7,laura,22,Female,1,flower,grass
+8,laura,22,Female,1,flower,bush
+9,laura,22,Female,1,flower,furniture
+10,laura,22,Female,1,flower,flowerbed
+11,laura,22,Female,1,bench,grass
+12,laura,22,Female,1,bench,bush
+13,laura,22,Female,1,bench,furniture
+14,laura,22,Female,1,bench,flowerbed
+15,laura,22,Female,1,grass,bush
+16,laura,22,Female,1,grass,furniture
+17,laura,22,Female,1,grass,flowerbed
+18,laura,22,Female,1,bush,furniture
+19,laura,22,Female,1,bush,flowerbed
+20,laura,22,Female,1,furniture,flowerbed
+0,Lukas,21,Male,3,grass,flower
+1,Lukas,21,Male,3,grass,sun
+2,Lukas,21,Male,3,grass,shed
+3,Lukas,21,Male,3,flower,sun
+4,Lukas,21,Male,3,flower,shed
+5,Lukas,21,Male,3,sun,shed
+0,test,21,Female,1,tree,bush
+1,test,21,Female,1,tree,flower
+2,test,21,Female,1,tree,apple
+3,test,21,Female,1,tree,sun
+4,test,21,Female,1,tree,summer
+5,test,21,Female,1,tree,rain
+6,test,21,Female,1,tree,tomato
+7,test,21,Female,1,bush,flower
+8,test,21,Female,1,bush,apple
+9,test,21,Female,1,bush,sun
+10,test,21,Female,1,bush,summer
+11,test,21,Female,1,bush,rain
+12,test,21,Female,1,bush,tomato
+13,test,21,Female,1,flower,apple
+14,test,21,Female,1,flower,sun
+15,test,21,Female,1,flower,summer
+16,test,21,Female,1,flower,rain
+17,test,21,Female,1,flower,tomato
+18,test,21,Female,1,apple,sun
+19,test,21,Female,1,apple,summer
+20,test,21,Female,1,apple,rain
+21,test,21,Female,1,apple,tomato
+22,test,21,Female,1,sun,summer
+23,test,21,Female,1,sun,rain
+24,test,21,Female,1,sun,tomato
+25,test,21,Female,1,summer,rain
+26,test,21,Female,1,summer,tomato
+27,test,21,Female,1,rain,tomato
+0,Nikolaj,23,Male,2,flower,tree
+1,Nikolaj,23,Male,2,flower,lawnmower
+2,Nikolaj,23,Male,2,flower,rose
+3,Nikolaj,23,Male,2,flower,plant
+4,Nikolaj,23,Male,2,flower,grass
+5,Nikolaj,23,Male,2,flower,house
+6,Nikolaj,23,Male,2,flower,suburban
+7,Nikolaj,23,Male,2,flower,backyard
+8,Nikolaj,23,Male,2,tree,lawnmower
+9,Nikolaj,23,Male,2,tree,rose
+10,Nikolaj,23,Male,2,tree,plant
+11,Nikolaj,23,Male,2,tree,grass
+12,Nikolaj,23,Male,2,tree,house
+13,Nikolaj,23,Male,2,tree,suburban
+14,Nikolaj,23,Male,2,tree,backyard
+15,Nikolaj,23,Male,2,lawnmower,rose
+16,Nikolaj,23,Male,2,lawnmower,plant
+17,Nikolaj,23,Male,2,lawnmower,grass
+18,Nikolaj,23,Male,2,lawnmower,house
+19,Nikolaj,23,Male,2,lawnmower,suburban
+20,Nikolaj,23,Male,2,lawnmower,backyard
+21,Nikolaj,23,Male,2,rose,plant
+22,Nikolaj,23,Male,2,rose,grass
+23,Nikolaj,23,Male,2,rose,house
+24,Nikolaj,23,Male,2,rose,suburban
+25,Nikolaj,23,Male,2,rose,backyard
+26,Nikolaj,23,Male,2,plant,grass
+27,Nikolaj,23,Male,2,plant,house
+28,Nikolaj,23,Male,2,plant,suburban
+29,Nikolaj,23,Male,2,plant,backyard
+30,Nikolaj,23,Male,2,grass,house
+31,Nikolaj,23,Male,2,grass,suburban
+32,Nikolaj,23,Male,2,grass,backyard
+33,Nikolaj,23,Male,2,house,suburban
+34,Nikolaj,23,Male,2,house,backyard
+35,Nikolaj,23,Male,2,suburban,backyard
+0,sabs,20,Female,2,flower,house
+1,sabs,20,Female,2,flower,home
+2,sabs,20,Female,2,flower,dog
+3,sabs,20,Female,2,flower,cat
+4,sabs,20,Female,2,flower,grass
+5,sabs,20,Female,2,flower,moss
+6,sabs,20,Female,2,house,home
+7,sabs,20,Female,2,house,dog
+8,sabs,20,Female,2,house,cat
+9,sabs,20,Female,2,house,grass
+10,sabs,20,Female,2,house,moss
+11,sabs,20,Female,2,home,dog
+12,sabs,20,Female,2,home,cat
+13,sabs,20,Female,2,home,grass
+14,sabs,20,Female,2,home,moss
+15,sabs,20,Female,2,dog,cat
+16,sabs,20,Female,2,dog,grass
+17,sabs,20,Female,2,dog,moss
+18,sabs,20,Female,2,cat,grass
+19,sabs,20,Female,2,cat,moss
+20,sabs,20,Female,2,grass,moss

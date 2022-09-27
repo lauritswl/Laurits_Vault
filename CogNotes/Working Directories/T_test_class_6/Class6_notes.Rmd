@@ -1,0 +1,311 @@
+---
+title: "Class6_notes"
+author: "Laurits Wieslander Lyngbæk"
+date: "14/10/2021"
+output: html_document
+---
+
+## Welcome to Class 6!
+
+Today we will learn how to perform a **t-test** on your reading experiment data! 
+
+  (R Markdown tips: ** around words make them bold in the markdown output, while * makes them in italics) 
+
+### Set up 
+
+1) Make sure to 'Save as' this R markdown file into some folder on your computer - once you saved it somewhere, this folder will be **your working directory**. Ideally, it is the folder of your currently open project, but it's completely up to you, as long as you know where to find this markdown file!
+
+2) Make sure that your folder with data from the reading experiment is in **your working directory** too. Move it there if it isn't. To make it easier for yourself, name the folder with data 'data'
+
+3) We will need libraries: tidyverse, pastecs, WRS2. Install them if you don't have them yet.
+
+```{r setup}
+knitr::opts_chunk$set(echo = T)
+
+pacman::p_load(tidyverse)
+pacman::p_load(readbulk)
+pacman::p_load(WRS2)
+```
+### Explanation of Data
+
+- Today we will be working with data collected by myself and my study group during 1. semester.
+The experiment was about reading time and how out of place words (surprising words) not fitting into the context of the story would possibly increase reading time. 
+
+**variables**
+ID: Subject identification (Factor)
+Age: Age (Int)
+Gender: Gender of the participant (Factor)
+Condition: 0 = No surprising words, 1 = there will be suprising words (Factor)
+Word: The word being read (Character)
+ReactionTime: The reading time of that particular word. (Numeric) 
+
+
+
+
+### Part 1: importing data from a list of files
+We have asked you to collect data from several participants, which means your data is contained in several log files. While you could manually read in data from every file separately, we can do it much faster thanks to the following functions:
+
+  list.files() which produces a character vector of the names of files in the named directory 
+  
+  map() which applies a function to each element in a vector ( map() function from purr does the same )
+  
+  read_csv() which reads csv files into a *tibble*. This function is very similar to read.csv() that reads files into a *dataframe*. Tibbles are apparently just a better version of dataframes (read more: https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html)
+  
+  bind_rows() which binds multiple data frames by row (adds rows of one dataframe to rows of other dataframe)
+
+```{r}
+#get a vector with names of files using list.files() 
+files <- list.files(path = ".",          #PUT THE NAME OF YOUR FOLDER WITH DATA HERE, it also might need '/' in the end, experiment with it :)
+                    pattern = ".csv",       #everything that contains '.csv' in its name will be listed
+                    full.names = TRUE)         #makes it include directory path, so instead of 'logfile_1.csv' it will be 'data/logfile_1.csv')
+
+# read all the files into a tibble (a fancy df) by applying read_csv() to every filename in files vector 
+# and binding them together automagically
+# NB: Assumes data looks EXACTLY the same for all y'all, so beware! 
+data <- map_dfr(files, read_csv)
+
+# Let's check if it looks alright (probably doesn't)
+View(data)
+
+## Common problems ##
+
+# 1 #
+# Error: Can't combine `ID` <some_type> with `ID`<other_type>
+# Issue: the column was saved as different data types
+# Fix: add this line after read_csv: col_types = cols(ID=col_character())
+
+# 2 #
+# Too many columns with a bunch of NA's O.o # 
+# Issue: you didn't name the columns the exact same things (i.e RT vs rt)
+# Fix: mutate a true column using if_else (look up using "?if_else") e.g. "mutate(RT = if_else(is.na(rt), RT, rt))"
+
+```
+
+```{r}
+#An alternative way is to use:
+readbulk::read_bulk("logfiles", extension = ".csv") #While this is smart 
+#try and get used to doing it with map() as this is a neat function used many times. 
+```
+
+
+### Part 2: hands-on t-test in R
+Find documentation for the t.test function using ? or help(), look through it.
+
+t.test(Continuous outcome variable ~ Categorical predictor varibale, data = dataFrame, paired = FALSE/TRUE, var.equal = FALSE/TRUE)
+
+As you can see, there are different arguments you can change to tailor the t.test to your needs and data. We will go through the default version of t.test and the arguments that you can change!
+
+2.1 Independent Welch t-test (default): t.test(Measure ~ Group, data = dataFrame/tibble)
+Performs Welch Two Sample t-test, which is an independent (unpaired) t-test. It requires your data to be normally distributed in both groups and allows variances in these groups to be different.
+
+```{r}
+#Try performing the default t-test using formula: Measure ~ Group
+#Example (you might need to change dataframe name and variable names)
+t.test(ReactionTime ~ Gender, data = data)
+
+```
+
+
+2.2 Independent Student's t-test: t.test(Measure ~ Group, data = , var.equal = T)
+'var.equal' argument is a logical variable indicating whether to treat the two variances as being equal. When set to true, your variances are assumed to be equal in two groups, and test becomes a Student's t-test. It assumes that the two populations have normal distributions with equal variances. 
+
+```{r}
+#change 'var.equal' argument to True to perform a student's t-test, rather than the default Welch's
+t.test(ReactionTime ~ Gender, data = data, var.equal = TRUE)
+
+
+```
+
+
+2.3 A paired t-test: t.test(Measure ~ Group, data = , paired = T)
+'paired' argument indicates whether you want a paired t-test (aka repeated measures: both group 1 and group 2 consist of the same participants ). It's meaningless in the context of our study, but you can try to run it anyway. 
+More information can be found: http://www.sthda.com/english/wiki/paired-samples-t-test-in-r 
+```{r}
+#set 'paired' argument to True to perform a paired (dependent) t-test (might not work due to our experimental design)
+t.test(ReactionTime ~ Gender, data = data, paired = TRUE)
+```
+
+
+2.4 A one sample t-test: t.test(df$Measure, mu = )
+mu is a number indicating the true value of the mean. One-sample t-test is used to compare the mean of one sample to a known standard (or theoretical/hypothetical) mean (mu). Generally, the theoretical mean comes from either a previous experiment or from specifics of your experimental design. 
+More information: http://www.sthda.com/english/wiki/one-sample-t-test-in-r
+```{r}
+t.test(data$ReactionTime, mu = 0.5)  #a one sample t-test: is mean of our sample different from the theoretical mean of 0.5
+
+#Try to change mu values and see if/how output changes
+
+```
+
+All of the tests above require our data to be normally distributed. What to do when it's not the case?
+
+2.5 t-tests from the WRS2 package allow us to 'trim' some part of data from the tails of distribution to deal with non-normal distributions.
+  2.5.1  Independent t-test: WRS2::yuen(Measure ~ Group, data = data)
+```{r}
+#An example 
+WRS2::yuen(ReactionTime ~ Gender, data = data)
+```
+  
+  2.5.2 Paired t-test: WRS2::yuend(x, y, tr = 0.2)
+```{r}
+#probably won't work since our experiment was not actually repeated measures design, so I commented it out
+#WRS2::yuen(data$ReactionTime, data$Gender, tr =0.2) 
+```
+  
+
+### Part 3: Your Reading Data Analysis
+3.1 Checking Assumptions: are your data normally distributed?
+Give a visual and statistical answer (remember that you can reuse your Class4_notes and other old code).
+
+Note that you need to check assumptions for reading time data in condition 1 and condition 2 separately, since those represent data from different groups! How can you do that? 
+
+```{r}
+round(pastecs::stat.desc(
+  cbind(data$ReactionTime),
+  basic = FALSE, norm = TRUE,desc = F), 
+  digits = 2)
+
+ggplot(data, aes(ReactionTime)) + 
+  geom_density(alpha=.5,fill="pink")
+
+ggplot(data, aes(sample = ReactionTime))+
+  stat_qq()+
+  stat_qq_line(color="red")+
+   labs(x = "Theoretical Quantiles",
+        y = "Sample Quantiles",
+        title = "QQ-plot of breathhold")+
+  theme_bw()
+
+
+
+```
+
+
+3.2 Transformation of data (if needed)
+First, remove obvious outliers in the data. Then try to apply a transformation to the data to make them normally distributed. It's a common practice to log-transform reaction time data, does it work for you?
+```{r}
+trans_df <- data %>% 
+  mutate(
+    logRT = log(ReactionTime), 
+    sqrtRT = sqrt(ReactionTime),
+    recipRT = 1/(ReactionTime))
+
+round(pastecs::stat.desc(
+  cbind(trans_df$ReactionTime,
+        trans_df$logRT,
+        trans_df$sqrtRT,
+        trans_df$recipRT
+        ),
+  basic = FALSE, norm = TRUE,desc = F), 
+  digits = 2)
+
+
+```
+
+
+3.3 T-test
+Perform a t-test to test if there is a significant difference in reading time between conditions of your experiment. If you performed previous assumptions check and data transformation on subsets of data, make sure you perform the t-test on the whole dataset that contains both conditions and potentially your transformed reaction time variable.
+```{r}
+
+
+
+```
+
+
+3.4 Visualize the results. 
+For that, make a plot that demonstrates the mean value of reading time in two conditions with corresponding error bars. It could be for example a bar plot or box plot or violin plot with marks of the mean values (you can reuse code from Class4_notes if you want). Remember that ggplot wants your condition variable to be a factor to plot data in 2 different groups. 
+
+```{r}
+
+```
+
+3.5 Report the results
+
+Example: *Using an independent t-test, we found that the unexpected word did not significantly increase reading time of the word, t(7.66) = 0.46, p > .05, r = 0.16, (M exp = 0.45, M unexp = 0.49)*
+
+M exp and M unexp stand for the mean values in 2 groups, in this case Expected Condition and Unexpected Condition. You can definitely change the way you want to refer to different groups in your experiment. 
+
+
+
+### Part 4 (optional): Extra for your reading data analysis
+
+4.1 Try and compare the results of Welch’s t-test with the results of Student’s t-test. How do they compare?
+
+4.2 T-test can also be made as a linear model do hint: **?lm()** try it out and see if you get similar results (you extract the output from a saved linear model using **summary()**)
+
+### Part 5 
+
+**We're gonna finish off this weeks exercise investigating diamond prices:** 
+**price:** price in US dollars (\$326--\$18,823)
+
+**carat:** weight of the diamond (0.2--5.01)
+
+**cut:** quality of the cut (Fair, Good, Very Good, Premium, Ideal)
+
+**color:** diamond colour, from D (best) to J (worst)
+
+**clarity:** a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))
+
+**x:** length in mm (0--10.74)
+
+**y:** width in mm (0--58.9)
+
+**z:** depth in mm (0--31.8)
+
+**depth:** total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)
+
+**table:** width of top of diamond relative to widest point (43--95)
+
+```{r}
+data("diamonds")
+head(diamonds)
+```
+**Description**
+You've just found a diamond and at first it was rated cut = Good and Color = D.
+But you believe it is actually a cut = ideal and Color = J. How much more could you on 
+avg sell your diamond for the cut and color was upgraded to (Cut = ideal and Color = J)
+
+**5.1** 
+Let us conduct a t-test comparing avg price between cut = Ideal and cut = Good.
+
+  i. first create a subset of your data only containing cut = Ideal and cut = Good:
+```{r}
+
+```
+ 
+  ii. Check assumptions and conduct an appropriate t-test:
+```{r}
+
+```
+
+**5.2**
+  i. first create a subset of your data only containing color = D and color = J:
+```{r}
+
+```
+
+  ii. check assumptions and conduct an appropriate t-test:
+```{r}
+
+```
+
+
+**5.3**
+ i. Report how your diamond would increase in value if the evaluation were accepted. Report on your results both in APA and in your own words.
+
+**5.4** EXTRA IF YOU WANT (Maybe hard):
+While color and cut does influence diamond prices other variables such as carat 
+could also hold great influence over price variability. 
+
+  i. Check with cor.test if there could be any other variables of interest that could be included 
+in our prediction of price.  
+```{r}
+
+```
+ 
+  ii. Could we include all these variables that predicts diamond prices into one model? 
+  HINT: use the lm() function. 
+```{r}
+
+```
+  
+  ii. Try and interpret these results. 

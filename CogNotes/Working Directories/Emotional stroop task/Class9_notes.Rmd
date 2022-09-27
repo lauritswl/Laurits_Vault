@@ -1,0 +1,517 @@
+---
+title: "Class9_notes"
+author: "Anita Kurm, feat. Sigurd Fyhn Sørensen"
+date: "11/21/2019"
+output: html_document
+---
+
+## Welcome to Class 9!
+
+Today we will learn how to build **linear mixed-effect models** in R! We will also have a recap on **checking assumptions of linear models**. 
+
+### Data collection
+
+For exercises on linear mixed-effect models, we need your data from the 'Emotional Stroop Task Test'. 
+1. You can find the PsychoPy script here on bb
+
+2. Run it, it will take around a couple of minutes. Once you are done, a log file will be placed into the same folder where your PsychoPy script was downloaded to (check Downloads maybe?).
+
+3. Upload the log-file to my Google Drive: https://drive.google.com/drive/folders/1jZ3BTNdmSRF6uesMCjA5CUxdZhLH0sBz
+
+4. Wait 5 minutes till the majority uploads their log files
+
+5. Download the whole folder to your computer and put it into your working directory
+
+### Set up
+1. Load/install packages tidyverse, lme4, lmerTest
+2. Make sure you know where your working directory is
+
+```{r}
+pacman::p_load(tidyberse,lme4,lmerTest)
+
+```
+```{r}
+
+
+
+```
+
+
+
+
+
+
+### PART 1: Mixed Effect Models
+
+For this we will work with an in-built dataframe from package lme4: 'Reaction times in a sleep deprivation study'. These data are from the study described in Belenky et al. (2003), for the sleep-deprived group from the first 10 days of the study (which was followed by a recovery period). 
+
+To see effects of sleep-deprivation over time, every participant had to be measured several times over the course of the study - which makes this study a good example of repeated measures design.
+
+The dataframe contains 180 observations on the following 3 variables:
+
+    Reaction: Average reaction time (ms) on a series of tests given each day to each subject.
+    
+    Days: Number of days of sleep deprivation. On day 0 the subjects had their normal amount of sleep. Starting that night they were restricted to 3 hours of sleep per night.
+    
+    Subject: participant number on which the observation was made (basically ID)
+    
+To load this data, make sure you have lme4 package installed. Once you run the command below, you might need to press on sleepstudy 'promise' in environment's 'values' to make it a dataframe.
+              
+              Tip for future: you can see all built-in datasets using command data()
+              These dataframes can be nice for practice/teaching 
+              
+```{r}
+#make sure lme4 is loaded
+pacman::p_load(lme4)
+
+#import a built-in dataset 'sleepstudy'
+data("sleepstudy")
+```
+
+
+Let's say we want to see how reaction time changes based on the amount of days participants were sleep deprived. 
+
+As we have established, running a 'fixed-effect only' linear model on this data would violate its assumption of independence of datapoints. So, mixed effect model it is! The general syntax we will be using is:
+
+  lmerTest::lmer(Outcome ~ Predictors + (1+Slope|Intercept),data = data, REML = F)
+  
+    - lmerTest::lmer   asking to look for lmer command from lmerTest package, since this specific one will also give us p-values for fixed effects
+    
+    - lmer()           the cooler version of lm() that allows us add random effects and therefore make mixed effect models. Originally comes from lme4 package, but then doesn't have p-values for fixed effects
+    
+    - Outcome~Predictors  standard linear model formula
+    
+    - 1+Slope|Intercept   random effects
+    
+    - REML             Maximum likelihood or restricted maximum likelihood (REML) - used for estimates of the parameters in linear mixed-effects models. We want it to be False, so we can see different criteria for model selection, like AIC and BIC we discussed last time
+    
+
+Now we just need to figure out the logic behind random effects. 
+
+
+#### Random Intercepts
+
+We know that reaction times are going to inherently differ from participant to participant even without our manipulation of their sleep schedule. We must account for it by allowing the model to give every subject in the study their own 'baseline'/starting point - in the form of a random intercept (1|Subject). 
+  
+  In this case our model is what is called *a random intercept model*. In this model, we account for baseline-differences in reaction times of different people, but we assume that whatever the effect of every additional day is, it’s going to be the same for all subjects.
+
+
+```{r}
+#fit the random intercept model, 'REML = F' will allow us see information criteria for the model
+intercept_model <- lmerTest::lmer(Reaction ~ Days + (1|Subject), 
+                                  data = sleepstudy, REML = F)
+
+summary(intercept_model)
+```
+
+  In this output we can see AIC and BIC information criteria that we can use to compare this model with other models. 
+
+  'Random effects':
+        Demonstrates that accounting for individual differences by adding 'Subject' as a random effect has explained quite a bit of variance, even more than what has now left unexplained in the 'error term' (1296 for Subject vs 954 for Residual). 
+        We can also see by the standard deviation that there was a lot of variability of reaction time between participants - again, more than variability of reaction time in unexplained by the model noise/error in the 'Residual'. 
+        This is a very good random effect for our model!
+
+  
+  
+  'Fixed effects':
+        interpretation is the same as with linear models we have worked with before. 
+        The estimate of the model for the intercept shows the mean value of outcome variable when predictor is equal to zero: i.e. at Day 0 average reaction time was 251.41 ms. 
+        Then, with every additional day, the reaction time got on average 10.47 ms longer (we see it from beta estimate for our predictor). This estimate has a p-value < 0.001, which indicates that sleep deprivation significantly modulates reaction time. 
+
+
+  'Correlation of Fixed Effects'
+          check your model for multicollinearity of predictors
+          more relevant for when we have a lot of predictors 
+
+
+
+#### Random slopes
+
+We could also argue, that our manipulation - the amount of days people went sleep deprived - is not going to have the same effect on all participants. Some might be more sensitive to lack of sleep than others. 
+
+So, what we need is *a random slope model*, where subjects are not only allowed to have differing intercepts, but where they are also allowed to have different slopes for the effect of Day by specifying (1+Days|Subject) random effect.
+
+```{r}
+int_and_slope_model <- lmerTest::lmer(Reaction ~ Days + (1+Days|Subject),
+                                      data = sleepstudy, REML = F)
+
+summary(int_and_slope_model)
+```
+
+
+
+By just looking at the summary of the model - not much has changed. We definitely have less 'Residual' variance now that we accounted for different effects of days, which is good. However, to properly see what the model has estimated, we need to call for its coefficients, using the following command: coef(model)
+
+```{r}
+
+#here are coefficients of the model that only has random intercepts
+coef(intercept_model)
+
+
+#here we can see what intercepts and slopes model estimated for every subject
+coef(int_and_slope_model)
+
+```
+
+Above you can see two tables of model coefficients for every subject. The first one has the same slope for everyone (estimate of Days is always 10.47), but random intercepts. The second one has both random slope and random intercept - which actually allows the model to find even better and more accurate estimates of the intercept for every subject.
+
+
+
+#### So what random effects should you include?
+According to Winters: "A lot of people construct random intercept-only models but conceptually, it makes a hella sense to include random slopes most of the time. After all, you can almost always expect that people differ with how they react to an experimental manipulation!" 
+
+You can compare models with different random effects using methods from Class 8. The most simple one is to use command anova(), which will automatically give you a p-value of whether the model has improved signifcantly after adding a more complex random effect and will give you information criteria AIC and BIC for all of your models. 
+
+You can also check R squared using MuMIn::r.squaredGLMM(model)
+    Will give you  2 R squred:
+      Marginal R2 (R2m)
+          Fixed effects only
+          
+      Conditional R2 (R2c)
+          Random + fixed 
+
+Note that it is often the case that the marginal R2 is worse compared to a R2 of a lm() without random effects
+      This is because you are less likely to fit the noise in the data (e.g. the model is more likely to generalise)
+
+```{r}
+#Compare models using analysis of variance (will also give AIC and BIC)
+anova(intercept_model, int_and_slope_model)
+
+#Check R squared 
+MuMIn::r.squaredGLMM(intercept_model)
+MuMIn::r.squaredGLMM(int_and_slope_model)
+```
+
+
+#### Assumptions:
+Same as linear model. Can be checked using the same command: plot(model)
+```{r}
+plot(intercept_model)
+plot(int_and_slope_model)
+```
+
+Both look fine in this case. See Part 2 for more information about Assumptions.
+
+
+#### Write up:
+
+It is always a good practice to give all of the information necessarry to replicate your analsysis. This includes information on what software you have used, what packages, what kinds of models you used and how you defined their syntax.
+
+```{r}
+#cite packages
+citation("base")
+citation('lmerTest')
+
+#recall results of assumption check
+plot(int_and_slope_model)
+
+#recall the effect sizes and stuff from the best model
+summary(int_and_slope_model)
+```
+
+ 
+  “We used R (R Core Team, 2019) and lmerTest (Kuznetsova, Brockhoff and Christensen, 2017) to perform a linear mixed effects analysis of the relationship between sleep deprivation and reaction time. As fixed effects, we entered the number of days subjects have been lacking sleep into the model. As random effects, we had intercepts for subjects, as well as by-subject random slopes for the effect of the number of days. The model was built using the following syntax:
+ 
+ Reaction ~ Days + (1 + Days | Subject) 
+ 
+ Both fixed and random effects accounted for roughly 80% of variance in the reaction time variable. Visual inspection of residual plots did not reveal any obvious deviations from homoscedasticity or normality. Reaction time has been found to significantly be modulated by number of days of sleep deprivation, β = 10.467, SE = 1.502, t = 6.968, p < .001” 
+ 
+ 
+### Part 1 Exerice: The Stroop Task
+1. Read in all of your data (there is code for it below, but you are free to try making it yourself)
+2. Think about a model you could build to test whether emotionally charged words increase reaction time compared to neutral words.
+3. Discuss with people at your table
+    - Which variables should be the fixed effects?
+    - Which variables should be the random effects?
+    - Which variables should be the random slope and random intercept?
+    
+4. Build the model
+
+Optional: 
+5. Check its residual plot: using command plot(model)
+6. Build another model and compare which one is the best
+7. Report the best model using write-up instructions from above
+
+
+
+
+```{r}
+#Read in all the csv files from a folder and bind them together
+df <- list.files(path = "logfiles", pattern = "*.csv", full.names = T) %>% 
+  map_dfr(read_csv)
+```
+
+```{r}
+#Mixed-effect linear model:
+Hypno_Sissy_Model <- lmerTest::lmer(Reaction_time ~ Sentiment + (1|ID),
+                                      data = df, REML = F)
+
+summary(Hypno_Sissy_Model)
+MuMIn::r.squaredGLMM(Hypno_Sissy_Model)
+plot(Hypno_Sissy_Model)
+
+
+Hypno_Sissy_Model2 <- lmerTest::lmer(Reaction_time ~ Color + (1|ID),
+                                      data = df, REML = F)
+
+
+summary(Hypno_Sissy_Model2)
+
+```
+
+
+
+
+### PART 2: Assumptions of linear models
+
+In this part you can see what model diagnostics plots look like when assumptions of linear models are violated. You will also find thorough explanations and suggestions on what could help your model in case of assumption violation. It's basically a very long read-along walk-through, not a lot of code at all. There is also an exercise in the end.
+
+Short summary of commands in this part: 
+  plot(model, 1): check linearity
+  plot(model, 2): check normality
+  plot(model, 3): check homoschedasticity
+  plot(model, 4): check influential cases
+  
+  plot(model) - to see all plots at once
+  
+  for mixed effect models:
+    plot(model) 
+
+
+
+References for this part and more info about regression: 
+      Bodo Winter's tutorial on linear models and linear mixed effects models in R with linguistic applications  https://arxiv.org/pdf/1308.5499.pdf ;
+      https://www.analyticsvidhya.com/blog/2016/07/deeper-regression-analysis-assumptions-plots-solutions/ ;
+      http://r-statistics.co/Assumptions-of-Linear-Regression.html
+
+
+
+First, we will generate data where y is a non-linear function of x, e.g. quadratic relationship:
+```{r}
+#set seed of computer's random number generator, so it generates data the same way every time
+set.seed(1)
+
+#make a function that samples x from a normal distribution with a certain mean and sd, and calculates y variable that is x squared 
+Quadratic <- function(number_of_observations, mean_x, sd_x) {
+    x <- rnorm(number_of_observations, mean_x, sd_x)
+    y <-  x^2
+    tibble(x,y)
+}
+
+#generate a dataframe with 100 observations where y = x^2, and x is drawn from normal distribution with the mean of 5 and sd of 0.5
+nonlinear_df <- Quadratic(100, 5, 2)
+```
+
+
+
+Let's now fit a linear model and see what it looks like.
+```{r}
+#build a simple linear regression model
+model = lm(y ~ x, data = nonlinear_df)
+
+#plot simple linear regression and actual data
+ggplot(nonlinear_df, aes(x, y))+
+  geom_point()+
+  geom_smooth(method = 'lm')+
+  ggtitle('Linear model fit to nonlinear (quadratic) relationship: y = x^2')
+```
+
+
+Now let's see what our assumption check will say about this model fit.
+
+
+
+#### 1) Linearity assumption
+
+To check this assumption make a 'Residuals vs Fitted' plot: plot(model, 1) 
+
+*Linearity assumption*: If the relationship between two variables is linear, once we fit a linear model it will closely capture the majority of our datapoints, producing smallest residuals possible. If we proceed with visualizing these residuals against the line of the model (i.e. against the fitted values), we can get an idea of how our linear model performs on different parts of our dataset.
+
+*Ideally*, if the assumption is met, our linear model performs equally well on the entire dataset -> making the residuals align in *a straight line closely to the line of the values fitted by the model* on the 'Residuals vs fitted' plot.
+
+- If you see stripes, it means you are dealing with categorical data. In this case assumption is not violated, just make sure that your predictor is seen as.factor, so your linear model performs ANOVA and not regression. See Class8_notes for an example. 
+
+- If you see *curvature* on the residual plot, it means that some datapoints are way further from the line of your model than others, indicating that *linearity assumption is violated*. 
+
+See the example of residual plot of the linear model fit to non-linear data.
+```{r}
+#Checking residuals of linear model performed on non-linear data
+plot(model, 1)
+```
+
+As expected from the way we generated the data, the assumption of linearity is violated - so we see curvature on the plot. 
+
+
+
+What violation of this assumption means: 
+    - If you fit a linear model to a non-linear data set, the regression algorithm would fail to capture the trend mathematically, thus resulting in an inefficient model. Also, this will result in erroneous predictions on an unseen data set.
+
+    - You should **consider transforming the outcome variable!** 
+    
+    - Material from future semesters, that we will not discuss now: 
+        It might mean that you miss an important predictor that interacts with whatever predictor you already have in your model. Potentially the pattern in the residual plot goes away if this predictor is added. 
+        You might also consider transforming predictors: e.g. adding polynomials of the predictor
+
+
+        
+Let's see how transformation affects this plot. Knowing that y was defined as squared values of x, we can take it's squre root to make the relationship linear.
+
+```{r}
+###### To show how stuff can improve with transformation:
+
+#make a square root transformation of the outcome variable 
+nonlinear_df <- nonlinear_df %>%  mutate(y_sqrt = sqrt(y))
+
+#make a model on transformed data
+model_transformed = lm(y_sqrt ~ x, data = nonlinear_df)
+
+#visualizing the model fit to data
+ggplot(nonlinear_df, aes(x, y_sqrt))+
+  geom_point()+
+  geom_smooth(method = 'lm')+
+  ggtitle('Linear model fit to appropriately transformed nonlinear relationship:\n square root of y = x^2')
+
+#Checking residuals of linear model performed on transformed non-linear data
+plot(model_transformed, 1)
+```
+    
+As you can see, once the relationship looks linear, model fits way better, making residuals very small and roughly equal - so they align into a flat line on the residual plot. 
+
+
+
+
+#### 2) The normality of residuals assumption
+
+To check this assumption, make a qq-plot of residuals: plot(model, 2)
+
+This q-q or quantile-quantile is a scatter plot which helps us validate the assumption of normal distribution of residuals across your data set. Using this plot we can infer if the data comes from a normal distribution. If yes, the plot would show fairly straight line. If there are evident deviations from the straight line, the normality assumption is violated.
+
+Let's see what it looks like for two different models we built, the one that already violates some assumptions and the one that has been fixed to meet the linearity assumption (by transforming the outcome variable):
+```{r}
+#non-linear relationship
+plot(model, 2)
+
+#transformed into a linear relationship
+plot(model_transformed, 2)
+```
+
+As you can see, originally residuals of our model did not meet the normality assumption. Once we have fixed the problem with linearity, the normality assumption has also been met, which can be seen on the second plot (majority of residuals align with the qq line). There are still deviations from the line, but not to the extent of the first plot. *Transformation helped with this assumption too*. 
+  
+
+If it's violated:
+   - If the error terms (residuals) are non-normally distributed, confidence intervals may become too wide or narrow. Once confidence interval becomes unstable, it leads to difficulty in estimating coefficients based on minimization of least squares. 
+   
+   -  Consider checking if you have unusual data points that must be studied closely to make a better model
+   
+   - Consider checking other assumptions (especially linearity one)
+   
+   - According to Bodo Winter: "The normality of residuals assumption is the one that is least important. Interestingly, many people seem to think it is the most important one, but it turns out that *linear models are relatively robust against violations of the assumptions of normality*. Researchers differ with respect to how much weight they put onto checking this assumption. For example, Gellman and Hill (2007), a famous book on linear models and mixed models, do not even recommend diagnostics of the normality assumption (ibid. 46)."
+
+
+
+      
+#### 3) Homoscedacticity assumption
+
+*Homoskedasticity assumption* is an extremely important assumption. It says that the variability of your data should be approximately equal across the range of your predicted values. If homoscedasticity is violated, you end up with heteroskedasticity, or, in other words, a problem with unequal variances.
+
+
+To check this assumption make:
+        a residual vs fitted plot(model, 1)
+        OR
+        a scale-location plot (same as residual vs fitted plot but uses standardized residual values): plot(model, 3)
+        
+Both plots show how the residuals are spread along the range of predictors. *Ideally*, there should be *no discernible pattern in the plot*. This would imply that errors are normally distributed. But, in case, if the plot shows any discernible pattern, it would imply non-normal distribution of errors.
+
+```{r}
+#check homoskedasticity for nonlinear data
+plot(model, 1)
+plot(model, 3)
+
+#check homoskedasticity after transforming data
+plot(model_transformed, 1)
+plot(model_transformed, 3)
+```
+
+The residuals before we transformed the data clearly form some pattern in both plots for the first model. Once we fixed previous assumptions by transforming the outcome, this assumption was also met, which is evident from the last pair of plots.
+
+
+
+I want to note though, that since we have a linearity assumption violated to start with, it overshines violation of all other assumptions. Open the following image for a more 'classic' picture of heteroscedacticity:
+   
+   https://www.analyticsvidhya.com/wp-content/uploads/2016/07/heterosk.png 
+ 
+    In this plot, higher-end fitted values have larger residuals - it reminds of a funnel shape ... indicating that the model is more “off” with largest predicted values of y. This means, *the variability is not homoscedastic* (it's heteroskedastic): it varies across the range of dataset.
+
+
+
+What violation of this assumption means: 
+    - If the variability of your data is not approximately equal across the range of your predicted values -  it's usually because of outliers or extreme leverage values. These values get too much weight, thereby disproportionately influence the model’s performance. When this phenomenon occurs, the confidence interval for out of sample prediction tends to be unrealistically wide or narrow.
+    
+    - You should **consider removing outliers and transforming your data!**        
+
+
+
+
+#### Absence of influential cases
+
+"Some people wouldn’t call “the absence of influential data points” an assumption of the model. However, influential data points can drastically change the interpretation of your results, and similar to collinearity, it can lead to unstable results."
+      - Winter. https://arxiv.org/pdf/1308.5499.pdf  
+
+Can be checked by making:
+      Cook's distance plot: plot(model, 4)
+      'Residuals vs Leverage' plot: plot(model, 5)
+
+
+Cook’s distance attempts to identify the points which have more influence than other points. Such influential points tend to have a sizable impact of the regression line. In other words, adding or removing such points from the model can completely change the model statistics. The bigger the cook's distance score - the more influential the point. 
+
+*Ideally* all points would score very low cook's distance.
+
+
+'Residuals vs Leverage' plot is the plot of standardized residuals against the leverage. Leverage is another measure of how much each data point influences the regression. The plot also contours values of Cook’s distance, which reflects how much the fitted values would change if a point was deleted.
+
+*Ideally* all points would be *close to the mid-line* and not have a large cook's distance, meaning none of the distort/influence the regression line too much.
+
+
+Let's see what these plots look like for our model pre- and post- transformation:
+```{r}
+#plot cook's distance and residuals-leverage plot for model violating linearity assumption
+plot(model, 4)
+plot(model, 5)
+
+
+#fixed model:
+plot(model_transformed, 4)
+plot(model_transformed, 5)
+```
+
+
+As we can see, transformation clearly helped with influential points - there is way less of them in the cook's distance plot for the second model. In the second model, points also stay close to the midline in the 'Residuals vs Leverage' plot. 
+
+
+
+What it means if we have influential points:
+    -  Influential points tend to have a sizable impact of the regression line. In other words, adding or removing such points from the model can completely change the model statistics. This makes model estimations less stable when performed on the new data.
+    
+    - Influential points are not necessarily outliers - simply removing them *might* not be a good practice
+    
+    - **Consider running the analysis with the influential points and then again without the influential points** ... then you can report both analyses and state whether the interpretation of the results does or doesn’t change.
+    
+    - Examine influential points closely, and remove them only when you are sure that it's reasonable for the context of your study. 
+  
+
+
+### Part 2 Exercise
+That was a long one! If you want to practice checking assumptions, there you go:
+
+1. Load data('GPA') from MuMIn package the way we loaded sleep data from lme4 (using data() command)
+  
+    GPA is a data frame with 5 variables. y is the first-year college Grade Point Average (GPA) and x1-x4 are four predictor variables from standardized tests (SAT) administered before matriculation. x1 is math score on the SAT, x2 is verbal score on the SAT, x3 is high school math, x4 is high school English.
+    If you want to know more run the command: ?GPA
+
+
+2. Build a model where you predict students' GPA in their first year of college (variable y) from their SAT scores in math (x1). 
+
+3. Check whether this data meets assumptions of your linear model.
+
+4. Visualize the linear model you built fit to actual datapoints. What would you say about the fit of the model, does it represent trends in your data well? 
+

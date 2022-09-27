@@ -1,0 +1,262 @@
+---
+title: "FaceStroop Experiment Analysis: Part 1"
+author: "Mikkel Wallentin"
+date: "10/02/2022"
+output: html_document
+---
+#Experiment
+
+This is a donder-type reaction type experiment, meassuring our RT at different points of our circadian rythms, and when fasting.
+The experiment also utilizes Stroop type stimuli, congurent/incongurent
+
+##Get and clean FaceStroopExp data
+```{r}
+library(tidyverse)
+
+#Get FaceStroopData
+datadir<-"./FaceStroopExp_data"
+
+
+#Find files
+files<-list.files(datadir,pattern='^FaceStroop_.+?csv',full.names=TRUE)
+
+#Prepare an empty data frame for the data (also removes old version)
+dataFS<-data.frame()
+
+#How many datasets were there
+n_datasets_raw<-length(files)
+#Prepare a variable to monitor how many datasets we keep
+n_datasets<-0
+#Prepare a variable to monitor how many points we originally had
+n_datapoints_raw<-0
+
+#Loop to go through all files in the list
+for(iii in 1:n_datasets_raw){
+  
+  #remove old loaded file to not risk importing it multiple times
+  if(exists('data_temp')) rm(data_temp)
+  
+  #Load data
+  data_temp<-read.csv(files[iii])
+  
+  #Take trials that have an RT (remove intertrial fixations)
+  data_temp<- subset(data_temp,rt!='null' & trial_type=='image-keyboard-response')
+  
+  #Make a variable with the total number of loaded data points, to know how many have been discarded 
+  n_datapoints_raw<-n_datapoints_raw+length(data_temp[,1])
+  
+  #Select data where at least 20 trials have been completed
+  if(length(data_temp[,1])>20){
+  
+  #Some early data did not have a hunger measurement. Add a hunger variable for them and make them NAs
+  if("hunger" %in% names(data_temp)){} else data_temp$hunger=NA
+  
+  #Some very ugly code because of script bug (you are able to select more than one value for hours since sleep and eat). 
+  #We split the string, convert it from a list and turn the first value into an integer (a number)
+  if(is.integer(data_temp$H_since_Eat)==FALSE){
+    data_temp$H_since_Eat<-as.integer(unlist(strsplit(data_temp$H_since_Eat[1],","))[1])
+    }
+  if(is.integer(data_temp$H_since_Sleep)==FALSE){
+    data_temp$H_since_Sleep<-as.integer(unlist(strsplit(data_temp$H_since_Sleep[1],","))[1])
+    }
+  
+  #Make sure that data have the same number of columns
+  if(length(colnames(data_temp))==33){
+    #Only include dataset with more than 70 percent correct responses
+    if(sum(data_temp$correct=='true')/length(data_temp$correct)>0.70){
+      data_temp$correct_p<-mean(as.numeric(data_temp$correct=='true'))
+      
+      #Turn RT into numeric variable
+      data_temp$rt<-as.numeric(data_temp$rt)
+      
+      #Determine a cutoff for when response times are suspiciously long (e.g. 3 SDs above the mean)
+      cutoff<-mean(data_temp$rt)+3*sd(data_temp$rt)
+      #Filter data with too long RTs
+      data_temp<- subset(data_temp,rt<cutoff)
+
+      #If this is the first time around the loop, make the currently loaded data into the actual data
+      if(length(colnames(dataFS))==0){
+        dataFS=data_temp
+        rm(data_temp)
+        #counter to monitor included datasets
+        n_datasets<-n_datasets+1
+      }
+      #Bind loaded data with actual data
+      else {dataFS<-rbind(dataFS,data_temp)
+      rm(data_temp)
+        #counter to monitor included datasets
+        n_datasets<-n_datasets+1
+      }
+    }
+  }
+  }
+}
+
+
+
+
+
+#A variable to monitor how many points we keep
+n_datapoints<-length(dataFS[,1])
+```
+
+
+## Prepare variables for analysis
+```{r}
+#Make a variable that says if the condition was a Stroop condition or not (incongruency between word and face)
+dataFS$stroop<-as.factor(dataFS$face!=dataFS$word)
+
+#Limit the data to only correct answers. Response time for incorrect responses can be difficult to interpret.
+#Note that this will make the data unsuitable for analyses on accuracy.
+dataFS<- subset(dataFS,correct=='true')
+
+#Turn id into factor - this can be used to monitor number of unique participants and to model random effects
+dataFS$id <- dataFS$id %>% as.factor()
+
+#Make a variable which has exp onset in hour and minutes of the day as decimal variable
+dataFS$hour2<-dataFS$hour+(dataFS$minute)/60
+```
+
+
+## Plots
+
+
+#### Let's make a correlogram with all numeric variables
+```{R}
+library(tidyverse)
+x <- dataFS %>% dplyr::select(where(is.numeric))
+# Use GGally to plot correlation matrix of both individual questions and summaries
+library(ggcorrplot)
+# ggcorrplot colors the squares according to whether the correlation is positive or negative
+ggcorrplot(cor(x))
+
+rm(x)
+```
+
+## Plotting response time as a function of hour
+```{r}
+library(ggplot2)
+
+
+ggplot(dataFS,aes(x=hour2,y=rt))+geom_smooth()+geom_point()+labs(x='Time of day (hours)', y='Response time')
+
+ggplot(dataFS,aes(x=hour2,y=correct_p))+geom_smooth()+geom_point()+labs(x='Time of day (hours)', y='Accuracy (percent)')
+
+ggplot(dataFS,aes(x=hour2,y=mood))+geom_smooth(na.rm=TRUE)+geom_point()+labs(x='Time of day (hours)', y='Negative/Positive Mood')
+
+ggplot(dataFS,aes(x=hour2,y=hunger))+geom_smooth(na.rm=TRUE)+geom_point()+labs(x='Time of day (hours)', y='HungrySatiated')
+ggplot(dataFS,aes(x=hour2,y=fresh))+geom_smooth(na.rm=TRUE)+geom_point()+labs(x='Time of day (hours)', y='Tired/Fresh')
+
+ggplot(dataFS,aes(x=H_since_Eat,y=hunger))+geom_smooth(na.rm=TRUE)+geom_point()+labs(x='Time since eating (hours)', y='Hungry/Satiated')
+
+ggplot(dataFS,aes(x=H_since_Eat,y=mood))+geom_smooth(na.rm=TRUE)+geom_point()+labs(x='Time since eating (hours)', y='Negative/Positive Mood')
+
+
+ggplot(dataFS,aes(x=hour2,y=mood,col=id))+geom_line() + stat_summary(aes(group = 1), geom = "point", fun.y = mean,shape = 17, size = 3)+labs(x='Time of day (hours)', y='Negative/Positive Mood')
+```
+
+## Example mixed effects models
+
+### Response time
+
+#### A simple model with only experimental variables
+
+```{r}
+library(lmerTest)
+
+## Simple 2x2 model with stroop incongruency, face type and interaction and participants as random effects
+modelFSrt1<-lmer(rt~stroop*face+(1|id),data=dataFS)
+summary(modelFSrt1)
+```
+
+#### An inclusive model with all sorts of variables
+```{r}
+#Inclusive model
+modelFSrt2<-lmer(rt~+stroop+face+hour2+trial_index+H_since_Sleep+H_since_Eat+mood+Gender+(1|id),data=dataFS)
+summary(modelFSrt2)
+```
+
+### Mood
+
+#### A model of mood given sleep and food
+```{r}
+#modelFSmood<-lmer(mood~H_since_Sleep*H_since_Eat+(1|id),data=dataFS)
+#summary(modelFSmood)
+
+#not repated mood measurements
+```
+
+### Wakefulness
+
+#### A model of wakefulness given sleep and food
+```{r}
+modelFSfresh<-lmer(fresh~H_since_Sleep*H_since_Eat+(1|id),data=dataFS)
+summary(modelFSfresh)
+```
+
+```{r}
+sapply(dataFS,class)
+
+
+
+```
+
+
+```{r}
+
+
+
+
+
+
+```
+
+
+
+
+```{r}
+
+
+scatterplot<- ggplot(dataFS,aes(mood,fresh))+
+  geom_point(aes())+
+  geom_smooth(method=lm,linetype="dashed",color="darkred")+
+  theme(legend.position=c(0,1), legend.justification=c(0,1))
+
+
+scatter_gender_reg<- ggplot(dataFS,aes(mood,fresh))+
+  geom_point()+
+  geom_smooth(method=lm,linetype="dashed")+
+  theme(legend.position=c(0,1), legend.justification=c(0,1))
+
+
+xdensity <- ggplot(dataFS, aes(mood)) + 
+  geom_density(alpha=.5) + 
+  theme(legend.position = "none")
+
+ydensity <- ggplot(dataFS, aes(fresh)) + 
+  geom_density(alpha=.5) + 
+  theme(legend.position = "none")
+
+blankPlot <- ggplot()+geom_blank(aes(1,1))+
+  theme(plot.background = element_blank(), 
+   panel.grid.major = element_blank(),
+   panel.grid.minor = element_blank(), 
+   panel.border = element_blank(),
+   panel.background = element_blank(),
+   axis.title.x = element_blank(),
+   axis.title.y = element_blank(),
+   axis.text.x = element_blank(), 
+   axis.text.y = element_blank(),
+   axis.ticks = element_blank()
+     )
+
+gridExtra::grid.arrange(xdensity, blankPlot, scatterplot, ydensity,ncol=2, nrow=2, widths=c(4, 1.4), heights=c(1.4, 4))
+
+gridExtra::grid.arrange(xdensity, blankPlot, scatter_gender_reg, ydensity,ncol=2, nrow=2, widths=c(4, 1.4), heights=c(1.4, 4))
+
+```
+
+
+
+
+

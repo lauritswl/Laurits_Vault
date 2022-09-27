@@ -1,0 +1,125 @@
+---
+title: "Applied_Class08_Factor_Analysis"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Working with the Maximising, Satisfising and Happiness responses from week 1 :) 
+*How to deal with correlated variables* 
+
+
+# I. Install packages and load data 
+
+```{r}
+#install libraries
+pacman::p_load(tidyverse, psych, fmsb, GPArotation)
+```
+
+
+## Questions:
+1. Whenever I’m faced with a choice, I try to imagine what all the other possibilities are, even ones that aren’t present at the moment. 
+2. No matter how satisfied I am with my job, it’s only right for me to be on the lookout for better opportunities 
+3. When I am in the car listening to the radio, I often check other stations to see if something better is playing, even if I am relatively satisfied with what I’m listening to. 
+4. When I watch TV, I channel surf, often scanning through the available options even while attempt- ing to watch one program. 
+5. I treat relationships like clothing: I expect to try a lot on before finding the perfect fit. 
+6. I often find it difficult to shop for a gift for a friend. 
+7. Seeing a film is really difficult. I’m always struggling to pick the best one. 
+8. When shopping, I have a hard time finding cloth-ing that I really love. 
+9. I’m a big fan of lists that attempt to rank things (the best movies, the best singers, the best athletes, the best novels, etc.).
+10. I find that writing is very difficult, even if it’s just writing a letter to a friend, because it’s so hard to word things just right. I often do several drafts of even simple things. 
+11. No matter what I do, I have the highest standards for myself.
+12. I never settle for second best. 
+13. I often fantasize about living in ways that are quitedifferent from my actual life. 
+14. Once I make a decision, I don’t look back.
+15. Whenever I make a choice, I’m curious about what would have happened if I had chosen differently. 
+16. If I make a choice and it turns out well, I still feel like something of a failure if I find out that anotherchoice would have turned out better.
+17. Whenever I make a choice, I try to get information about how the other alternatives turned out. 
+18. When I think about how I’m doing in life, I often assess opportunities I have passed up. 
+19. In general, I consider myself (1= not a very happy person, 7 = a very happy person).
+20. Compared to most of my peers, I consider myself: (1= less happy, 7 = more happy).
+21. Some people are generally very happy. They enjoy life regardless of what is going on, getting the most out of everything. To what extent does this characterization describe you? (1= not at all, 7 = a great deal).
+22. Some people are generally not very happy. Although they are not depressed, they never seem as happy as they might be. To what extend does this characterization describe you? (1= not at all, 7 = a great deal).
+
+
+
+
+
+
+# 1. Clean the data 
+
+```{r}
+# load data
+df_max_full <- read_csv("maximising_responses.csv")
+#change header names
+names(df_max_full) <- c("time","year","gender",1:22)
+
+# only choose the responses
+df_max_filtered <- df_max_full[,4:25]
+
+```
+
+
+# 2. Make Correlation Matrix  
+
+**2.a: Do you see any patterns emerging, do the variables seem correlated?** 
+
+```{r}
+#Create correlation matrix (save as variable)
+df_max_cor <- cor(df_max_filtered)
+heatmap(df_max_cor)
+corPlot(df_max_cor)
+
+```
+
+
+# 3 Find number of factors
+
+**3.a: Interpret the screeplot and conclude how many factors the analysis suggest you to use**
+
+```{r}
+# find number of factors
+fa.parallel(df_max_cor,fa="fa")
+# only 2, mabye 3 factors is good enough, as they are close to 1 or above
+```
+
+
+# 4. Conduct Analysis
+
+```{r}
+#4. conduct FA analysis
+fa_max_2 <- fa(df_max_filtered, 2) 
+fa_max_3 <- fa(df_max_filtered, 3)
+fa_max_2
+fa_max_3
+
+```
+
+
+# 5. Inspect Loadings
+
+**5.a: Which questions are determining what factors?**
+**5.b: By inspecting the loadings, interpret the factors**
+
+
+```{r}
+#inspect loadings manually
+colnames(fa_max_3$loadings) <- c("happines","decisivness", "openess")
+fa.diagram(fa_max_3)
+print(fa_max_3$loadings, cutoff = 0.5)
+```
+
+
+# 6. Evaluate model 
+
+**6.a: How much variance does each factor explain?**
+**6.b: Try to change some parameters in your analysis (see ?fa() for help) and see how the model changes.**
+
+The happiness and decisivness factors seem to fit well. The openess factor is a bit more up for interpritation, and a clarification of questions or larger sample size might be necessarry for a clear result of factors.
+
+
+
+

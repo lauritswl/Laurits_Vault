@@ -1,0 +1,283 @@
+---
+title: "Aphasia Exercise"
+author: "Kristian Tylén, Emil Rønn, Esben Kran"
+date: "16 nov 2021"
+output: html_document
+---
+
+In this exercise you will be looking into people suffering from aphasia. We will investigate whether specific features of their articulation (speech) are predictive of their diagnosis.
+
+## Praat (extracting features from voice)
+
+Praat is a program used to extract features from speech sound files.
+
+![Praat program interface](https://www.researchgate.net/profile/Nivja-De-Jong/publication/228940484/figure/fig1/AS:300668096139264@1448696268357/part-of-a-speech-file-in-PRAAT-with-intensity-and-pitch-shown-The-points-in-the-tier.png)
+
+There exists a couple of R packages for Praat (`rPraat` and `PraatR`) that you can experiment with (see [this tutorial](http://www.aaronalbin.com/praatr/index.html)) but we will use the actual program with a script written by our very own Telma that extracts a bunch of nice parameters from audio files.
+
+Download the version that fits your computer from [this page](https://github.com/praat/praat/releases/tag/v6.1.56). For Windows, that is `_win64.zip`, for mac it's `_mac.dmg`. If you have Linux, you know what to download ;-)
+
+When you extract the downloaded file, you can run the program directly from that folder, i.e. click on `Praat.exe` or similar for Mac. Praat contains three main windows:
+
+![Three main Praat windows](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBMtiTS5PcdVv254TYiO5pxIDBjLtSFQUowA&usqp=CAU)
+
+- Left: Is like the `Environment` windows in R. It contains all the objects in the environment.
+- Right: Is like the `Plots` window in R. It shows the plots. We will not use it.
+- Middle: The waveform viewer and editor. No R equivalent. Used a bit like `ELAN` when you are coding words but for more advanced vocal analysis.
+
+You have downloaded the `.zip` folder with this R markdown file, with all the .wav files and a single file with the file ending .praat, called `speech_rate_telma`. Open the Praat program, click on the Praat Objcets window, hit `Ctrl/Cmd + O` and open the `speech_rate_telma` file. This opens in a fourth window that looks like a simple text editor.
+
+Click `Ctrl/Cmd + R` to Run the program. This will give a popup a bit like a PsychoPy popup where you define all the settings for the program. The important one is the `directory` variable. By default, this is the same folder as the script. It will use all .wav files in this folder. **Praat has a hard time dealing with spaces in the directory, so either rename folders or move it to a path with no spaces.** Ask if this does not make sense.
+
+When you then click `OK` in that popup, Praat will be running for a while and you will see the data being generated per line. Copy+paste the final output into a new text file (e.g. `magicdata.txt`). We will use this in R...
+
+
+## Logistic regression / machine learning pipeline for voice
+
+To predict if a subject is aphasic or neurotypical, we will need to train models on known cases of aphasia and "normal" control subjects. In this way, it will see the differences between the two. Let's start!
+
+Load our `magicdata.txt` as a .csv since the Praat script writes it in this fashion...
+
+```{r}
+# Load packages
+pacman::p_load(tidyverse, lme4, boot, caret, pROC, snakecase)
+
+# Set working directory
+#setwd("")
+
+# Load the data -remember to save the file from praat in your working directory
+aphasia <- read_csv("magicdata.txt") %>% 
+  filter(soundname != "soundname") %>% 
+# Add conditions from soundnames:
+  mutate(
+    condition = str_extract(soundname, "Aphasia|Control|Secret"),
+    npause = as.numeric(npause),
+    `dur(s)` = as.numeric(`dur(s)`),
+# Add the rate of pauses (number of pauses divided by duration)
+    pauserate = npause / `dur(s)`
+  ) 
+
+# Fix column names
+colnames(aphasia) <- to_any_case(colnames(aphasia), "snake")
+
+```
+
+By now, you have used Praat to extract vocal features of the soundwaves from the participants. If you inspect your dataframe, you will notice that the features specifically are:
+
+The number of syllables produced
+The numbers of pauses produced
+The duration of speech in seconds
+The phonation time in seconds
+The speech rate (nsyll/duration)
+Articulation rate (nsyll/phonation time)
+
+Notice how some of these are correlated and derived from each other! (i.e. does it make sense to include them all as predictors?) 
+
+Now that the data is loaded and R is prepared, we can take an intial look at the data. Remember this is a simple but VERY IMPORTANT step when you're working with data: visualize it.
+
+Make bar plots of the mean values of each predictors for every condition. (Aphasia, Control and SecretT). Use the results to inform your model decisions. 
+```{r fig.width=8, fig.height=8}
+
+# Define function to create a plot of the specific column based on condition
+analysis <- function(title, JIT) {
+  ggplot(aphasia, aes(condition, JIT, fill = condition )) + 
+    labs(title = title) +
+    geom_boxplot() +
+    theme(legend.position="none")
+}
+
+# Make all numeric columns _actually_ numeric
+aphasia <- aphasia %>% 
+  mutate(
+    speechrate_nsyll_dur = as.numeric(speechrate_nsyll_dur),
+    nsyll = as.numeric(nsyll),
+    npause = as.numeric(npause),
+    dur_s = as.numeric(dur_s),
+    phonationtime_s = as.numeric(phonationtime_s),
+    articulation_rate_nsyll_phonationtime = as.numeric(articulation_rate_nsyll_phonationtime),
+    asd_speakingtime_nsyll = as.numeric(asd_speakingtime_nsyll),
+    condition = as.factor(condition)
+  )
+
+# Arranging plots in a grid using the package gridExtra
+pacman::p_load(gridExtra)
+
+grid.arrange(
+  analysis("Speech rate", aphasia$speechrate_nsyll_dur),
+  analysis("N pauses", aphasia$npause),
+  analysis("N syllables", aphasia$nsyll),
+  analysis("Phonation time", aphasia$phonationtime_s),
+  analysis("Articulation rate", aphasia$articulation_rate_nsyll_phonationtime),
+  analysis("Speaking time", aphasia$asd_speakingtime_nsyll),
+  analysis("Pause rate", aphasia$pauserate)
+)
+
+```
+
+## Training a model
+
+Using logistic regression in a binary classification task is a case of "supervised learning". 
+
+Because of this, we need to explicitly tell our model what "answers" it is looking for, in the training phase. To do so we need to provide a "training" dataset in which only the known cases are included. Similarly, to assess the accuracy, we need to provide a "test" dataset, in which the true diagnoses are unknown to the model.
+
+Separate the "aphasia" dataset into two of such sets. One for training, and one for testing.
+(I suggest that you use the "filter" function).
+
+```{r}
+
+# Making a "training set" - We want to ommit the "secret case", as our model should not include this in its training.
+
+# Training data (Aphasia and Control)
+trainingset <- aphasia %>% 
+  filter(condition != "Secret")
+
+# Test data (Secret)
+testset <- aphasia %>% 
+  filter(condition == "Secret")
+
+```
+
+Now we are almost ready to create our model. However, we need to check our levels first. We need to know what R considers the "baseline" of the data. This can be done using the "relevel()" function. The convention would be to have your controls as the first level.  
+Also, check the format of your data. Are your factors actually factors? and what about your numerics?
+
+```{r}
+# Check the format of your data
+str(trainingset)
+
+# Changing the labels of your training data: Make Control into "0" and Aphasia into "1"
+trainingset <- trainingset %>% 
+  mutate(condition = as.factor(if_else(condition == "Control", 0, 1)))
+
+# Now we can see that our condition is a 2-level factor with "0" or "1"
+str(trainingset$condition)
+
+# Releveling the condition factor to use "0" (Control) as the reference (see how it's used with ?relevel)
+trainingset <- trainingset %>% 
+  mutate(
+    condition = relevel(condition, ref="0")
+  )
+
+```
+
+
+Now we are ready to make some models!
+Let's forget about those boring and troublesome assumptions for now. 
+
+Make a logistic regression model that predicts the condition/diagnosis of the participants. You decide what predictors to include, but you should be able to justify your decisions. Assess the model output.
+
+```{r}
+# Creating the glm model:
+model <- glm(condition ~ asd_speakingtime_nsyll, data = trainingset, family = binomial())
+
+# Looking at the results:
+summary(model)
+
+```
+
+
+The predict() function allows yo to extract the individual predictions made by your model. 
+To convert it into probabilties (which we can actually understand - as opposed to those weird logodds^[We predict a linear model that is then transformed using the logit function to the values we use. In this way, we can properly represent the classification into two different labels and train on the output.]), use the inv.logit() function. Add a "Predictions probability" column to your training dataframe, in which the individual model prediction probabilities are scored.  
+
+```{r}
+# Adding the predicted probabilities: 
+trainingset <- trainingset %>% 
+  mutate(predictions_perc = inv.logit(predict(model)))
+```
+
+### Model selection
+Experiment with different models with other predictors and compare them using Information Criteria.
+
+```{r}
+# Using the BIC() function, evaluate the models side-by-side
+# The smaller the value, the better the model
+BIC(model)
+?BIC
+```
+
+You can select the best one and continue by again, adding the predicted probabilities:
+```{r}
+# Adding the predicted probabilities: 
+trainingset <- trainingset %>% 
+  mutate(predictions_perc = inv.logit(predict(model)))
+```
+
+### Model inspection
+
+Now that the predicted probabilities are added, we need to decide on what counts as a classified aphasia patient and what counts as a classified control. Normally, such decision are heavily domain dependent, but in this case I suggest we make the threshold at 50%. 
+
+That is:
+if the predicted probability is above 0.5 => the participant has aphasia => label "1"
+if the predicted probability is below 0.5 => the participant is a control => label "0"
+
+add a "Predictions" column to your dataset based on the predicted probabilities
+```{r}
+# Assigning predicted conditions based on their probabilities (remember to make it a factor)
+trainingset <- trainingset %>% 
+  mutate(prediction = as.factor(if_else(predictions_perc<0.5, 0, 1)))
+
+
+```
+
+When you are making classifications, it is common to make a confusion matrix which displays various error measures of your model. I have supplied you with the code below. Use it to assess the quality of your model. 
+
+(more info at: https://towardsdatascience.com/understanding-confusion-matrix-a9ad42dcfd62
+and https://en.wikipedia.org/wiki/Confusion_matrix)
+
+```{r}
+# Making a confusion matrix: 
+conf_matrix <- confusionMatrix(trainingset$prediction, reference = trainingset$condition, positive= "1") 
+
+
+conf_matrix$table %>% 
+  as_tibble() %>%  
+  ggplot() +
+  aes(Prediction, Reference, fill=n, label=n) +
+  geom_tile() +
+  geom_text(color="white") +
+  coord_cartesian(expand=FALSE) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+Lets visualize the classification accuracy using a ROC curve - "Receiver Operating Characteristics"
+(more info at https://towardsdatascience.com/understanding-auc-roc-curve-68b2303cc9c5)
+
+```{r}
+# ROC curve
+rocCurve <- roc(response = trainingset$condition, trainingset$predictions_perc)
+
+# Area under that curve
+auc(rocCurve)
+
+# Confidence interval
+ci(rocCurve)
+
+# Plotting the ROC curve over the chance (diagonal line) level
+plot(rocCurve, legacy.axes = TRUE)
+```
+
+Can you predict the secret cases?
+hint: use the predict() function, but remember to convert the prediction into a probability. (just like you did with the training data)
+ 
+```{r}
+# Predictions on the test dataset:
+testset <- testset %>% 
+  mutate(
+    model_predictions_perc = inv.logit(predict(model, testset, na.action = na.omit, allow.new.levels = T ))
+  )
+
+# Based on the probability, convert to 0s and 1s
+testset <- testset %>% 
+  mutate(
+    model_predictions = as.factor(if_else(model_predictions_perc < 0.5, 0, 1))
+  )
+
+```
+
+What were the predicted diagnoses? Can you confirm the results by listening to the actual audio files?
+
+```{r}
+# See which files were predicted as Aphasic ("1") and Control ("0")
+
+```
+

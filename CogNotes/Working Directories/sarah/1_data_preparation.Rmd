@@ -1,0 +1,309 @@
+---
+title: "MLU exercise"
+author: "Laurits Lyngbæk"
+date: "14/9/2021"
+---
+
+Today's aim is to investigate how a child's mean length of utterance (MLU) develops over time. To do this, we first need to get hold of some relevant data. As an alternative to having a bring-your-toddler-to-class day we will get data from the internet child language database 'CHILDES', which can be found at:
+http://childes.talkbank.org/.
+
+In fact things are even easier. Since you have this script, you already have the Sarah folder which contains the data we will be looking at. You find the 139 data files in the folder "data".
+
+
+
+------Part 1: Setup------
+
+First we will handle the practicalities of importing the right files, keeping the relevant information and save it for later.
+
+
+1.1) First we need to install and load the libraries "tidyverse","stringi","stringr" and "anytime".
+```{R}
+
+pacman::p_load(tidyverse,stringi,stringr,anytime,plyr,dplyr)
+
+
+
+```
+
+1.2) The we set your working directory to the "sarah" folder. Try and use the function
+# setwd(".")
+# setwd("your path")
+If setwd() doesn't work, then run the following command:
+# knitr::opts_knit$set(root.dir = "Replace here with correct patch")
+Or go to the 'Session' tab in the drop-down menu of RStudio
+
+```{R}
+setwd('.')
+
+```
+
+
+1.3) In the "sarah" folder you will find a script called "CrantoR_function.R". This script contains a function for turning the Childes CHA files into an R friendly dataframe. We can turn this script into a function by running the following command.
+
+This is the same as loading a package but it's just our own.
+
+```{R setup}
+
+source("CRANtoR_function.R") 
+
+
+
+``` 
+
+1.4) Next we need to store all the file-names from the "data" folder in a new variable.
+You can do that by using the function: 
+# list.files() 
+For this to work we need to specify that it should find files in the subfolder named "data", and that it should list full names of the files. 
+# path = "data", full.names = T
+To get list.files() to do this, write: 
+# ?list.files 
+in the console and check out how the arguments "path" and "full.names" works. 
+
+```{R}
+files <- list.files(path="data",full.names=T)
+files
+
+```
+
+If you have done the previous step correctly you should have a 139 item long list of file names starting with "data/" and then some number.
+
+1.5) Next we will use a handy function from tidyverse called
+# map_df
+It allows us to call a function on each file name in our list and unite the result into a data-frame. It will take a couple of minutes to load in all the files, and at the end it will mention something about "coercing into character vector..." - don't worry about this.
+Replace quotated parts and run the command:
+
+PS: If you can't get this part to work I have a file ready for you called "sarah_dataframe.csv" (For some reason it adds another coloumn, so we'll use the next line to get rid of that)
+# sarah_data <- read_csv("sarah_dataframe.csv")
+# sarah_data <- sarah_data[,-1]
+(But again, try to get map_df to work first)
+
+```{R}
+df <- files %>% 
+map_df(function(x) read.CLAN.file(x))
+
+df %>% 
+  view()
+
+```
+
+Now go and view the data frame. It should contain 84443 observations of 30 variables.
+
+
+1.6) To make things clearer lets throw away the variables we won't need. Use the function "select" or another subsetting command to create a new data frame which only contains the columns "Speaker", "gloss", and "Date".
+
+Also, rename the columns to only lowercase. In the `select` function, this is done by setting the new column name equals the old column name, ie: `speaker = Speaker`.
+
+
+```{R}
+select_df <- df %>% 
+  select(speaker=Speaker, gloss=Gloss, date=Date)
+
+view(select_df)
+
+```
+
+1.7) Lets save our data so we won't have to rerun the long data import again. To do this you can use: 
+# write.csv()
+Remember to put a ".csv" at the end of the output file so that it will be in csv format.
+
+```{R}
+
+select_df %>% 
+  write.csv("select_df.csv")
+read.csv("select_df.csv")
+```
+
+
+
+
+
+
+
+
+------PART 2: Data cleaning and selection------
+
+
+
+2.1) Start out by loading the data you saved in last part
+
+```{R}
+df_csv <- read_csv("select_df.csv")
+
+
+```
+
+2.2) check whether the different classes of the columns are strings, factors, numeric, integer, dates etc. 
+You do this with str() or class().
+
+You want "speaker" to be "factor".
+You want "gloss" to be "character".
+And you want "date" to be "date".
+
+```{R}
+df_csv %>% 
+  str()
+
+```
+
+2.3) Since the columns are of the wrong class, change it with 
+# as.xxx() 
+where xxx is replaced by name of the desired class.
+
+If you get an error using "as.Date", try using:
+#anytime::anydate() 
+
+```{R}
+ df_as<-df_csv %>% 
+  mutate(
+    speaker=as.factor(speaker),
+    gloss=as.character(gloss),
+    date=anytime::anydate(date))
+  
+summary(df_as)
+summary(df_csv)
+```
+
+2.4) In the data, the little girl Sarah is conversing with several people but mainly her mother. We are only interested in the child-mother conversations. Make a dataframe where you only keep the rows where the speaker is "MOT" OR "CHI". I would suggest using:
+# filter() 
+to do this. You need to pass it a logical statement like (xxx == yy). You say "Or" in R with "|". A logical "Or" statement looks like:
+# (xxx == "yy" | æææ == "zz")
+
+```{R}
+filter_df <- df_as %>% 
+  filter(speaker == "CHI"| speaker == "MOT")
+
+
+```
+Tip: https://r4ds.had.co.nz/transform.html#dplyr-basics
+
+
+
+
+
+
+
+
+------Part 3: Cleaning strings------
+
+
+First we need to remove all special characters like 
+# "/¤:#/#&." 
+One way to do this, is to replace all these characters with nothing which can be specified with 
+# "" 
+
+The Stringr package has a nice tool for this called: 
+# str_replace_all(). 
+In order to tell the function, what to remove you will need to give it a Regular Expression. Regular Expressions are used widely in computer science, since they are a standardized way of telling the computer what pattern of symbols to search for.
+
+To find any special character you need two things. First you need the regular expression denoting the character, this is [:punct:]. Secondly, you need to tell R to find ANY of these. You do that by using "[]". So:
+#  ...(select_sarah_data$gloss, "[:punct:]", "")
+
+
+3.1) Make a new column in your dataset by using str_replace_all and regular expressions to remove all special characters:
+
+```{R}
+filter_df<- filter_df %>% 
+  mutate(
+    clean = str_replace_all(gloss,"[:punct:]",""))
+
+view(filter_df)
+
+```
+TIP: https://stringr.tidyverse.org/articles/regular-expressions.html
+
+In the text there are a lot of "xxx" and "yyy" which means, that the transcribers haven't been able to hear what has been said. It could be argued that these should be removed as well, but for the sake of simplicity we will keep them and count them as a single word :)
+
+
+
+
+
+
+
+
+------Part 4: Calculating MLU------
+
+In this part we will calculate the Mean Length of Utterances for the child and mother for each date. We define MLU as:
+# (number of words) / (number of utterances)
+
+Each cell in the cleaned 'text'gloss' column corresponds to an utterance. So for each date we need to calculate the total number of words said for child and mother, and how many utterancess each have used.
+
+
+4.1) The function:
+# stri_count_words 
+from the package "stringi" does excatly what you would expect it to do. 
+Please refer to part 1 to install "stringi". 
+So, what we want to do is create a new column using "stri_count_words" to count the number of words in each utterance. Try this if confused:
+# ?stri_count_words
+
+```{R} 
+filter_df <- filter_df %>% 
+  mutate(count_words=stri_count_words(clean))
+
+view(filter_df)
+
+```
+
+Our columns are a mix of lines from the mother and child. We want to treat these seperatly. Furthermore we want to treat each date seperatly as well. There is a genius function in the "tidyverse" package (which you should already have loaded) called group_by.
+
+By using:
+# group_by(speaker) 
+on our dataframe, the computer will know that further operations on the dataframe should be applied seperatly to the CHI and MOT rows. In the same way we can also use 
+# group_by(date) 
+to let the computer know, that it should apply functions depending on dates. 
+
+4.2) Use group_by to create a new data frame. You should give three arguments to group_by: your dataframe, Speaker and date.
+
+```{R}
+grouped_df <- filter_df %>% 
+  group_by(speaker,date) %>% 
+  summarise(
+    sum_words=sum(count_words),
+    utterances=n(),
+    MLU =sum_words/utterances,
+    mean_words=mean(count_words))
+
+view(grouped_df)
+
+```
+
+Group_by doesn't change anything about the data, its effect is first visible when we apply further functions (if we wanted to apply functions to the full data frame again grouping can be removed with 
+# ungroup())
+
+There is one problem about the group_by functions. Further functions need to be used in the context of the function:
+# summerise() 
+Since we are interested in MLU we need calculating the following values: 
+I) the sum of words 
+II) the number of utterances and 
+III) divide the two just calculated values to get the mlu. 
+
+And remember we are interested to get these values for child and mother for each date. 
+But this will happen automatically since we have already grouped our data.
+
+4.3) Replace quotated parts in order to create a data frame that contains 
+I) number of words 
+# sum()
+II) utterances 
+# n()
+III) (number of words)/(utterances) 
+# /
+
+TIP: Each row corresponds to a single utterance. Roughly speaking, the function n() calculates the number of rows that went into the calculation, so you can use n() to calculate the number of utterances (the function doesn't take any arguments)
+
+```{R}
+
+
+
+```  
+4.4) View the data frame, click on "date" to sort by it and see if child and mother each have a MLU value for each date
+
+4.5) Lastly, remember to save the data
+```{R}
+write_csv(grouped_df,"MLU_df.csv")
+
+
+```
+
+If everything worked out as it should then you should now have a nifty data frame with MLUs for child and mother for each date. What a day!
+
+
+  

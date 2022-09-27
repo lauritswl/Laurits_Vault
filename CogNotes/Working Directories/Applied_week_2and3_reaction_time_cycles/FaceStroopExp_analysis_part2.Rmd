@@ -1,0 +1,373 @@
+---
+title: "FaceStroop Experiment Analysis"
+author: "Mikkel Wallentin"
+date: "16/02/2022"
+output: html_document
+---
+#Get and clean FaceStroopExp data
+```{r}
+library(tidyverse)
+library(lmerTest)
+
+#Get FaceStroopData
+datadir<-"./FaceStroopExp_data"
+
+
+#Find files
+files<-list.files(datadir,pattern='^FaceStroop_.+?csv',full.names=TRUE)
+
+#Prepare an empty data frame for the data (also removes old version)
+dataFS<-data.frame()
+
+#How many datasets were there
+n_datasets_raw<-length(files)
+#Prepare a variable to monitor how many datasets we keep
+n_datasets<-0
+#Prepare a variable to monitor how many points we originally had
+n_datapoints_raw<-0
+
+#Loop to go through all files in the list
+for(iii in 1:n_datasets_raw){
+  
+  #remove old loaded file to not risk importing it multiple times
+  if(exists('data_temp')) rm(data_temp)
+  
+  #Load data
+  data_temp<-read.csv(files[iii])
+  
+  #Take trials that have an RT (remove intertrial fixations)
+  data_temp<- subset(data_temp,rt!='null' & trial_type=='image-keyboard-response')
+  
+  #Make a variable with the total number of loaded data points, to know how many have been discarded 
+  n_datapoints_raw<-n_datapoints_raw+length(data_temp[,1])
+  
+  #Select data where at least 20 trials have been completed
+  if(length(data_temp[,1])>20){
+  
+  #Some early data did not have a hunger measurement. Add a hunger variable for them and make them NAs
+  if("hunger" %in% names(data_temp)){} else data_temp$hunger=NA
+  
+  #Some very ugly code because of script bug (you are able to select more than one value for hours since sleep and eat). 
+  #We split the string, convert it from a list and turn the first value into an integer (a number)
+  if(is.integer(data_temp$H_since_Eat)==FALSE){
+    data_temp$H_since_Eat<-as.integer(unlist(strsplit(data_temp$H_since_Eat[1],","))[1])
+    }
+  if(is.integer(data_temp$H_since_Sleep)==FALSE){ 
+    data_temp$H_since_Sleep<-as.integer(unlist(strsplit(data_temp$H_since_Sleep[1],","))[1])
+    }
+  
+  #Make sure that data have the same number of columns
+  if(length(colnames(data_temp))==33){
+    #Only include dataset with more than 70 percent correct responses
+    if(sum(data_temp$correct=='true')/length(data_temp$correct)>0.70){
+      data_temp$correct_p<-mean(as.numeric(data_temp$correct=='true'))
+      
+      #Turn RT into numeric variable
+      data_temp$rt<-as.numeric(data_temp$rt)
+      data_temp$rt_median<-median(data_temp$rt)
+      #Determine a cutoff for when response times are suspiciously long (e.g. 3 SDs above the mean)
+      cutoff<-mean(data_temp$rt)+3*sd(data_temp$rt)
+      #Filter data with too long RTs
+      data_temp<- subset(data_temp,rt<cutoff)
+
+      #If this is the first time around the loop, make the currently loaded data into the actual data
+      if(length(colnames(dataFS))==0){
+        dataFS=data_temp
+        rm(data_temp)
+        #counter to monitor included datasets
+        n_datasets<-n_datasets+1
+      }
+      #Bind loaded data with actual data
+      else {dataFS<-rbind(dataFS,data_temp)
+      rm(data_temp)
+        #counter to monitor included datasets
+        n_datasets<-n_datasets+1
+      }
+    }
+  }
+  }
+}
+
+
+#A variable to monitor how many points we keep
+n_datapoints<-length(dataFS[,1])
+
+```
+
+
+## Prepare variables for analysis
+```{r}
+
+
+#Make a variable that says if the condition was a Stroop condition or not (incongruency between word and face)
+dataFS$stroop<-as.factor(dataFS$face!=dataFS$word)
+
+#Limit the data to only correct answers. Response time for incorrect responses can be difficult to interpret.
+#Note that this will make the data unsuitable for analyses on accuracy.
+dataFS<- subset(dataFS,correct=='true')
+
+#Turn id into factor - this can be used to monitor number of unique participants and to model random effects
+dataFS$id <- dataFS$id %>% as.factor()
+
+#Make a variable which has hour and minutes of the day as decimal variable
+dataFS$hour2<-dataFS$hour+(dataFS$minute)/60
+```
+
+## Make a smaller dataframe for use when analysing mood etc, that were not repeated each session
+```{r}
+library(tidyverse)
+#Summarise data in order to make smaller dataset with only one row per experimental session.
+dataFSs<-dataFS %>% group_by(exp_id) %>% slice_head()
+#Include a mean response time
+temp<-dataFS  %>% group_by(exp_id) %>% summarise(rt_mean=mean(rt))
+#Merge rt_mean with data
+dataFSs<-merge(dataFSs,temp, by='exp_id')
+rm(temp)
+```
+
+
+## It all starts with a circle and a triangle
+```{r}
+#Radius
+r<-1
+# Get x-values from minus 1 to plus 1
+x<-seq(-1,1,0.00001)
+# A circle with c(0,0) centre can be written with these two equations (following Pythagoras)
+y1<-sqrt(r^2-x^2)
+y2<--sqrt(r^2-x^2)
+y<-c(y1,y2)
+x<-c(x,x)
+#Plotting the circle with sine and cosine values
+pp=pi/4
+plot(x,y,type='l')
+lines(x=c(0,0),y=c(-1,1))
+lines(x=c(0,cos(pp)),y=c(0,sin(pp)),col='darkgreen')
+lines(x=c(cos(pp),cos(pp)),y=c(0,sin(pp)),col='darkblue')
+text(x=c(-0.15+cos(pp)),y=c(0.5*sin(pp)),labels='sin(x)',col='darkblue')
+lines(x=c(0,cos(pp)),y=c(sin(pp),sin(pp)),col='darkred')
+text(x=c(0.5*cos(pp)),y=c(+0.15+sin(pp)),labels='cos(x)',col='darkred')
+```
+
+### Going beyond the circle, the sine and cosine functions can describe cycles in time
+
+$$
+y(t)=\beta{sin}(2\pi f t )
+$$
+$$
+y(t)=\beta{cos}(2\pi f t )
+$$
+Beta is the amplitude (the height of the wave)
+f is the frequency (the number of cycles per time unit)
+t is time point
+
+
+
+#### Plotting circadian sine and cosine waves
+```{r}
+#cycle frequency (in this case per hour) - one cycle per 24 hours
+cf=1/24
+#sample frequency per hour
+fs=100
+#Duration in hours
+dur=24
+#A time vector divided by fs
+t = seq(0, dur, 1/fs)
+#Make a sine wave (with amplitude =1) for each time point in t
+u = sin(2*pi*cf*t)
+#Make a cosine wave (with amplitude =1) for each time point in t
+u2= cos(2*pi*cf*t)
+#Plot the waves
+plot(x=t,y=u, type='l',col='darkblue',xlab='time(hours)',ylab='Amplitude')
+text(x=1+t[1000],y=-0.2+u[500],labels='y=sin(2*pi*cf*t)',col='darkblue')
+lines(x=t,y=u2, type='l',col='darkred')
+text(x=-1+t[500],y=-0.2+u2[500],labels='Y=cos(2*pi*cf*t)',col='darkred')
+```
+As can be seen, the sine function is a time shifted version of the cosine function and vice versa.
+The time shift is also called phase. We can add a constant for the phase (phi) to the sine/cosine wave function.
+
+$$
+y(t)=\beta{sin}(2\pi f t + \phi)
+$$
+
+#### Plotting circadian sine wave with phase shift
+```{r}
+#cycle frequency (in this case per hour) - one cycle per 24 hours
+cf=1/24
+#sample frequency per hour
+fs=100
+#Duration in hours
+dur=24
+#A time vector divided by fs
+t = seq(0, dur, 1/fs)
+#a  phase shift of pi/2 radians (half a cycle)
+phi=pi
+#Make a sine wave (with amplitude =1)
+u = sin(2*pi*cf*t)
+#Make a sine wave (with amplitude =1), and phase shift
+u2= sin(2*pi*cf*t+phi)
+#Plot the waves
+plot(x=t,y=u, type='l',col='darkblue',xlab='time(hours)',ylab='Amplitude')
+text(x=1+t[1000],y=-0.2+u[500],labels='y=sin(2*pi*cf*t)',col='darkblue')
+lines(x=t,y=u2, type='l',lty='dashed',col='darkblue')
+text(x=-1+t[500],y=0.2+u2[500],labels='Y=sin(2*pi*cf*t+phi)',col='darkblue')
+```
+Using the trigonometric identity
+
+$$
+{sin(A+B)}={sin(A)cos(B)}-{cos(A)sin(B)}
+$$
+we can rewrite the sine function (including phase) as
+
+$$
+y(t)={\beta_1{sin}(2\pi f t)}+{\beta_2{cos}(2\pi f t)}
+$$
+where 
+$$
+{\beta_1}=\beta{cos(\phi)}, {\beta_2}=-\beta{sin(\phi)}
+$$
+We can use the rewritten sine function in a linear regression analysis, where we estimate the best fitting B1 and B2. This will yield a composite estimate of the amplitude and the phase of the data.
+
+This will allow us to use sine and cosine waves to model a circadian rhythm, even if we don't know when it peaks. The amplitude will be given by
+
+$$
+{\beta}=\sqrt{\beta_1^2+\beta_2^2}
+$$
+The phase (phi) will be given by
+$$
+{\phi}=atan2(\beta_1,\beta_2)
+$$
+
+#### Use the sine and cosine waves to make predictors for the FaceStroop data
+
+```{r}
+
+#Make sine and cosine waves for each time point present in the data
+
+dataFS$sinCirc<-sin(2*pi*cf*dataFS$hour2)
+dataFS$cosCirc<-cos(2*pi*cf*dataFS$hour2)
+
+# Plot the predictors for each data point in the data
+plot(x=dataFS$hour2,y=dataFS$sinCirc,type='p',col='darkblue')
+lines(x=dataFS$hour2,y=dataFS$cosCirc,type='p',col='darkred')
+```
+
+
+
+
+
+## Oscillation model
+
+### Response time
+```{r}
+# Simple linear model with time of day predicting RT
+modelFSrtHour<-lmer(rt~hour2+(1|id),data=dataFS)
+# 2nd order polynomial model with time-squared predicting RT
+modelFSrtHour2<-lmer(rt~poly(hour2,2)+(1|id),data=dataFS)
+# Oscillation model with a sine and a cosine function predicting RT
+modelFSrtCirc<-lmer(rt~sinCirc+cosCirc+(1|id),data=dataFS)
+
+#Comparing the three different models to see which best explains the data
+anova(modelFSrtHour,modelFSrtHour2,modelFSrtCirc)
+```
+
+#### Get fitted effects
+```{r}
+#Get info from model 1
+m_temp<-summary(modelFSrtHour)
+m_temp
+#Make a variable with the fitted effect using the regression coefficients
+dataFS$HourFit<-m_temp$coefficients[1,1]+m_temp$coefficients[2,1]*dataFS$hour2
+
+
+#Get info from model 2
+m_temp<-summary(modelFSrtCirc)
+m_temp
+#Make a variable with the fitted effect using the regression coefficients
+dataFS$CircFit<-m_temp$coefficients[1,1]+m_temp$coefficients[2,1]*dataFS$sinCirc+m_temp$coefficients[3,1]*dataFS$cosCirc
+
+
+#Get info from model 3
+m_temp<-summary(modelFSrtHour2)
+m_temp
+#Make a variable with the fitted effect using the regression coefficients
+dataFS$Hour2Fit<-m_temp$coefficients[1,1]+m_temp$coefficients[2,1]*dataFS$hour2+m_temp$coefficients[2,1]*dataFS$hour2^2
+
+
+library(ggplot2)
+#Make a fitted plot. Include a non-linear fit (geom_smooth) for comparison.
+ggplot(dataFS,aes(x=hour2,y=rt))+geom_smooth()+geom_smooth(aes(x=hour2,y=HourFit),col='darkred')+geom_smooth(aes(x=hour2,y=CircFit),col='darkgreen')+labs(x='Time of day (hours)', y='Response time')
+```
+
+### Freshness
+```{r}
+# Freshness: Simple oscillation model
+modelFSfreshCirc<-lmer(fresh~sinCirc+cosCirc+(1|id),data=dataFS)
+
+#Get info from freshness model
+m_temp<-summary(modelFSfreshCirc)
+m_temp
+
+#Make a variable with the fitted effect using the regression coefficients
+dataFS$CircFreshFit<-m_temp$coefficients[1,1]+m_temp$coefficients[2,1]*dataFS$sinCirc+m_temp$coefficients[3,1]*dataFS$cosCirc
+
+
+
+#Make a fitted plot. Include a non-linear fit (geom_smooth) for comparison.
+ggplot(dataFS,aes(x=hour2,y=fresh))+geom_smooth()+geom_smooth(aes(x=hour2,y=CircFreshFit),col='darkgreen')+labs(x='Time of day (hours)', y='Tired/Fresh')
+```
+$$model=\beta_0+\beta_1 sin(x)+\beta_3 cos(x)$$
+
+### Mood
+```{r}
+# Mood: Simple oscillation model
+modelFSMoodCirc<-lmer(mood~sinCirc+cosCirc+(1|id),data=dataFS)
+
+#Get info from mood model
+m_temp<-summary(modelFSMoodCirc)
+m_temp
+#Make a variable with the fitted effect using the regression coefficients
+dataFS$CircMoodFit<-m_temp$coefficients[1,1]+m_temp$coefficients[2,1]*dataFS$sinCirc+m_temp$coefficients[3,1]*dataFS$cosCirc
+
+#Make a fitted plot. Include a non-linear fit (geom_smooth) for comparison.
+ggplot(dataFS,aes(x=hour2,y=mood))+geom_smooth()+geom_smooth(aes(x=hour2,y=CircMoodFit),col='darkred')+labs(x='Time of day (hours)', y='Negative/Positive Mood')
+```
+
+
+
+### Compare time course of the three cycles
+```{r}
+
+#Make a fitted plot. Include a non-linear fit (geom_smooth) for comparison.
+ggplot(dataFS,aes(x=hour2,y=fresh))+geom_smooth(aes(x=hour2,y=scale(CircFit)),col='darkblue')+geom_smooth(aes(x=hour2,y=scale(CircFreshFit)),col='darkgreen')+geom_smooth(aes(x=hour2,y=scale(CircMoodFit)),col='darkred')+labs(x='Time of day (hours)', y='RT/Fresh/Mood')
+```
+
+
+
+
+
+
+### Compare 1,2 and 3 cycle:
+```{r}
+
+
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

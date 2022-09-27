@@ -1,0 +1,5 @@
+,time_stamp,consent,id,age,gender,fluent_in_danish,video,condition,text
+0,2021_Dec_09_1337,Ja,Elisius,21,Mand,Ja,2,Noise with video,
+1,2021_Dec_09_1337,Ja,Elisius,21,Mand,Ja,1,No noise with video,damen satte spanden på muren og kastede et rødt æble til naboen
+2,2021_Dec_09_1337,Ja,Elisius,21,Mand,Ja,0,Noise without video,og fik en slikkepind
+3,2021_Dec_09_1337,Ja,Elisius,21,Mand,Ja,3,No noise without video,drengen kastede frisbeen over hækken og fik et rødt æble tilbage

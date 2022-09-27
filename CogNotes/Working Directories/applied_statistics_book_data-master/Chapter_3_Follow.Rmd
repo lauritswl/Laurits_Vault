@@ -1,0 +1,112 @@
+ 
+```{r}
+x <- runif(50)
+x
+```
+
+---
+```{r}
+x <- runif(50, min = 2, max = 6)
+head(x)
+
+```
+
+---
+```{r}
+hist(x,col="peachpuff3")
+
+```
+
+
+
+
+---
+```{r}
+x <- rnorm(50)
+hist(x, col = 'peachpuff3')
+abline(v = mean(x), lty = 2, lwd = 2)
+
+
+```
+
+
+```{r}
+x <- rnorm(50, mean = 5, sd = 2)
+hist(x, col = 'peachpuff3')
+abline(v = mean(x), lty = 2, lwd = 2)
+
+mean(x)
+sd(x)
+quantile(x)
+quantile(x, 0.16)
+
+
+#If the 68% rule of thumb works, the resulting numbers should be fairly close to the
+#interval covered by M − SD and M + SD
+
+quantile(x,0.32)
+mean(x)-sd(x)
+quantile(x,0.68)
+mean(x)+sd(x)
+
+
+```
+
+```{r}
+hist(rnorm(n = 100))
+ 
+```
+
+```{r}
+library(tidyverse)
+setwd(".")
+war <- read.csv("warriner_2013_emotional_valence.csv")
+war
+
+```
+
+```{r}
+range(war$Val)
+
+war %>% 
+  filter(Val==min(Val)| Val==max(Val))
+
+
+```
+
+
+```{r}
+
+plot2 <- war %>% 
+  ggplot(aes(x=Val))+ geom_histogram(fill="pink",col = 'black')+ geom_vline(xintercept=quantile(war$Val,0.68),colour="black", linetype = "longdash")+
+    geom_vline(xintercept = quantile(war$Val,0.95), colour="black",linetype = "longdash")
+
+
+
+plot2
+
+
+```
+
+```{r}
+plot3 <- war %>% 
+  ggplot(aes(x=Val))+ geom_density(fill="pink")+ geom_vline(xintercept=quantile(war$Val,0.68),colour="black", linetype = "longdash")+
+    geom_vline(xintercept = quantile(war$Val,0.95), colour="black",linetype = "longdash")
+
+
+
+plot3
+
+```
+
+
+```{r}
+#68%
+5.25+0.4
+#95%
+5.25+(0.4*2)
+
+```
+
+
+

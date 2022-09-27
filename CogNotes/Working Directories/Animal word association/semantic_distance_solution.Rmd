@@ -1,0 +1,153 @@
+---
+title: "Visualizing semantic distance"
+author: "Esben & Sebastian"
+date: "2nd November, 2021"
+---
+
+# Analysis of the animal association game 
+
+The purpose of this exercise is to investigate aspects of how meaning is organized in the human mind. 
+In particular, we will be looking at the concepts of cognitive search and "semantic distance". The exercises assumes word meanings to be organized in an associative network in the human mind. Some meanings are more associated - that is - closer together or more tightly connected in the network, while other meanings are further apart. We investigate this by looking at two complementary measurements: 
+
+1) the time between each word entries 
+2) the semantic distance between entries as derived from word embeddings trained on a very large corpus of text (https://cran.r-project.org/web/packages/LSAfun/LSAfun.pdf)
+
+The exercise: load the logfile from the animal association game. Plot the variables following the instructions below and see if the plots can illuminate the discussion of the organization of meaning in your mind as you perform the experiment.   
+
+Read in tidyverse/LSAfun/ggrepel/ape, set working directory and load the data from the semantic distance exercise.
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# import/load packages 
+# LSAfun is used for the semantic analysis. We will load a pretrained semantic model to get semantic distances between each animal name. See more documentation here: https://cran.r-project.org/web/packages/LSAfun/LSAfun.pdf 
+# ggrepel is a package that allow us to show text in ggplot without it overlapping with the data points (it provides an improved alternative to geom_text())
+# ape is a package that we can use to make fancy dendogram network plots 
+
+pacman::p_load(tidyverse, LSAfun, ggrepel, ape, plyr, dplyr, ggplot2)
+```
+
+```{r}
+# Load the semantic model which is trained on 2 Billion word corpus, which consist of the British National Corpus (BNC), the ukWaC corpus and a 2009 Wikipedia dump
+load("EN_100k.rda")
+
+# Here you can play with the function that will return the semantic distance between two words 
+distance("garden", "tree", method="euclidean", tvectors=EN_100k)
+```
+
+# load and preprocess logfile data
+
+Consider checking if you made some spelling mistakes and correct them in the csv-file before you load the file into r  
+
+```{r fig.height=2, fig.width=2}
+# Load your logfile from the animal association game
+
+df <- read_csv("logfiles/logfile_1_2021_Nov_01_2042.csv")
+
+# Read all files
+temp = list.files(path = "logfiles", full.names = T, pattern="*.csv") 
+
+# Load them all in
+data <- ldply(temp, read_csv)
+
+# Investigating word tally
+ freq_data<-raw_data %>% 
+  group_by(word) %>% 
+  tally() %>% 
+  arrange(desc(n))
+   
+ ?mutate()
+ 
+ 
+   freq_data %>% 
+    head(15) %>% 
+  ggplot() +
+  aes(n, word, fill = n) + 
+  geom_col() +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+# Add a column with the semantic distance between each row of the animal words 
+df <- df %>% 
+  filter(word %in% rownames(EN_100k)) %>% 
+  mutate(word2 = lag(word)) %>% 
+  rowwise() %>% 
+  dplyr::mutate(sem_dist = distance(word, word2, method="euclidean",tvectors=EN_100k)) %>% 
+  mutate(sem_dist = scale(sem_dist, center = FALSE)) %>% 
+  drop_na()
+
+```
+
+# Exploratory plotting
+
+```{r}
+
+# Trial-by-trial reaction times of word entries
+# Try to interpret the patterns 
+
+df %>% 
+  ggplot(aes(X1, reaction_time, label=word, color = reaction_time)) +
+  geom_line(color = "red") + 
+  geom_text_repel()
+
+# Trial-by-trial semantic distances 
+# Try to interpret the patterns 
+
+df %>% 
+  ggplot(aes(X1, sem_dist, label=word,  color = sem_dist)) +
+  geom_line(color = "red") + 
+  geom_text_repel()
+
+# The relation between semantic distance and reaction time
+
+df %>% 
+  ggplot(aes(sem_dist, reaction_time, label = word, color = reaction_time)) +
+  geom_point() +
+  geom_smooth(method = lm, color = "red") +
+  geom_text_repel() +
+  labs(x = "semantic distance", y = "reaction time")
+
+# Run a regression analysis predicting reaction time from semantic distance. That is, it takes longer to come up with an animal name that is further away in semantic space 
+
+summary(lm(reaction_time ~ sem_dist, df))
+```
+
+# Plot the network of animal names visited in the exercise 
+
+```{r}
+
+# first we make a cross table with all pairwise semantic distances 
+df2 <- data.frame(matrix(ncol=nrow(df),nrow=nrow(df)))
+colnames(df2) <- df$word
+rownames(df2) <- df$word
+
+# notice that here we use loops in r :-). The syntax is a bit more confusing than in python, but it is the same thing   
+for (r in 1:length(df$sem_dist)){
+  for (c in 1:length(df$sem_dist)){
+    df2[r,c] <- distance(rownames(df2)[r],rownames(df2)[c],method="euclidean",tvectors=EN_100k)
+  }
+}
+
+# now we use some unsupervised clustering on the semantic distances to explore how the animals cluster together as a function of their semantic distance 
+dd <- dist(scale(df2), method = "euclidean")
+hc <- hclust(dd, method = "ward.D2")
+
+# and then we can plot the result as a small network 
+plot(as.phylo(hc), type = "unrooted")
+
+```
+
+# Do We Find Zipf's law?
+
+```{r}
+df %>% 
+  filter(sem_dist != 3) %>% 
+  ggplot(aes(sem_dist, color = sem_dist)) +
+  geom_histogram(binwidth = 0.3, aes(fill = ..count..)) +
+  scale_fill_gradient("count", low="orange", high="purple") +
+  labs(x = "Distance", 
+       y = "Count", 
+       title = "Semantic distance distribution") +
+  scale_x_continuous(breaks = seq(0,2,0.1)) +
+  theme_minimal()
+```
+

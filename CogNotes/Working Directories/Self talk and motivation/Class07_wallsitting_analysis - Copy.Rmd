@@ -1,0 +1,199 @@
+---
+title: "Applied CS class 07"
+author: "Johanne Nedergaard & Mikkel Wallentin"
+date: "18/03/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load in the data
+
+```{r loading-in}
+library(tidyverse)
+
+#Get Wall-sit Data - EDIT data directory
+datadir<-'/Users/lauri/Desktop/CogNotes/Working Directories/Self talk and motivation/data_wallsit'
+
+
+#Find files
+files<-list.files(datadir,pattern='*csv',full.names=TRUE)
+#files
+dataWS<-data.frame()
+
+#How many datasets were there
+n_datasets_raw<-length(files)
+#Prepare a variable to monitor how many datasets we keep
+n_datasets<-0
+#Prepare a variable to monitor how many points we originally had
+n_datapoints_raw<-0
+
+#Loop to go through all files in the list
+for(iii in 1:n_datasets_raw){
+  
+  #remove old loaded file to not risk importing it multiple times
+  if(exists('data_temp')) rm(data_temp)
+  
+  #Load data
+  data_temp<-read.csv(files[iii])
+
+   
+
+      #If this is the first time around the loop, make the currently loaded data into the actual data
+      if(length(colnames(dataWS))==0){
+        dataWS=data_temp
+        rm(data_temp)
+        #counter to monitor included datasets
+        n_datasets<-n_datasets+1
+      }
+     
+      
+      #Bind loaded data with compounded data
+      else {
+
+        dataWS<-rbind(dataWS,data_temp)
+      rm(data_temp)
+        #counter to monitor included datasets
+        n_datasets<-n_datasets+1
+      }
+  }
+
+
+#A variable to monitor how many points we keep
+n_datapoints<-length(dataWS[,1])
+
+         #remove data without a numeric variable in duration
+dataWS$sit_duration <-as.numeric(dataWS$sit_duration)
+```
+
+## Look at the raw data. Any weird outliers? Should we exclude them? Why/why not?
+
+
+```{r}
+#Making a histogram for sitting time.
+hist(dataWS$sit_duration)
+```
+
+## Testing the difference in wall-sitting times across conditions
+
+People might have very different durations they can wall-sit. We need to account for this. A low level way of dealing with this could be to subtract the mean sitting time for each participant.
+
+An alternative, more satisfying method of doing the same is to model random intercepts for each participant. The intercept for each participant is equal to the mean sitting time in this model.
+
+```{r scaling}
+library(lmerTest)
+#Model using a mixed-effects model, include trial order
+modelWS<-lmer(sit_duration~distraction +trial + (1|participant), data=dataWS)
+summary(modelWS)
+```
+
+
+## Ploting the difference between how long people were able to wall-sit in the three interference conditions.
+
+```{r DV-by-interference-plot}
+library(ggplot2)
+#Using a violin plot to get an illustration of the wall-sitting data
+FigureWS<-ggplot(dataWS,aes(x=distraction, y=sit_duration,col=distraction))+geom_violin()+geom_point()
+FigureWS
+```
+
+```{r DV-by-trial-plot}
+
+# visualise the effect of trial
+ggplot(dataWS, aes(trial, sit_duration, color=distraction)) +
+  geom_point()
+
+```
+
+### Plotting correct responses in the memory task
+
+Plot the difference between the number of correct detected 2-back matches and the number of false detected 2-back matches in the verbal and visual interference conditions. 
+
+Think about possible trade-offs between the primary and secondary tasks as well.
+
+
+```{r}
+library(ggplot2)
+#Use ggplot to plot the number of correctly spottet targets.
+FigureWScor<-ggplot(dataWS,aes(x=distraction, y=true_pos,col=distraction))+geom_violin()+geom_point()
+FigureWScor
+```
+
+
+
+## Test the differences in performance between the two interference conditions.
+
+D-prime (https://dictionary.apa.org/d-prime) is a performance measure that takes biases in behavior into account. There are ways in which you can get 100% correct responses in the interference task without any effort (consider why).
+
+D-prime is a performance measure that also takes the number of "false alarms" into account, i.e. when the participant presses the button because thinks she heard the word before, but actually didn't, etc.
+
+```{r message=FALSE}
+library(psycho)
+#Calculate d-prime for each condition
+
+
+#Start by making a dummy variable
+dataWS$dprime<-NA
+#Make a loop to go through all rows in the data
+for( iii in 1:dim(dataWS)[1]){
+  
+  #Exclude the control tasks that have NAs as n_targets
+  if (is.na(dataWS$stim_count[iii])==FALSE){
+    #Avoid having to divide with zero. Turn zeros into another small number
+    if (dataWS$true_pos[iii]==0)dataWS$true_pos[iii]<-0.0001
+    if (dataWS$false_pos[iii]==0)dataWS$false_pos[iii]<-0.0001
+    #Use the dprime function from psycho package
+    dprime<- dprime(
+    n_hit = dataWS$true_pos[iii],
+    n_fa = dataWS$false_pos[iii],
+    n_targets = dataWS$total_matches[iii],
+    n_distractors = dataWS$stim_count[iii],
+    adjusted = FALSE
+    )
+  dataWS$dprime[iii]<-dprime$dprime
+  }
+}
+
+
+```
+
+### Test for differences in dprime memory performance
+```{r}
+# Compare d-prime across conditions
+
+library(lmerTest)
+#Model using a mixed-effects model. Include trial order
+data_temp<-subset(dataWS, !dprime==Inf & !dprime==-Inf)
+modelWS2<-lmer(dprime~distraction + trial + (1|participant), data=dataWS)
+summary(modelWS2)
+
+rm(data_temp)
+```
+
+### Plot the memory performance against the wall-sitting performance
+
+```{r}
+library(ggplot2)
+#Use ggplot to plot memory peformance against wall-sitting.
+data_temp<-subset(dataWS, !dprime==Inf & !dprime==-Inf)
+FigureWSscat<-ggplot(dataWS,aes(x=dprime, y=sit_duration))+geom_smooth()+geom_point(aes(col=distraction))
+FigureWSscat
+
+rm(data_temp)
+```
+
+### Test for differences in wall-sitting, when also modelling memory
+```{r}
+# Compare d-prime across conditions
+
+library(lmerTest)
+#Model using a mixed-effects model.
+data_temp<-subset(dataWS, !dprime==Inf & !dprime==-Inf)
+modelWS3<-lmer(sit_duration~distraction + dprime + (1|participant), data=data_temp)
+summary(modelWS3)
+
+rm(data_temp)
+```
+

@@ -1,0 +1,540 @@
+---
+title: "Class10_notes"
+author: "Anita Kurm feat Jonathan"
+date: "11/27/2019"
+output: html_document
+---
+
+## Welcome to Class 10!
+
+Today we will learn how to perform **logistic regression** in R and kick-start your Portfolio 5! In the Part 2 of this markdown you will also find out more about **the problem of multicollinearity in linear models** and ways to avoid it.
+
+
+
+### Set-up: Data for Portfolio 5
+
+The data you will be working with today are from a sound symbolism experiment: kikibobo.Rda 
+
+You will notice that data comes in .Rda format, which is short for .RData (or .rdata). Typically files of this format are *R objects* that were saved using save() command. To load them, we just need the load() command. You should see a new object (a data frame) named kikibobo3 in your environment once you run the command.
+
+```{r}
+#an alternative spelling of pacman::p_load() is to call library(pacman) followed by p_load
+library(pacman);p_load(tidyverse, boot, lmerTest, caret, e1071)
+
+#load data
+load(file = "kikibobo.Rda") 
+```
+
+
+
+Note that you can't give a name to the output of this command the way you would give a name 'df' to an output of read_csv(). If you try to give a name to the output of load(), your new object will just contain a name of the R object in your file, but not the data it contains.
+
+```{r}
+#try to give a name and fail
+KB_DF <- load(file = "kikibobo.Rda") 
+df #the output is just a character string 'kikibobo3'
+
+#delete useless df variable from environment
+rm(KB_DF)
+```
+
+
+### Data Pre-processing Exercise:  
+Now that we have data loaded (object named kikibobo3), let's do some simple pre-processing and data eye-balling:
+
+
+1. Make a (better) copy of kikibobo3 by creating a tibble named 'better_bobo' using the command as_tibble()
+```{r}
+better_bobo<- as_tibble(kikibobo3)
+```
+
+
+
+2. Remove the column X - we don't need it 
+```{r}
+ better_bobo <- subset (better_bobo, select = -X)
+
+```
+
+
+
+3. Anonymize data! Right now the id column might contain sensitive information. We want to preserve some kind of ID, so we can use it in our analysis further, but we don't want it the way it is written right now:
+        
+        - Make id a factor - to make sure that every distict ID and all data belonging to it is treated as its own thing. It will ensure that all ids will get a new - completely unrelated- number as id. Right now some ids are student numbers - once transformed from characters to numbers - student numbers might stay exactly the same, which we don't want.
+        
+        - Then make id a numeric variable - to turn all level names into numbers - this way they are distinct and don't contain all the sensitive information
+        
+        - Then make id a factor again - this time all of its levels will be written down as numbers and we can treat it as a categorical variable for our analysis
+        
+```{r}
+
+
+better_bobo<- better_bobo %>% 
+  mutate(id=as.factor(id)) %>% 
+  mutate(id=as.numeric(id)) %>% 
+  mutate(id=as.factor(id))
+   
+
+
+view(better_bobo)
+
+```
+        
+        
+
+4. Check out first several rows using head() function.
+```{r}
+head(better_bobo)
+```
+
+
+5. Check what class of variable 'shape' is. Use command class() for that. 
+```{r}
+class(better_bobo$shape)
+```
+
+
+6. Pick any factor variable in the better_bobo tibble and use command levels() on that variable to see what levels are possible in this variable. You already know, that the order the levels are demonstrated in define what our models predict (in case of outcome varuable) or use as an intercept (in case of predictor)
+
+```{r}
+levels(better_bobo$shape)
+```
+
+
+
+
+### Part 1: Logistic Regression in R and its 
+
+Logistic regression is another type of linear models - something we have worked with for a while now!
+
+Quick recap on what it is and what it does:
+- Logistic regression is for categorical (binary) outcome variables
+- Predicts probability of a certain kind of y given values of x
+- Same output as linear model, but estimates are in the log-odd scale
+- Very common classification algorithm in machine learning
+
+
+#### Assumptions of Logistic Regression
+Credit: https://www.statisticssolutions.com/assumptions-of-logistic-regression/ 
+
+Logistic regression *does not* make many of the key assumptions of linear regression and general linear models that are based on ordinary least squares algorithms:
+
+      - logistic regression does not require a linear relationship between the dependent and independent variables.  
+      - the error terms (residuals) do not need to be normally distributed.
+      - homoscedasticity is not required
+
+However, some other assumptions still apply and you should always consider this when making your own logistic regression models!
+
+  - binary logistic regression requires the dependent variable to be binary, i.e. a factor with two levels
+      
+  - logistic regression requires the observations to be independent of each other.  In other words, the observations should not come from repeated measurements or matched data - UNLESS YOU MAKE MIXED EFFECT MODELS
+      
+  - logistic regression requires there to be little or no multicollinearity among the independent variables.  This means that the independent variables should not be too highly correlated with each other (See Part 2 for multicollinearity check)
+      
+  - logistic regression assumes linearity of independent variables and log odds (otherwise it will be a bad fit)
+    
+  - logistic regression typically requires a large sample size.  A general guideline is that you need at minimum of 10 cases with the least frequent outcome for each independent variable in your model. For example, if you have 5 independent variables and the expected probability of your least frequent outcome is .10, then you would need a minimum sample size of 500 (10*5 / .10).
+
+As you can see, it's way less strict! There isn't much to check except multicollinearity (see Part 2 for guidelines)
+
+
+
+#### Logistic Regression as GLM: generalised linear model
+R makes it very easy to fit a logistic regression model by using a function called glm(). The fitting process of glm() is not so different from the one used in linear regression, except we also specify an additional parameter called family that corresponds to a form of distribution  and corresponding 'link':
+
+      glm(outcome ~ predictors, data, family = binomial)
+
+      For logistic regression, we want to specify family = binomial. The reason for that is the binary nature of our outcome variable and this family's default link function - logit.
+      
+      By default, when you specify family = binomial, R reads: family = binomial(link ='logit')
+      
+      The model takes the scale of probability of the outcome variable and logit-transforms it (using the link function!!) -> and produces log-odds as its estimations
+      
+      See help(family) for other allowable link functions for each family.
+
+
+We will try to predict shape (jagged vs curved) by the type of consonant using GLM and interpret the output.      
+```{r}
+#make a GLM model for shape
+m <- glm(shape ~ consonant, 
+         data = better_bobo, #  (use your data name here) 
+         family = binomial)
+summary(m)
+
+```
+
+
+So how do we interpret this?
+
+intercept: the baseline log-odds of positive class (in this case: "jagged" - last in alphabet) --> log-odds for jagged when "Bouba". It's negative to not super likely
+consonantK: Positive and significant --> Kiki makes it more likely to be jagged
+
+#### Output interpretation
+The output looks very similar to linear model output, but we should remember about the different scale of estimates.
+
+1) A good habit to have is to check on deviance residuals, they should not be too assymetrical:
+
+      e.g. in this output it looks fine, max is not much further from 0 than min (1.887 and -1.6068), quantiles also seem to be pretty similarly distanced from 0 (-0.6098 and 0.802)
+      
+2) Estimates: understanding levels using command levels()
+
+Outcome variable has two levels (categories)
+    - regardless of actual names of levels specific to the outcome variable we have, the first level is encoded as 0 and the second level is encoded as 1.
+    - estimates we are getting are **log odds of level 1**.
+
+
+On the example of our data: levels(better_bobo$shape) are "curved" "jagged" - meaning curved is level 0 and jagged is level 1. Therefore, log odds we are going to get from the model estimates are for 'jagged' shape:    
+```{r}
+#see levels of outcome variable: 0 and 1. Model estimates log odds for level 1
+levels(better_bobo$shape)
+```
+
+
+
+Our predictor is also a categorical variable - it also has levels
+    - based on the order levels are encoded in the predictor, the very first one will be treated as the base level
+    - knowing the base level is important for model interpretation: intercept shows **log odds of outcome's level 1** at **the base level of predictor**
+    - all other model estimates show change in the log odds due to unit change in predictor
+
+On the example of our data: levels(better_bobo$consonant) are "B" "K" - meaning B is base level. Therefore, the model's estimate of intercept will show log odds of jagged shape in the case of consonant B. And the beta estimate of predictor consonant K will show change in log odds for jagged shape due to change from consonant B to consonant K
+```{r}
+#see levels of predictor: base level and other levels... Model intercept shows log odds of outcome's level 1 at base level! Other estimates show how outcome's log odds change in other levels compared to the base level.
+levels(better_bobo$consonant)
+```
+
+
+Estimates of the logistic regression are on the log-odds scale and we need to inerpret them to conclude something from our data. Log odds are easier to interpret on either odds or probability scale. I think *probability scale* is more intuitive and recommend using it!
+
+To get normal probabilities out of log odds, we will need package boot and its function for inverse logit:
+
+```{r}
+#see summary again to see log odds
+summary(m)
+
+#log odds into probability for estimate of intercept (the probability of jagged shape given letter B)
+boot::inv.logit(-1.5882)
+
+#log odds into probability for estimate of going from letter B to letter K
+boot::inv.logit(-1.5882 + 2.5576) 
+```
+
+Inverse logit of intercept is equal to 0.1696373, meaning that it's ca 17% chance that it's a jagged shape, given consonant B. By adding the beta estimate of consonantK to initial log odds - we get log odds for jagged shape, given consonant K. Inverse logit of these log odds is equal to 0.7249999, meaning it's roughly 72.5% chance that it's a jagged shape given consonant K. 
+
+The significant p-value of beta estimate for consonant K suggests that change of consonant significantly affects the choice of shape, making choice of jagged shape way more likely in the case of consonant K.
+
+We can also note AIC value, that can be further used for model comparison. 
+
+One big *problem with this output* is that our data actually violates the independence assumption - *we have repeated measures*!!
+
+
+
+#### Mixed effects logistic regression model
+If we have repeated measures, we need to account for violation of independence assumption by making a mixed effect model, just like in the previous class!
+
+The general syntax is the following:
+
+  lme4::glmer(Outcome ~ Predictors + (1+Slope|Intercept),data = data, family = binomial)
+  
+    - lme4::glmer           asking to look for glmer command from lme4 pacakge
+    
+    - glmer()               asking to fit generalized mixed effect model (GLMM)
+    
+    - Outcome ~ Predictors  standard linear model formula
+    
+    - 1+Slope|Intercept     random effects
+    
+    - data                  name of the dataset
+    
+    - family = binomial     The ability to specify the family is exactly what makes a logistic regression model so easy to fit. GLMM, by default binomial means binomial(link = "logit"), but it can actually use other link functions too for other puproses
+    
+
+
+Let's allow both random intercepts and random slopes and look at the output!
+```{r}
+#make a GLMM model for shape
+m2 <- lme4::glmer(shape ~ consonant + (1+consonant|id), better_bobo, family = binomial)
+summary(m2)
+```
+
+
+#### Output interpretation
+
+1) The singularity warning - points out that your model is almost too complex (most likely overfits data) and some of your predictor estimates are close to 0. It's just a warning and you can still use estimates from the model - but most likely it isn't the best model and you should consider a simpler model. Check the most popular response here to know more about recommendations: https://www.researchgate.net/post/What_does_singular_fit_mean_in_Mixed_Models 
+
+2) Model fit:
+      Information criteria - can be used to compare with other models
+
+      loglik - Log-likelihood statistic:
+           how much unexplained information left after model is fitted
+           large values = poor fit
+
+      deviance - like F-ratio in linear regression
+
+
+
+3) Model estimations in log odds - all the same stuff as with GLM's output:
+
+```{r}
+#see summary again to see log odds
+summary(m2)
+
+#log odds into probability for estimate of intercept (the base level of factor/the first factor - curved)
+boot::inv.logit(-2.178216)
+
+#log odds into probability for estimate of going from letter B to letter K
+boot::inv.logit(-2.178216 + 3.290078) 
+
+```
+
+Intercept shows that probability of jagged shape at base level (consonant B) is 0.10 (10%), whcih becomes 75% when consonant changes to K. 
+
+    -> If you want to know probability of the other category - just subtract probability of given category from 1: probability of curved shape in case of consonant B is 1-0.1 = 0.9, probability of curved shape in case of consonant K is 1-0.75=0.25 
+    
+    
+    -> In binomial logistic regression, you can look at the scale of outcome probabilities as a scale from category 0 to category 1 (e.g. a scale from 'curved' to 'jagged'). 
+    E.g.  on the scale from curved to jagged, words with consonant B are very close to 'curved' (estimate of 0.1 - close to 0), while words with consonant K are very close to 'jagged' (estimate of 0.75 - close to 1)
+    
+
+As you can see our estimations have roughly changed now that we accounted for unsystematic variance due to individual differences between participants.
+
+
+
+#### Visualization
+
+There is a lot of things going on in our data, and your task will be to do a logistic analysis to be able to answer a research question about sound symbolism. To help you orient in the data, here is a visualization of variables from our dataset that could potentially be used in a classification task.
+
+We will use ggplot.
+
+    When we have lots of different variables and they all have various groups - aesthetics  is a good way to show more differentiation: two categoric variables can be of course plottes as x and y, another categoric variable as color, and another categoric variable as shape.  
+
+    geom_point() vs geom_jitter()
+        geom_point()  when we have all categoric variables, they don't really have any numeric feature to would differentiate them in space - which can be seen when you use geom_point() - all points are plotted in the same spot for a certain category
+        
+        geom_jitter() allows to overcome this problem by allowing manually spread datapoints out by certain values of width and height even if technically they are located in the same spot. This way we can see better what is going on in every category:
+
+
+```{r}
+#visualise the data:
+ggplot(better_bobo, aes(shape, size, color = word, shape = word)) + geom_point() + ggtitle("Using geom_point: this is where datapoints actually are")
+
+#spread points out - so much better
+ggplot(better_bobo, aes(shape, size, color = word, shape = word)) + geom_jitter(width = .4, height = .4) + ggtitle("Using geom_jitter: datapoints are spread out")
+```
+
+
+
+#### Logistic Regression as 'classification algorithm'
+
+The caret package (short for Classification And REgression Training) contains functions to perform the model training process for complex regression and classification problems. Today, we will use its functions predict() and confusionMatrix()
+
+
+1) predict(model, newdata = test_dataframe,  type = 'response')
+    
+    by default: newdata is not specified and then original data to which model was fit is going to be used for predictions (so it doesn't have to be specified unless you want it)
+    
+    by default: type is not specified and then predictions are given in log odds, when specified 'response' predictions are given in probabilities (so it doesn't have to be specified unless you want it)
+    
+    For linear models it will give you predictions of y for a certain x-value
+
+    For logistic models it will give you the predictions in percentage for a certain value of your outcome
+
+```{r}
+library(caret)
+
+#let's remind ourselves the model: shape (jagged) ~ consonant
+summary(m) 
+
+#let's predict *probabilities* of jagged shape, we don't specify any dataframe, so it will use the same data it was fitted to to make predictions; type = response makes it return probabilities rather than log odds
+predicted_probs <- predict(m, type = 'response')
+
+#extract actual shape categories, i.e. 'true answers' from the original dataframe
+actual_categories <- better_bobo$shape
+
+#make a dataframe to see predicted probabilities of jagged category against the actual category
+pred_df <- tibble(predicted_probs, actual_categories)
+
+#let's see first 6 rows
+head(pred_df)
+```
+
+As you can see here, our predictions seem to be pretty good: we predicted high probability of jagged (at around 0.7) for datapoints that actually belonges to jagged category, and low probability of jagged (at around 0.16) for datapoints that actually belonger to curvy category. 
+
+
+We can make it even easier for ourselves, if we write out predicted category: if predicted probability is below 0.5 it has predicted curvy shape and if it's above 0.5, it has predicted jagged:
+```{r}
+#make a new column to see more easily what our model predicted: if probability is less than 0.5 - it predicted 'curved', otherwise - it predicted jagged
+pred_df <- pred_df %>% 
+  mutate(predicted_category = if_else(predicted_probs < 0.5, "curved", "jagged"))
+
+#let's see first 6 rows
+head(pred_df)
+```
+
+Looks very nice - classifier seems to be pretty accurate! But how sure can we be about it, should we go through all 1120 observations to see if there are any errors? What if we work with hundreds of thousands of datapoints? There must be a better way - and there is!
+
+
+2) confusionMatrix(predicted_categories, actual_categories, positive category) :
+    
+      needs a vector of predictions and a vector of actual values - in the same format to be comparable (in this case both have to be factors with levels 'jagged' and 'curved')
+    
+      needs to know which level of outcome is 'positive': for which category performance metrics should be calculated 
+      
+      https://stackoverflow.com/questions/33431694/caret-package-defining-positive-result/33432399 
+      
+      produces Confusion Matrix: Prediction against Actual values
+    
+      evaluates performance of our classifier: Sensitivity, Specificity
+      
+      read ?confusionMatrix for explanation of model perfomance metrics
+      
+
+
+```{r}
+#make sure predicted category is a factor (at the moment it's a character variable due to the way we specified ifelse outcomes)
+pred_df <- pred_df %>% 
+  mutate(predicted_category = as_factor(predicted_category))
+
+#make the confusion matrix
+confusionMatrix(pred_df$predicted_category, pred_df$actual_categories, positive ="jagged")
+```
+
+At the top of the output we can see that our model predicted correctly 465 of datapoints that were curved and 406 datapoints were correctly classified as jagged. There were still some errors: 95 of jagged datapoints were falsely classified to be curved, and 154 of curved datapoints were falsely classified as jagged. How bad is it - it is for you to judge using various metrics provided by the confusion matrix.
+    
+      Accuracy is a pretty straightforward metric: shows how many predictions were correct out of all predictions, our model classified 77.8% of data correctly
+      However, it isn't sensitive to the type of errors our classifier is making.
+      
+      Sensitivity: out of all 'positive' class datapoints, how many were actually classified correctly. In our case: out of all 'jagged' data, 81% was captured as 'jagged' by our model
+      
+      Specificity: out of all datapoints from the 'non-positive' class, how many were classifier as that class. In our case: out of all 'curved' data, 75% was captured as curved 
+          
+      
+    There are also others.. read about it in ?confusionMatrix()
+
+
+#### Train and test data
+
+Let's see how our model performs when we do it more properly: train model on one set of data and testing on the other one. In future, you will learn to split data in a better way, making sure both training and testing data is representative of all categories. For now, just dividing by the id is fine.
+
+```{r}
+#make id numeric, so we can use it to split the data
+better_bobo$id <- as.numeric(better_bobo$id)
+
+
+#everyone with it below 30 - train data, above 30 - test data
+better_bobo_train <- subset(better_bobo, id < 30) #training data
+better_bobo_test <- subset(better_bobo, id > 30) #test data
+
+#fit model to train data
+trained_model <- glm(shape ~ consonant, better_bobo_train, family = binomial)
+
+#predict values in test data
+predicted_probs_test = predict(trained_model, better_bobo_test, type = 'response')
+
+#extract actual shape categories, i.e. 'true answers' from the original dataframe
+actual_categories_test = better_bobo_test$shape
+
+#make a dataframe to see predicted probabilities of jagged category against the actual category
+pred_df_test <- tibble(predicted_probs_test, actual_categories_test)
+
+
+#make a new column to see more easily what our model predicted: if probability is less than 0.5 - it predicted 'curved', otherwise - it predicted jagged
+pred_df_test$predicted_category = ifelse(pred_df_test$predicted_probs_test < 0.5, "curved", "jagged")
+
+#let's see first 6 rows
+head(pred_df_test)
+
+#make sure predicted category is a factor (at the moment it's a character variable due to the way we specified ifelse outcomes)
+pred_df_test$predicted_category <- as_factor(pred_df_test$predicted_category)
+
+#make the confusion matrix
+confusionMatrix(pred_df_test$predicted_category, pred_df_test$actual_categories_test, positive ="jagged")
+
+```
+
+We can see now that classification performance is slightly worse in all metrics after we used new data to test it. The metrics we get this time are more reliable than the previous confusion matrix we interpreted.
+
+
+### Part 1 Exercise
+
+Find Portfolio 5 assignment on blackboard and start doing it :) You can also check out part 2 for multicollinearity check! 
+
+
+### Part 2: Multicollinearity 
+
+1. Correlation matrix using cor() is suitable for all numeric predictors. If you still want to try to make a correlation matrix for non-numeric variables, I would suggest looking up a solution here: https://stackoverflow.com/questions/31238284/correlation-matrix-of-a-bunch-of-categorical-variables-in-r/31240202
+
+
+2. There is an easier way to detect multicollinearity in multiple regression models: Variance Inflation Factor (VIF)
+
+Variance Inflation Factor measures how much the behavior (variance) of an independent variable is influenced, or inflated, by its interaction/correlation with the other independent variables
+  
+Variance inflation factors range from 1 upwards;  a large VIF on an independent variable indicates a highly collinear relationship to the other variables
+e.g a VIF of 1.9 tells you that the variance of a particular coefficient is 90% bigger than what you would expect if there was no multicollinearity
+
+To get VIF measures, we can use vif() from package car
+    GVIF - generalised VIFs are produced in highly dimensional models; in power 1/(2*Df) they are comparable to normal VIFs
+
+```{r}
+#load package car
+pacman::p_load(car)
+?car::vif() #look up what function does
+
+#load titanic data
+data("TitanicSurvival")
+
+#read up about the dataset
+?TitanicSurvival
+
+#fit a pretty complex model
+model <- glm(survived ~ sex + age + passengerClass, TitanicSurvival, family = binomial)
+summary(model)
+
+#see VIF
+vif(model)
+```
+
+In case of highly dimensional models, generalised VIFs are produced, and it's better to look at the 'adjusted' for dimensionality version: GVIF^(1/(2*Df)). Age has the highest GVIF^(1/(2Df)) among predictors (1.163688), and would be the most problematic. I would still say, that in this case no predictor needs to be excluded. Normally VIF above 5 indicates high collinearity!
+
+Let's produce some highly collinear data:
+```{r}
+#generate problematic data
+N <- 100
+height <-  rnorm(N, 10, 2)
+leg_prop <- runif(N, 0.4, 0.5)
+
+#leg left and leg right will be very similar and therefore collinear/correlated
+leg_left <- leg_prop*height+rnorm(N, 0, 0.02)
+leg_right <- leg_prop*height+rnorm(N, 0, 0.02)
+
+#gender - so we have a categorical variable too
+gender <- c(rep('female', N/2), rep('male', N/2))
+
+leg <- tibble(height, leg_left, leg_right, gender, workstatus)
+
+#make model with two correlated variables
+multicol_model <- lm(height~ leg_left + leg_right+gender, leg)
+
+vif(multicol_model)
+```
+
+HUGE VIF values for highly correlated leg_left and leg_right!! What if we remove one of them?
+
+```{r}
+better_model <- lm(height~ leg_left + gender, leg)
+vif(better_model)
+
+```
+
+Now all VIF values are okay!
+
+
+### Part 2 Exercice:
+Now that you know how to use VIF, make a more complex model of sound symbolism data and see if your predictors violate assumption of absence of multicollinearity!
+
+
+
+
+
+
+  
+

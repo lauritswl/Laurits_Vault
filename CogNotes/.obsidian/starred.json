@@ -1,0 +1,24 @@
+{
+  "items": [
+    {
+      "type": "file",
+      "title": "Statistics for Linguists An Introduction Using R by UK.) Winter, Bodo (Lecturer in Cognitive Linguistics at the University of Birmingham (z-lib.org)",
+      "path": "First Semeter/Methods/PDF's and Documents/Statistics for Linguists.pdf"
+    },
+    {
+      "type": "file",
+      "title": "Talking_the_talk",
+      "path": "First Semeter/CogCom/Talking_the_talk.pdf"
+    },
+    {
+      "type": "file",
+      "title": "Syllabus_IntoCog",
+      "path": "IntoCog/PDF's and Documents/Syllabus_IntoCog.pdf"
+    },
+    {
+      "type": "file",
+      "title": "Course Description",
+      "path": "First Semeter/Methods/PDF's and Documents/Syllabus_Methods.pdf"
+    }
+  ]
+}

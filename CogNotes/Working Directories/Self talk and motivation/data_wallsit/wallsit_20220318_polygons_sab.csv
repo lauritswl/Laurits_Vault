@@ -1,0 +1,4 @@
+participant,trial,distraction,true_pos,false_pos,total_matches, total_pressed,stim_count, stimuli, sit_duration, perceivedExertion
+sabrina,1,verbal,0,0,1,0,9,pseudo_EN/w17.wav_pseudo_EN/w12.wav_pseudo_EN/w16.wav_pseudo_EN/w10.wav_pseudo_EN/w19.wav_pseudo_EN/w10.wav_pseudo_EN/w5.wav_pseudo_EN/w2.wav_pseudo_EN/w21.wav,16.070176900999968,4
+sabrina,2,control,NA,NA,NA,NA,NA,N_A,18.430978385000117,4
+sabrina,3,visual,0,0,3,0,15,polygons_2/p1.jpg_polygons_2/p2.jpg_polygons_2/p3.jpg_polygons_2/p2.jpg_polygons_2/p4.jpg_polygons_2/p5.jpg_polygons_2/p6.jpg_polygons_2/p5.jpg_polygons_2/p7.jpg_polygons_2/p8.jpg_polygons_2/p9.jpg_polygons_2/p10.jpg_polygons_2/p11.jpg_polygons_2/p12.jpg_polygons_2/p11.jpg,28.10917963199995,5

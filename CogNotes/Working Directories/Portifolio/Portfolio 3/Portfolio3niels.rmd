@@ -1,0 +1,107 @@
+---
+title: "Portfolio 3"
+author: "Niels Værbak"
+date: "16/11/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+pacman::p_load(tidyverse, LSAfun, ggrepel, ape, plyr, dplyr, ggplot2, car)
+```
+
+## R Markdown
+
+```{r cars}
+df <- read_csv("clean_dist.csv")
+```
+Loading word corpus
+```{r}
+load("EN_100k.rda")
+```
+```{r}
+df <- df %>% 
+  filter(word1 %in% rownames(EN_100k)) %>% 
+  filter(word2 %in% rownames(EN_100k)) %>% 
+  rowwise() %>% 
+  dplyr::mutate(sem_dist = distance(word1, word2, method="euclidean",tvectors=EN_100k)) %>% 
+  mutate(sem_dist = scale(sem_dist, center = FALSE))
+
+```
+
+```{r}
+df <- aggregate(df$sem_dist, list(df$id, df$condition), mean)
+```
+
+```{r}
+#Condition 1
+df1 <- df %>% 
+  filter(Group.2 == 1)
+
+ggplot(df1, aes(V1))+
+geom_histogram(aes(y = ..density..), binwidth = .02)+
+stat_function(fun = dnorm, args = list(mean = mean(df1$V1), sd = sd(df1$V1)), color = "red", size = 1)+
+theme_bw()
+
+
+#Condition 2
+df2 <- df %>% 
+  filter(Group.2 == 2)
+
+ggplot(df2, aes(V1))+
+geom_histogram(aes(y = ..density..), binwidth = .02)+
+stat_function(fun = dnorm, args = list(mean = mean(df2$V1), sd = sd(df2$V1)), color = "red", size = 1)+
+theme_bw()
+
+
+#Condition 3
+df3 <- df %>% 
+  filter(Group.2 == 3)
+
+ggplot(df3, aes(V1))+
+geom_histogram(aes(y = ..density..), binwidth = .02)+
+stat_function(fun = dnorm, args = list(mean = mean(df3$V1), sd = sd(df3$V1)), color = "red", size = 1)+
+theme_bw()
+
+round(pastecs::stat.desc(cbind(sem_dist3 = df3$V1, sem_dist2=df2$V1, sem_dist1 = df1$V1), basic = FALSE, norm = TRUE, desc = FALSE), digits = 2)
+
+```
+skew.2SE < 1 = normality
+kurt.2SE < 1 = normality
+looking at the shapiro wilk test, we can see that p>0.05 which means that the groups are not significantly different from normal. Expect for the third one, as the p-value < 0.05
+
+Models
+```{r}
+df <- mutate(
+  Group.2 = as.factor(Group.2)
+,df)
+
+str(df$Group.2)
+
+summary(aov(df$V1 ~ df$Group.2))
+
+summary(lm(df$V1 ~ df$Group.2))
+
+
+pairwise.t.test(df$V1, df$Group.2, p.adjust.method = "bonferroni")
+
+```
+
+```{r}
+model1<-lm(V1~Group.2,data = df)
+
+
+plot(model1,1)
+plot(model1,2)
+plot(model1,3)
+plot(model1,4)
+
+
+
+car::durbinWatsonTest(model1)
+
+
+```
+

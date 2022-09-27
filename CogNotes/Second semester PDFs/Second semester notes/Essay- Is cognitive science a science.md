@@ -1,0 +1,19 @@
+[[102  Philosophy of Cognitive Science]] - #📄Essay
+___
+# Is Cognitive Science a science? 
+When the nerds of the science world gather together and discuss the intricacies of their next big ground-breaking papers, i.e., *The ground-breaking ancestry of Mesopotamia*, *The underestimated levels of chlorine in drinking water* or  *How the human mind reacts to videos of cute puppies*, the discussion of what science is more proper will follow secondly.
+
+The topic of what knowledge is and the epistemological doubt thereof, have been a troublesome battlefield from its beginning. René Decartes' attempts of defining knowledge could never surpass the functionality of acknowledging existence as a fact. David Hume's complete lack of faith in the method of induction, never allowed him to make justify any sciences other than math. The scepticism of sciences have always been present, and for good reason. The consequences of wrongly believing something to be the truth has grave consequences and can put a halt to scientific development for years. But, science isn't just *a priori* knowledge of course, and shouldn't be thought of as such. But the differences between the different types of science still needs to be addressed:
+
+**Physics, psychology and cognitive science**
+The differences between physics and psychology seems clear to most, but this essay will focus on the differences in applications of their research, i.e., their effects. Physics is a field of science that focuses on describing the laws of the universe, that is the laws that applies to everything. When a physics describes a phenomenon like gravity, you can count on the fact that *the moon, the ocean and your grandma* all gets affected by that gravity. If you agree with the inductive method, the effects of physics transcend its field of science, and apply to all other fields as well. 
+
+However, this transcendence of scientific fields doesn't apply to a well-defined field like psychology. As described by Robert Cummins (2000, "How does it work?" vs. "What are the laws?"), psychology is a field that tries to describe laws **in situ**, i.e., effects that only applies to a specific system because of peculiar constitution and organization. The law that applies to that system, doesn't need to explain other systems, as its scientific purpose is to predict the effects of effectors in that system. This however doesn't dismiss the explanatory capabilities of the theory *in that system*.
+
+For *cognitive science* the focus on laws **in situ** and explanatory theories is the same. Explanatory theories should not necessarily explain where every neuron is located, connected and activated to be useful, but should allow for a deeper understanding of respectively effectors and their effects on cognition. But, just because some scientific fields of study focuses primarily on a closed system, it doesn't mean all research should be purely behaviouristic black box research, i.e., just proving an effector results in a certain effect. The fields explanatory theories can still vary in levels of analysis and give a broad view of the rules of the system. In neuroscience this depth of analysis shows itself in the difference between research in understanding single neuron's purpose, research on connectionist networks describing the effect of the connections between these neurons and symbolic computational processing explanations.
+
+Neuroscience therefore could make its case for being a prober science, by using inductive research of laws **in situ** to predict the effects of that systems effectors. The laws of neuroscience isn't general laws of nature or a priori deduction of the undeniable truth, but is still a science as it aims to explain the laws of cognition, without stating that these laws apply to any other system. 
+
+
+
+

@@ -1,0 +1,380 @@
+---
+title: "CogCom data"
+author: "Laurits Lyngbæk"
+date: "12/9/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+########################
+### Loading packages ###
+########################
+
+```{r}
+pacman::p_load(tidyverse, stringi)
+```
+
+#################
+### Read data ###
+#################
+
+```{r}
+df <- list.files(path = "./logfiles/",
+               pattern = "*.csv", 
+               full.names = T) %>% 
+    map_df(~read_csv(.))
+
+```
+
+##########################
+### Cleaning dataframe ###
+##########################
+```{r}
+#Anonymising data
+df <- df %>%
+    mutate(id = as.factor(id)) %>%
+    mutate(id = as.numeric(id)) %>%
+    mutate(id = as.factor(id))
+```
+
+
+
+```{r}
+#Creating noise and gesture.
+df <- df %>% 
+   mutate(noise = condition) %>%
+   mutate(gesture = condition)
+
+#As numbers
+df <- df %>%
+    mutate(noise = as.factor(noise)) %>%
+    mutate(noise = as.numeric(noise)) %>%
+    mutate(noise = as.factor(noise))
+
+df <- df %>%
+    mutate(gesture = as.factor(gesture)) %>%
+    mutate(gesture = as.numeric(gesture)) %>%
+    mutate(gesture = as.factor(gesture))
+
+#Logical transformation to 0 / 1- 
+df <- df %>%
+  mutate(noise = noise == 3 | noise == 4) %>% 
+  mutate(gesture = gesture == 1 | gesture == 3) %>% 
+  mutate(noise = as.numeric(noise)) %>% 
+  mutate(noise = as.factor(noise)) %>%
+  mutate(gesture = as.numeric(gesture)) %>% 
+  mutate(gesture = as.factor(gesture))
+  
+
+```
+
+###################################
+### Reshaping text into collums ###
+###################################
+
+```{r}
+max_word <- 16
+
+
+wordcollumn <-  sprintf("word%d",seq(1:max_word))
+df$text <- str_replace_all(df$text, 'æ', 'ae')
+df$text <- str_replace_all(df$text, 'ø', 'oe')
+df$text <- str_replace_all(df$text, 'å', 'aa')
+
+df <- df %>% 
+  select(-text, everything()) %>%
+  separate(text, wordcollumn,remove=FALSE)
+```
+
+#####################
+### Cross look up ###
+#####################
+
+```{r}
+ df <- df %>% 
+  mutate(video = video + 1)
+
+video1 <- c("manden", "samlede", "bolden", "op", "under", "trampolinen", "og", "fik", "en", "lille", "slikkepind", "fra", "drengen")
+video2 <- c("damen", "satte", "spanden", "paa", "muren", "og", "kastede", "et", "roedt", "aeble", "til", "naboen")
+video3 <- c("pigen", "hentede", "blomster", "paa", "marken", "og", "lavede", "en", "smuk", "buket", "til", "moren")
+video4 <- c("drengen", "kastede", "frisbeen", "over", "hækken", "og", "fik", "en", "rød", "bold", "tilbage", "fra", "naboen")
+
+
+df_video1 <- df %>% 
+  filter(video == 1)
+df_video2 <- df %>% 
+  filter(video == 2)
+df_video3 <- df %>% 
+  filter(video == 3)
+df_video4 <- df %>% 
+  filter(video == 4)
+
+
+
+```
+
+#############################
+### Loop for word in list ###
+#############################
+
+```{r}
+
+# For text 1:
+  for (i in 1:(max_word)){
+    colum <-  paste("word", i, sep = "")
+    col_name <-  paste("correct", i, sep = "")
+    df_video1[, col_name] <- df_video1[[colum]] %in% video1
+  }
+
+# For text 2:
+  for (i in 1:(max_word)){
+    colum <-  paste("word", i, sep = "")
+    col_name <-  paste("correct", i, sep = "")
+    df_video2[, col_name] <- df_video2[[colum]] %in% video2
+  }
+
+# For text 3:
+  for (i in 1:(max_word)){
+    colum <-  paste("word", i, sep = "")
+    col_name <-  paste("correct", i, sep = "")
+    df_video3[, col_name] <- df_video3[[colum]] %in% video3
+  }
+
+# For text 4:
+  for (i in 1:(max_word)){
+    colum <-  paste("word", i, sep = "")
+    col_name <-  paste("correct", i, sep = "")
+    df_video4[, col_name] <- df_video4[[colum]] %in% video4
+  }
+
+#Merge back into one df
+ 
+df <- merge(df_video1, df_video2, all = T)
+df <-  merge(df, df_video3, all = T)
+df <-  merge(df, df_video4, all = T)
+
+# As logical
+ df[,c((12+max_word):(12+max_word+max_word))] <- sapply(df[,c((12+max_word):(12+max_word+max_word))], as.numeric)
+
+```
+##########################
+### Precentage correct ###
+##########################
+
+```{r}
+# Update video_x
+ df_video1 <- df %>% 
+   filter(video == 1)
+df_video2 <- df %>% 
+  filter(video == 2)
+df_video3 <- df %>% 
+  filter(video == 3)
+df_video4 <- df %>% 
+  filter(video == 4)
+
+
+#Procent correct words 1:
+df_video1 <- df_video1 %>%
+    mutate(sum_correct = select(., correct1:correct16) %>%
+    rowSums(na.rm = TRUE)) %>% 
+    mutate(sum_avg = (sum_correct/13))
+
+#Procent correct words 2:
+df_video2 <- df_video2 %>%
+    mutate(sum_correct = select(., correct1:correct16) %>%
+    rowSums(na.rm = TRUE)) %>% 
+    mutate(sum_avg = (sum_correct/12))
+
+#Procent correct words 3:
+df_video3 <- df_video3 %>%
+    mutate(sum_correct = select(., correct1:correct16) %>%
+    rowSums(na.rm = TRUE)) %>% 
+    mutate(sum_avg = (sum_correct/12))
+
+#Procent correct words 4:
+df_video4 <- df_video4 %>%
+    mutate(sum_correct = select(., correct1:correct16) %>%
+    rowSums(na.rm = TRUE)) %>% 
+    mutate(sum_avg = (sum_correct/13))
+
+#Merge back
+df <- merge(df_video1, df_video2, all = T)
+df <-  merge(df, df_video3, all = T)
+df <-  merge(df, df_video4, all = T)
+
+
+
+
+```
+
+######################
+### Data analysis: ###
+######################
+
+```{r}
+df <- df %>% 
+  mutate(video = as.factor(video))
+data_df <- df %>% 
+  select("id", "video","condition","noise","gesture", "sum_avg","text")
+
+```
+```{r}
+df_noise0_gesture0 <- data_df %>% 
+   filter(noise == 0 & gesture == 0) 
+df_noise0_gesture1 <- data_df %>% 
+   filter(noise == 0 & gesture == 1)
+df_noise1_gesture0 <- data_df %>% 
+   filter(noise == 1 & gesture == 0)
+df_noise1_gesture1 <- data_df %>% 
+   filter(noise == 1 & gesture == 1)
+
+df_noise0_gesture0 <- df_noise0_gesture0 %>% 
+   filter() 
+df_noise0_gesture1 <- df_noise0_gesture1 %>% 
+   filter() 
+df_noise1_gesture0 <- df_noise1_gesture0 %>% 
+   filter()
+df_noise1_gesture1 <- df_noise1_gesture1 %>% 
+   filter()
+
+3*sd(df_noise1_gesture1$sum_avg)
+
+
+
+
+ggplot(data_df,aes(x = condition,y= sum_avg))+geom_point(colour=data_df$id)
+```
+
+
+
+
+```{r}
+pacman::p_load(lmerTest,jtools,lme4)
+###################################
+#Model test
+#model_test <- lmerTest::lmer(sum_avg~noise*gesture+(1|id), data = data_df, REML = F)
+#summ(model_test)
+#summary(model_test)
+```
+```{r}
+#Model 2
+model_2 <- lmerTest::lmer(sum_avg~noise+gesture+(1|id)+(1|video), data = data_df, REML = F)
+summ(model_2)
+summary(model_2)
+```
+
+```{r}
+#Model 1
+model_1 <- lmerTest::lmer(sum_avg~noise*gesture+(1|id)+(1|video), data = data_df, REML = F)
+summ(model_1)
+summary(model_1)
+```
+
+
+### Assumptions ###
+
+```{r}
+qqnorm(residuals(model_1))
+```
+
+```{r}
+qqnorm(residuals(model_3))
+```
+################
+### Plotting ###
+################
+
+```{r}
+pacman::p_load(emmeans, effects, plotly)
+```
+  
+```{r}
+#ggplot boxplot
+
+
+newname <- c('No noise with video'='0:1','No noise without video'='0:0','Noise with video'='1:1','Noise without video'='1:0')
+
+boxplot_gg<- ggplot(data_df, aes(x=condition, y=sum_avg))+ 
+  geom_boxplot(color="#2F5496", fill="#4774c4", alpha=0.5)+
+  labs(x = "Noise:Gesture",y= "Precentage of sentence understood")+theme_bw()+scale_x_discrete(labels = newname)
+
+ggsave("boxplot_gg.png",boxplot_gg)
+boxplot_gg
+
+
+```
+  
+```{r}
+violin<- ggplot(data_df, aes(x=condition, y=sum_avg))+
+  geom_violin(color="#2F5496", fill="#4774c4", alpha=0.3)+
+  geom_boxplot(color="#2F5496",width=0.03)+
+  labs(x = "Noise:Gesture",y= "Precentage of sentence understood")+theme_bw()+scale_x_discrete(labels = newname)
+
+ggsave("violin_gg.png",violin)
+violin
+
+
+```
+  
+  
+  
+  
+  
+```{r}
+#interaction effects model - define aes()
+understanding_model <- ggplot(data_df, aes(gesture, sum_avg, color = noise, group = noise,linetype=noise)) 
+#Plot data
+understanding_model <- understanding_model+ stat_summary(size = 1.5,geom = "point")+ 
+                                            stat_summary(geom = "errorbar", width = .1,linetype="solid")+
+                                            stat_summary(geom = "path", alpha = 2) 
+#Theme and titles
+understanding_model<- understanding_model +
+                      ylim(0,1)+ theme(legend.position = "right") + theme_bw() + 
+                      labs(title = "The effect of gesturing on understanding", subtitle = "with and without noise", color = "Noise")+
+                      ylab("Precentage of sentence understood")+
+                      xlab("Gesturing") + 
+                      scale_color_manual(values=c("0"="#2F5496","1"="#4774c4"))+
+                      scale_linetype_manual(values=c("0"="solid","1"="twodash"))
+
+
+ggsave("noisegesture2.png",understanding_model)
+understanding_model
+#2F5496 - dark blue
+#4774c4 - lighter blue
+
+```
+
+```{r}
+#Raindrop plot
+raindrop_df <- data_df %>%
+  mutate("noise_gesture" = paste(noise,":",gesture,sep = ""))
+ 
+raindrop_df$noise_gesture <- as.factor(raindrop_df$noise_gesture)
+
+
+```
+
+```{r}
+pacman::p_load(ggdist,tidyquant,tidyverse,gghalves,Hmisc,plyr)
+source("https://raw.githubusercontent.com/datavizpyr/data/master/half_flat_violinplot.R")
+
+
+raindrop_p<- ggplot(data = raindrop_df, aes(y = sum_avg, x = condition, fill = condition)) +
+geom_flat_violin(position = position_nudge(x = .2, y = 0), alpha = .8) +
+geom_point(aes(y = sum_avg, color = condition), position = position_jitter(width = .15), size = .5, alpha = 0.8) +
+geom_boxplot(width = .1, guides = FALSE, outlier.shape = NA, alpha = 0.5) +
+expand_limits(x = 5.25) +
+guides(fill = FALSE) +
+guides(color = FALSE) +
+scale_colour_manual(values = c("#2F5496","#2F5496","#4774c4","#4774c4"))+
+  scale_fill_manual(values = c("#2F5496","#2F5496","#4774c4","#4774c4"))+
+  labs(x = "Noise:Gesture",y= "Precentage of sentence understood")+ggtitle("Raindrop plot of understanding")+theme_bw()+scale_x_discrete(labels = newname)
+ggsave('Basic_Raincloud_colour.png', raindrop_p)
+
+raindrop_p
+```
+
+

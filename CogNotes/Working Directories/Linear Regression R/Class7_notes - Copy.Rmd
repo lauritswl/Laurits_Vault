@@ -1,0 +1,340 @@
+---
+title: "Class7_notes"
+author: "Anita"
+date: "11/3/2019"
+output: html_document
+---
+
+## Welcome to Class 7!
+
+Today we will learn how to build **linear regression models** in R! The new commands lm() and summary() are from base R, however we still want the tidyverse package to be loaded.
+
+In this class we will work with the child aggression data.
+
+### Importing data 
+It comes in .dat format, which is different from .csv we normally work with. Therefore, instead of using the specific read_csv() function that is looking for commas between values, we we will use the more general command read_delim() to read it in. 
+
+read_delim() comes from tidyverse and needs us to specify the 'delim' argument, i.e. what character separates values. Normally it's either white space, tab, comma or semicolon. When you try to read files, you can try experimenting with it. In tis case it's the space character:
+
+```{r}
+library(tidyverse)
+
+#load data
+child <- read_delim("ChildAggression.dat", delim = ' ')
+head(child)
+```
+
+
+Once you read in your data, you can use head(your_data) to quickly inspect data by seeing the first several values from it. Make a code chunk below and try this function out.
+
+
+
+Here is interpretation for variables and their values:
+    Aggression (high score = more aggressive) <- this will be our dependent variable (**outcome variable**)
+    Television (high score = more time spent watching television) 
+    Computer_ Games (high score = more time spent playing computer games) 
+    Sibling_Aggression (high score = more aggression seen in their older sibling)
+    Diet (high score = the child has a good diet low in additives) 
+    Parenting_Style (high score = bad parenting practices) 
+
+Already now you should try to answer the following questions:
+  What is the type of variables you can see in this data? 
+  What kind of statistical tests can you use to explore this kind of data? Could you run a t-test?
+    
+
+### Part 1: Simple linear regression
+
+#### lm(formula, data)
+  takes in the following arguments:
+    formula in the format: outcome ~ predictor
+    name of the dataset, where the outcome and predictor come from 
+  
+   Fits the model, i.e. finds the estimates that produce the line that minimizes the sum of the squares of the residuals
+   
+  ...and returns the output that contains results of fitting a linear regression
+  The output contains coefficients of the fitted model, its residuals (distance between actual and predicted values), fitted values, degrees of freedom, and all other kinds of stuff relevant to the model.
+  
+Use summary() function on the fitted model to see this output.
+
+Example:
+```{r}
+#make a linear model
+m <- lm(Aggression ~ Television, child)
+
+#see results of model fit to data
+
+
+
+
+#See adjusted r.squared
+test_Tel<- summary(lm(Aggression ~ Television, child))
+test_Tel$adj.r.squared
+
+
+
+test_CG<- summary(lm(Aggression ~ Computer_Games, child))
+test_CG$adj.r.squared
+
+
+
+
+
+
+
+```
+
+#### Reporting simple regression
+By looking at the output above, we could report the following result:
+
+*"A linear regression analysis was used to test if the amount of television time significantly predicted children's ratings of aggression. Adjusting for the number of predictors, the results of the regression indicated that the predictor explained 2.36% of the variance in aggression metric (Adjusted R2 =.0236, F(1,664)= 17.11, p<.001). It was found that bigger amount of television significantly predicted aggressive tendencies (β = 0.1634, SE =0.0395, t = 4.137, p<.001)."*
+  
+    Report regression in APA style:
+    https://web2.uconn.edu/writingcenter/pdf/Reporting_Statistics.pdf
+  
+    
+    When reporting model performance: 
+      mention either of R squared and corresponding explained variance
+         if you have just one predictor - R squared is fine
+         if yoy have more - adjusted R squared is better
+      F(number of predictors, remaining degrees of freedom) = F statistic
+      p-value associated with F statistic
+    
+    When reporting results for research question (do so for every predictor):
+      beta value
+      standard error
+      t value
+      associated p-value
+      
+    
+#### Visualizing regression
+
+From class on correlation, we know that to visualize how one continuous variable changes in relation to another continuous variable, we need to draw a scatter plot (geom_point in ggplot2):
+
+```{r}
+#plot the data
+ggplot(child, aes(Television, Aggression)) +  #base layer
+  geom_point() + #scatter plot
+  ggtitle('Scatter plot')
+```
+
+
+The distinct feature of regression plots is the fitted line that produces the least sum of squares, let's draw it using the summary of the model we defined in the previous part. In that summary, we can access coefficients. In coefficients the first element is intercept and the second one is slope for our regression line. We write them down so we can use them in ggplot's geom_abline().
+
+```{r}
+#writing down the model summary
+sum_m <- summary(m)
+
+#extracting intercept and slope from the model summary using index
+int <- sum_m$coefficients[1] #the first element is intercept
+slope <- sum_m$coefficients[2] #the second element is slope
+
+#plot the line
+ggplot(child, aes(Television, Aggression)) +    #base layer
+  geom_point() +                                #scatter plot
+  geom_abline(intercept = int, slope = slope) + #drawing a line with intercept and slope we wrote down from model summary
+  ggtitle('Scatter plot with the regression line: manually')
+```
+
+
+
+Alternatively, we can draw a regression line automatically using geom_smooth(method = lm). Use this page: http://www.sthda.com/english/wiki/print.php?id=188 to look up more information about scatter plots and regression lines in R.
+```{r}
+#... or just use geom_smooth(method = lm) to plot that line automatically  (does not show extrapolation)
+ggplot(child, aes(Television, Aggression)) + 
+  geom_point() + 
+  geom_smooth(method = lm) + #fit the best straight line to the data
+  ggtitle('Scatter plot with the regression line: quicker using default geom_smooth for lm')
+
+
+#same but without the confidence intervals around the line
+ggplot(child, aes(Television, Aggression)) + 
+  geom_point() + 
+  geom_smooth(method = lm, se = FALSE) + #fit the best straight line to the data, don't show confidence intervals
+  ggtitle('Scatter plot with the regression line: geom_smooth without confidence intervals ')
+```
+
+
+#### Part 1 Exercise:
+Now, it's your turn to build linear models.
+Make 5 regressions: one for each predictor
+Visualize the results using scatter plots with regression lines
+
+Which one of predictors was the worst? 
+
+```{r}
+Scatterplot_lm <- function(data, Predictor, Outcome) {
+  data %>% 
+    ggplot(aes({{Predictor}},{{Outcome}}))+
+    geom_point()+
+    geom_smooth(method = lm)+
+    ggtitle(" ")
+  }
+
+# Predictor = Television
+Scatterplot_lm(child, Television, Aggression)
+
+# Predictor = Computer_Games
+Scatterplot_lm(child, Computer_Games, Aggression)
+
+# Predictor = Sibling_Aggression
+Scatterplot_lm(child, Sibling_Aggression, Aggression)
+
+# Predictor = Diet
+Scatterplot_lm(child, Diet, Aggression)
+
+# Predictor = Parenting_Style
+Scatterplot_lm(child, Parenting_Style, Aggression)
+
+
+```
+
+
+
+### Part 2: Multiple regression
+
+In general, you have to be very picky when you choose multiple predictors for your regression model. However, here we just learn, so feel welcome to experiment and try different combinations of predictors. You can include more than one predictor by simply adding it using '+' sign in the formula (see below):
+```{r}
+CG_Tel_lm <- lm(Aggression ~ Computer_Games + Television, child)
+summary(CG_Tel_lm)
+
+
+
+CGsummary(lm(Aggression ~ Computer_Games + Television, child))
+```
+
+#### Multicollinearity
+However, you should still keep in mind that if you add two predictors that are highly correlated, the estimates of your regression will become hard to interpret and unstable. 
+
+Therefore, make sure you always check correlation between your predictors!
+
+You can check how all of variables in your data are correlated with each other by running cor() function on the entire dataset. High correlation coefficients (e.g. over 0.7) are worrying and indicate that it might be better not to include such correlated predictors in the same model together. To make it easier to see, round up the results to 2 decimal points using round() function:
+```{r}
+#check cor()
+cor(child)
+
+#same, but rounded to 2 decimal points
+round(cor(child),2) #much better! but still hard to see
+```
+
+
+You can make it even easier by displaying the correlation matrix of all predictors as **a heatmap**. For this you will need to install and load reshape2 library and run the following code (source and explanation: https://onunicornsandgenes.blog/2019/07/22/using-r-correlation-heatmap-with-ggplot2/)
+
+From the author of this code:
+"*What is going on?*
+- cor makes a correlation matrix with all the pairwise correlations between variables (twice; plus a diagonal of ones)
+
+- melt takes the matrix and creates a data frame in long form, each row consisting of id variables Var1 and Var2 and a single value
+
+- We then plot with the tile geometry, mapping the indicator variables to rows and columns, and value (i.e. correlations) to the fill colour.
+
+- In ggplot2, a scale that has a midpoint and a different colour in each direction is called scale_colour_gradient2, and we just need to add it. I also set the limits to -1 and 1, which doesn’t change the colour but fills out the legend for completeness. Done!"
+
+Run the code below and look at the output - are there predictors that are highly correlated?
+```{r}
+pacman::p_load(ggplot2, reshape2)
+
+#plot as heatmap
+qplot(x=Var1, y=Var2, 
+      data=melt(cor(child, use="p")), 
+      fill=value, 
+      geom="tile") +
+   scale_fill_gradient2(limits=c(-1, 1))
+
+
+
+##### Highlight only the 'worrying' correlation values
+#plot only values above .7
+plot_df <- melt(cor(child))
+plot_df$value[plot_df$value < 0.7 & plot_df$value > - 0.7] = 0
+qplot(x=Var1, y=Var2, data=plot_df, fill=value, geom="tile") +
+   scale_fill_gradient2(limits=c(-1, 1))
+```
+
+
+After you've examined this, you just need to make sure that you don't put highly correlated predictors in the same model at the same time. In this case, it seems that Television and Parenting style variables are correlated more than others. Even though their correlation coefficient is below 0.7 (it's 0.53), you still might want to avoid putting those two together as predictors in a model. 
+
+#### Part 2 Exercise 
+Pick a predictor that you think is the most important for predicting child aggression. Then create 3 regression models: 
+  1) where aggression is predicted by just the predictor you picked
+  2) where aggression is predicted by your predictor and some another additional predictor from the dataset
+  3) where aggression is predicted by your predictor and two additional predictors from the dataset
+
+Look through summaries of these models and answer questions:
+  How did the beta estimate for your most important predictor change?
+  How did model performance change? Which metric do you use to answer this question?
+  
+Write up an APA style report for your best model.  
+
+
+#### The top model competition
+*In groups*
+
+Who can make the model which explains the data the best? E.g. have the highest adjusted R2
+
+If you believe you have the best model send me an email reporting the results of the model in APA style
+
+  Either mail, pdf or html output of the markdown is fine
+  my email: 202006317@post.au.dk
+
+We will choose the winner next week
+
+**additional things to look up: (We will learn about this in a couple of weeks)**
+If you really wanna win and get that extra edge you could look up these possibilites to 
+improve your model. 
+
+  - Interaction effects
+  - Linear Mixed effect models.
+
+### Optional stuff
+#### 1) Playing with ggplot
+1a) Play with geom_smooth, try making a regression line without the method argument
+
+1b) All of our predictor variables are standardized (their mean values were assigned to be 0, and all of observations were centered around it correspondingly to the original relations in data). Try to make a scatter plot that has one x axis for all predictor variables and the y axis for the outcome variable. Plot all 5 regression lines on it. 
+
+```{r}
+
+```
+
+#### 2) Making a loop
+If you’re bored: make a loop that runs through the 5 predictors, fits a model to each and saves the R^2 to a data.frame
+
+```{r}
+
+```
+
+
+
+#### 3) Look through code for stuff from slides
+##### Here's how extrapolation example about meatless day was made (last year by Kenneth)
+```{r}
+#data - source: https://vegetarisk.dk/statistik-om-danmark/
+tible <- data_frame(year = c(2010, 2017, 2018),
+                    perc_one_meatless_day_pr_week = c(17, 28, 32)
+                    )
+
+#linear model
+m1 <- lm(perc_one_meatless_day_pr_week ~ year, tible)
+
+sum_m1 <- summary(m1)
+
+#visaulisation
+ggplot(tible, aes(year, perc_one_meatless_day_pr_week)) +
+  geom_point() +
+  geom_abline(intercept = sum_m1$coefficients[1, 1], slope = sum_m1$coefficients[2, 1]) +
+  labs(title = paste("adjusted R^2: ", round(sum_m1$adj.r.squared, 2), sep = ""))
+
+#extrapolation
+predict(m1, data.frame(year = c(2018-100, 2018+100)))
+
+ggplot(tible, aes(year, perc_one_meatless_day_pr_week)) + 
+  geom_point() + 
+  geom_abline(intercept = sum_m1$coefficients[1,1], slope = sum_m1$coefficients[2,1]) + 
+  xlim(2010, 2118)+ylim(0,200) + 
+  geom_abline(intercept = 100, slope = 0) + 
+  labs(title = paste("adjusted R^2: ", round(sum_m1$adj.r.squared, 2), sep= ""))
+```
+
+
+
+
+

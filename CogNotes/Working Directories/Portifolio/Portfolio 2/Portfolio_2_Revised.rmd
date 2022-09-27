@@ -1,0 +1,348 @@
+---
+title: "Portfolio 2"
+author: "Studygroup 5 (Maja, Niels, Marton, Laurits & Sarah S.)"
+date: "26/10/2021"
+output: html_document
+---
+
+### Introduction
+We have conducted a PsychoPy experiment. The experiment was about reading time and how out of place words (salient words) not fitting into the context of the story would possibly affect reading time. 
+
+```{r setup}
+knitr::opts_chunk$set(echo = T)
+
+message = FALSE
+
+pacman::p_load(pastecs, tidyverse, readbulk, stringr, car, ggpubr)
+
+```
+### Stimuli
+
+Our stimuli text where control/salient word is marked in **bold**
+
+> This is a short story about Hungry Wolf. Once, a wolf was very hungry. It looked for food here and there. But it couldn't get any. At last it found a loaf of bread and piece of meat in the hole of a tree. The hungry wolf squeezed into the hole. It ate all the food. It was a woodcutter's lunch. He was on his way back to the tree to have lunch. But he saw there was no food in the hole, instead, a wolf. On seeing the woodcutter, the wolf tried to get out of the hole. But it couldn't. Its tummy was swollen. The woodcutter caught the **wolf/priest** and gave it nice beatings.
+
+### Data loading
+
+We load in our logging data and add additional fields from the MRC database for further analysis. 
+```{r}
+df <- readbulk::read_bulk("logfiles", extension = ".csv", verbose = F)
+
+df <- df %>% 
+  rename(word_number = X)
+
+mrc <- read_csv("MRC_database.csv")
+
+df <- df %>% 
+  mutate(word = str_to_upper(word)) %>% 
+  inner_join(mrc) %>% 
+  mutate(
+    var = if_else(is.na(lag(word)), 
+                  TRUE, 
+                  lag(word) != word)) %>% 
+  filter(var)
+
+df <- df %>% 
+  mutate(name=as.factor(name)) %>% 
+  mutate(name=as.numeric(name)) %>% 
+  mutate(name=as.factor(name))
+
+
+```
+
+#### Variables
+  - **name:** Subject identification (Factor)
+  - **age:** Age (Int)
+  - **gender:** Gender of the participant (Factor)
+  - **condition:** control = No surprising words, salient = there will be salient words (Factor)
+  - **word:** The word being read (Character)
+  - **reading_time:** The reading time of that particular word. (Numeric) 
+  - **word_number:** the number of letters in a word (Int)
+
+
+### Correlation analysis
+#### Assumption testing
+We need to examine whether or not our data is normally distributed in order to do t-tests on it. 
+Therefore, we will do a Shapiro Wilk test on our data to get statistical evidence and also visualize it in a  histogram and a qq-plot.
+```{r}
+round(pastecs::stat.desc(cbind(df$reading_time), basic = FALSE, norm = TRUE), digits = 2)
+
+qq <- df %>% 
+  ggplot(aes(sample = reading_time)) +
+    stat_qq() +
+    stat_qq_line(colour = "red") +
+    labs(x = "Theoretical Quantiles", y = "Sample Quantiles") +
+    ggtitle("Reading_time, qq plot") +
+    theme_bw()
+
+hist <- df %>% 
+  ggplot(aes(reading_time)) +
+      geom_histogram(aes(y = ..density..),binwidth=0.2, colour = "white", fill = "black") +
+      stat_function(fun = dnorm, args = list(mean = mean(df$reading_time), sd = sd(df$reading_time)), colour = "red", size = 1) +
+      ggtitle("Reading_time, histogram") + xlim(0,3) + theme_bw()
+#setting xlim removes two outliers at 15 seconds RT
+
+ggarrange(qq,hist, ncol = 2)
+
+```
+
+The data is heavily skewed (skew.2SE>1) and has a high kurtosis (kurt.2SE>1) and the p-value for the shapiro wilk test is below the significant level 0.05, meaning that the data is not normally distributed. The qq-plot supports that our data is not normally distributed, since the data points does not follow the linear line, which is to be expected as we are looking at reaction times. Therefore, we can try to see whether or not transforming the data and removing outliers result in a normal distribution.
+
+```{r}
+filter_outlier <- df %>% 
+  filter(reading_time > mean(reading_time)-sd(reading_time)*3) %>% 
+  filter(reading_time < mean(reading_time)+sd(reading_time)*3) 
+
+filter_outlier <- filter_outlier %>% 
+  mutate(reading_time_log = log(reading_time), 
+        reading_time_sqrt = sqrt(reading_time), 
+        reading_time_divid = 1/reading_time
+      )
+
+```
+
+Now we check if the transformed data is normally distributed:
+
+```{r}
+log_qq<- filter_outlier %>% 
+  ggplot(aes(sample = reading_time_log)) +
+    stat_qq() +
+    stat_qq_line(colour = "red") +
+    labs(x = "Theoretical Quantiles", y = "Sample Quantiles") +
+    ggtitle("Reading_time_log, qq plot") +
+    theme_bw()
+
+log_hist <- filter_outlier %>% 
+  ggplot(aes(reading_time_log)) +
+      geom_histogram(aes(y = ..density..), colour = "white", fill = "black") +
+      stat_function(fun = dnorm, args = list(mean = mean(filter_outlier$reading_time_log),
+             sd = sd(filter_outlier$reading_time_log)), colour = "red", size = 1) +
+      ggtitle("Reading_time_log, histogram") +
+      theme_bw()
+
+
+sqrt_qq <- filter_outlier %>% 
+  ggplot(aes(sample = reading_time_sqrt)) +
+    stat_qq() +
+    stat_qq_line(colour = "red") +
+    labs(x = "Theoretical Quantiles", y = "Sample Quantiles") +
+    ggtitle("Reading_time_sqrt, qq plot") +
+    theme_bw()
+
+sqrt_hist <- filter_outlier %>% 
+  ggplot(aes(reading_time_sqrt)) +
+      geom_histogram(aes(y = ..density..), colour = "white", fill = "black") +
+      stat_function(fun = dnorm, args = list(mean = mean(filter_outlier$reading_time_sqrt),
+             sd = sd(filter_outlier$reading_time_sqrt)), colour = "red", size = 1) +
+      ggtitle("Reading_time_sqrt, histogram") +
+      theme_bw()
+
+divid_qq <- filter_outlier %>% 
+  ggplot(aes(sample = reading_time_divid)) +
+    stat_qq() +
+    stat_qq_line(colour = "red") +
+    labs(x = "Theoretical Quantiles", y = "Sample Quantiles") +
+    ggtitle("reading_time_divid, qq plot") +
+    theme_bw()
+
+divid_hist <- filter_outlier %>% 
+  ggplot(aes(reading_time_divid)) +
+      geom_histogram(aes(y = ..density..), colour = "white", fill = "black") +
+      stat_function(fun = dnorm, args = list(mean = mean(filter_outlier$reading_time_divid),
+             sd = sd(filter_outlier$reading_time_divid)), colour = "red", size = 1) +
+      ggtitle("reading_time_divid, histogram") +
+      theme_bw()
+
+ggarrange(log_qq,log_hist,sqrt_qq,sqrt_hist,divid_qq,divid_hist, ncol = 2, nrow = 3)
+
+
+round(pastecs::stat.desc(cbind(
+  "Reading_time" = df$reading_time,
+  "Log_Reading_time" = filter_outlier$reading_time_log,
+  "Sqrt_Reading_time" = filter_outlier$reading_time_sqrt,
+  "Divid_Reading_time" = filter_outlier$reading_time_divid), basic = FALSE, norm = TRUE), digits = 2)
+
+```
+We can see that the transformed data is still not normally distributed. 
+We check if the variables meet the assumptions of normality:
+
+```{r}
+round(pastecs::stat.desc(cbind(
+  "Reading_time" = df$reading_time,
+  "nlet" = df$nlet, 
+  "kf_freq" = df$kf_freq), basic = FALSE, norm = TRUE), digits = 2)
+```
+
+The variables are not normally distributed either.
+
+#### Correlation
+
+Now we can explore if a relation exists between reading times and length, frequency and ordinality of the words using correlation analysis and scatter plots with linear regression lines. 
+
+Assumptions of parametric tests:
+1. Data are normally distributed
+2. Variance is homogeneous across samples, groups, levels of a variable
+3. Data are at least at the interval level
+4. Data are independent from each other across participants or across sessions within participants
+
+Since our data does not fit these assumptions, we need to use a non-parametric correlation test. Thus, our choice was Spearman's correlation test.
+```{r}
+cor_kf_freq <- filter_outlier %>% 
+  ggplot() +
+  aes(reading_time, kf_freq) +
+  geom_point() +
+  geom_smooth(method = "lm")+
+  ggtitle("correlation of reading_time and kf_freq") +
+    theme_bw()
+
+
+
+cor_nlet <- filter_outlier %>% 
+  ggplot() +
+  aes(reading_time, nlet) +
+  geom_point() +
+  geom_smooth(method = "lm")+
+   ggtitle("correlation of reading_time and nlet") +
+    theme_bw()
+
+
+
+cor_word_number <- filter_outlier %>% 
+  ggplot() +
+  aes(reading_time, word_number) +
+  geom_point() +
+  geom_smooth(method = "lm")+
+   ggtitle("correlation of reading_time and word_number") +
+    theme_bw()
+
+
+cor_kf_freq
+cor_nlet
+cor_word_number
+
+
+cor.test(df$reading_time, df$kf_freq, method = "spearman")
+
+cor.test(df$reading_time, df$nlet, method = "spearman")
+
+cor.test(df$reading_time, df$word_number, method = "spearman")
+
+```
+From the scatterplot and the Spearman's correlation test, we can see that there is no linear relation between the variables, except for the variable word_number. There is a statistically significant linear relation between word_number and reading_time (***p-value<0.001). Furthermore, reading time seems to decrease as the experiment progresses. 
+Looking at the rho value:
+  reading_time and kf_freq: rho = -0.03 means that there is a weak or no relationship (p = 0.15)
+  reading_time and nlet: rho = 0.02 means that there is a weak or no relationship (p = 0.23)
+  reading_time and word_number: rho = -0.12 means that there is a weak or no relationship (p = 3.9e-09)***
+In conclusion, there is a weak (or no) relationship between reading time and word number, as the p-value signals its significance
+
+### Hypothesis testing
+#### Assumption testing
+##### Normality
+
+We create a new data frame containing the mean reading time for "salient word" and the word right after. We remove outliers of 3 standard deviations.
+```{r}
+hyp_df <- filter_outlier %>%
+  mutate(control = str_detect(toupper(File), "CONTROL")) %>% 
+  mutate(salience = (salience == "True")) %>% 
+  mutate(condition = ifelse(control, "Control", "Salient"))
+  
+hyp_df <- hyp_df[, c(5, 6, 27)]
+
+salient_df <- hyp_df %>% filter(salience)%>% 
+  filter(reading_time > mean(reading_time)-sd(reading_time)*3) %>% 
+  filter(reading_time < mean(reading_time)+sd(reading_time)*3) 
+
+
+after_salient_df <- hyp_df %>%  filter(lag(salience))%>% 
+  filter(reading_time > mean(reading_time)-sd(reading_time)*3) %>% 
+  filter(reading_time < mean(reading_time)+sd(reading_time)*3) 
+```
+
+Now we need to examine if our data meets the assumptions for a parametric t-test, but we need to check the assumptions separately for the two conditions, because they represent data from different groups. 
+The assumptions: Assumes the dependent variable are normally distributed and that the variances are equal
+
+Checking for normality
+
+```{r}
+box_salient <- salient_df %>% 
+  ggplot(aes(x = condition, y = reading_time)) +
+  geom_boxplot() +
+  ggtitle("Reading times-salient")
+
+box_after_salient <- after_salient_df %>% 
+  ggplot(aes(x = condition, y = reading_time)) + 
+  geom_boxplot() +
+  ggtitle("Reading times-after")
+
+hist_salient <- salient_df %>% ggplot(aes(reading_time)) +
+      geom_histogram(aes(y = ..density..), colour = "white", fill = "black") +
+      stat_function(fun = dnorm, args = list(mean = mean(salient_df$reading_time),
+             sd = sd(salient_df$reading_time)), colour = "red", size = 1) +
+      ggtitle("hist-salient") +
+      theme_bw()
+
+qq_salient <- salient_df %>% 
+  ggplot(aes(sample = reading_time)) +
+    stat_qq() +
+    stat_qq_line(colour = "red") +
+    labs(x = "Theoretical Quantiles", y = "Sample Quantiles") +
+    ggtitle("qq-salient") +
+    theme_bw()
+
+hist_after_salient <- after_salient_df %>% ggplot(aes(reading_time)) +
+      geom_histogram(aes(y = ..density..), colour = "white", fill = "black") +
+      stat_function(fun = dnorm, args = list(mean = mean(after_salient_df$reading_time),
+             sd = sd(after_salient_df$reading_time)), colour = "red", size = 1) +
+      ggtitle("hist-after") +
+      theme_bw()
+
+qq_after_salient <- after_salient_df %>% 
+  ggplot(aes(sample = reading_time)) +
+    stat_qq() +
+    stat_qq_line(colour = "red") +
+    labs(x = "Theoretical Quantiles", y = "Sample Quantiles") +
+    ggtitle("qq-after") +
+    theme_bw()
+
+ggarrange(
+  box_salient, qq_salient, hist_salient,
+  box_after_salient, qq_after_salient, hist_after_salient,
+  ncol = 3, nrow = 2
+)
+
+pastecs::stat.desc(
+  cbind(
+    "Reading time for salient words" = salient_df$reading_time,
+    "Reading time for words right after" = after_salient_df$reading_time
+    
+  ), basic = FALSE, norm = TRUE, desc = FALSE) %>% 
+  round(digits = 2)
+
+```
+
+From the normality test, we can see that the data is not normally distributed (skew.2SE<1, kurt.2SE<1, Shapiro Wilk p-value>0.05). Thus, the data meets the first assumption for a parametric t-test. 
+
+##### Homoscedasticity
+
+Now we perform Levene's test, which is an inferential statistic used to evaluate the equality of variances for a variable determined for two or more groups. 
+*H0:* no difference in the variance among the two groups
+*H1:* a difference in the variance among the two groups
+```{r}
+my_data = stack(list(salient_df=salient_df$reading_time, after_salient_df=after_salient_df$reading_time))
+leveneTest(values ~ ind, my_data)
+
+```
+The p-value of the test is 0.16, which is more than our significance level of 0.05. Therefore, we reject the alternative hypothesis and conclude that the variance among the two groups must be equal, thus the data is homoscedastic.
+
+#### t-test
+
+Therefore, our data does not meet the assumptions for a parametric t-test. Therefore we choose to perform a non-parametric t-test from the WRS2 package, that allow us to "trim" some part of data from tails of the distrubution in order to deal with non-normal distrubutions. 
+Our hypotheses:
+*H0 (null hypothesis)* = No difference in the mean reading times in the two conditions of our reading experiment
+*H1 (alternative hypothesis)* = There is a difference in the mean reading times in the two conditions of our reading experiment
+```{r}
+WRS2::yuen(reading_time~condition, data=salient_df)
+WRS2::yuen(reading_time~condition, data=after_salient_df)
+```
+#### Conclusion 
+The p-value > 0.05 indicates that there is no statistically significant relationship between reading_time and condition, for both the salient words and the word after. Therefore, we accept the null hypothesis, that there is no difference in the mean reading times in the two conditions of our reading experiment. 

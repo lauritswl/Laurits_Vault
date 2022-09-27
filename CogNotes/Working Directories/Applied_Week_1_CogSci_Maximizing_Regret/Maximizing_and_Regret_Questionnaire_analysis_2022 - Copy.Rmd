@@ -1,0 +1,240 @@
+---
+title: "Maximizing analysis 2022"
+author: "Mikkel Wallentin"
+date: "4 February 2022"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+## Load data
+```{r}
+
+pacman::p_load(readxl)
+Max <- read.csv("Maximizing Regret Happiness Questionnaires (Responses) - Form Responses 1.csv")
+
+#Rename variables for convenience
+colnames(Max)<-c('Timestamp','Year','Gender','Max01','Max02','Max03','Max04','Max05','Max06','Max07','Max08','Max09','Max10','Max11','Max12','Max13','Regret01','Regret02','Regret03','Regret04','Regret05','Happ01','Happ02','Happ03','Happ04')
+```
+
+#### Notation. 
+When indexing matrices or data frames, we can use square brackets like this [row,column], e.g. [1,2] means the first row of the second column. Leaving a place empty means "all", e.g. [,16] means all rows in column 16.
+
+## Preproces data
+```{r}
+#Find maximizing quotient for each participant
+Max$MaxqSum<-rowSums(Max[,4:16])
+#The first variable of the Regret Questionnaire is phrased opposite of the others (value is to be subbracted from 8)
+
+Max[,17]<-8-Max[,17]
+Max$RegretSum<-rowSums(Max[,17:21])
+
+#The last variable of the happiness questionnaire is phrased opposite of the others (value is to be subbracted from 8)
+Max[,25]<-8-Max[,25]
+Max$HappinessSum<-rowSums(Max[,22:25])
+```
+
+
+### Plot Maximizing sum against Regret sum
+
+```{r}
+pacman::p_load(ggplot2)
+splot<-ggplot(Max, aes(MaxqSum,RegretSum))
+#Plot scatterplot and a linear regression line
+splot + geom_smooth(method='lm')+ geom_point(size=2) + labs(y="Regret Scale Score", x='Maximizing Scale Score')
+
+```
+
+### Plot Maximizing sum against Happiness sum
+
+```{r}
+library(ggplot2)
+splot<-ggplot(Max, aes(MaxqSum,HappinessSum))
+#Plot scatterplot and a linear regression line
+splot + geom_smooth(method='lm')+ geom_point(size=2) + labs(y="Happiness Scale Score", x='Maximizing Scale Score')
+#clean up
+rm(splot)
+```
+
+
+##Statistical analysis
+
+####Pearson correlation between Maximizing, Regret and Happiness scores
+```{R}
+#Pairwise correlation test between Maximization and Regret
+Maxcor<-cor.test(Max$MaxqSum,Max$RegretSum)
+Maxcor
+#Pairwise correlation test between Maximization and Happiness
+Maxcor<-cor.test(Max$MaxqSum,Max$HappinessSum)
+Maxcor
+
+#Pairwise correlation test between Regret and Happiness
+Maxcor<-cor.test(Max$RegretSum,Max$HappinessSum)
+Maxcor
+
+#Clean up
+rm(Maxcor)
+```
+
+#### Let's make a correlogram with summary scores
+```{R}
+
+# Use GGally to plot correlation matrix of summary scores
+pacman::p_load(GGally)
+
+ggpairs(Max[c(26:28)], title="Correlogram: Summary scores") 
+
+
+# ggpairs shows us 
+# a. The distribution of variables on the diagonal
+# b. The correlation coefficients on the right
+# c. scatter plot of variables on the left
+
+```
+
+
+#### Let's make a correlogram with all possible correlations
+```{R}
+#Change gender variable into numeric in order to use it in correlation
+Max$Gender<-as.factor(Max$Gender)
+Max$GenderN<-as.numeric(Max$Gender)
+
+# Use GGally to plot correlation matrix of both individual questions and summaries
+pacman::p_load(ggcorrplot)
+# ggcorrplot colors the squares according to whether the correlation is positive or negative
+ggcorrplot(cor(Max[c(4:29)]))
+```
+
+### Include significance test
+```{R}
+# Using p.mat, we can cross out the squares that are not significant at a given cutoff.
+#cor_pmat(): Returns a matrix containing the p-values of correlations
+P<-cor_pmat(Max[c(4:29)])
+ggcorrplot(cor(Max[c(4:29)]), p.mat = P, sig.level=0.05)
+```
+
+
+#### Remake the correlogram with binary gender
+```{R}
+library(tidyverse)
+#Filter variable to only contain males and females
+Max2 <- Max %>% dplyr::filter(.,Gender == "Male" | Gender == "Female")
+
+# Use GGally to plot correlation matrix of summary scores
+library(GGally)
+ggpairs(Max2[c(26:29)], title="Correlogram: Summary scores") 
+
+
+# Use GGally to plot correlation matrix of both individual questions and summaries
+library(ggcorrplot)
+ggcorrplot(cor(Max2[c(4:29)]), p.mat = cor_pmat(Max2[c(4:29)]), sig.level=0.05)
+```
+
+# Code for voluntary extra questions
+
+## A bit of power analysis for correlations
+
+```{r}
+
+#Statistical power is the probability of a hypothesis test of finding an effect if there is an effect to be found.
+
+# Correlation can be viewed as an effect size measure.
+
+# A correlation coefficient of 
+#.20  RMPE recommended minimum effect size representing a ???practically??? significant effect for social science data (but smaller may in certain cases be interesting); 
+#.50 a moderate correlation; 
+#.80 is considered to represent a strong or large correlation 
+#(https://psychology.okstate.edu/faculty/jgrice/psyc3214/Ferguson_EffectSizes_2009.pdf).
+# 
+# We can obtain sample size for a significant correlation at a given alpha level or the power for a given sample size using the function wp.correlation() from the R package webpower.
+
+#A pairwise correlation test between Maximization and Happiness to exemplify
+Maxcor<-cor.test(Max$Maxq,Max$Happiness)
+Maxcor
+
+#Using WebPower to find the power for detecting an effect with the current effect size and number of participants
+library(WebPower)
+wp.correlation(power=0.9, r= Maxcor$estimate)
+
+#Make power estimates for different sample sizes
+powercurve=wp.correlation(n=seq(4,10000,1), r=Maxcor$estimate, alternative = "two.sided") 
+#Plot the power curve
+plot(powercurve,type='l')
+
+```
+
+## Plotting Power curves for correlation coefficients and sample size
+
+```{r}
+#Code from here:
+#https://www.statmethods.net/stats/power.html
+
+# Plot sample size curves for detecting correlations of
+# various sizes.
+
+library(pwr)
+
+# range of correlations
+r <- seq(.1,.5,.01)
+nr <- length(r)
+
+# power values
+p <- seq(.4,.9,.1)
+np <- length(p)
+
+# obtain sample sizes
+samsize <- array(numeric(nr*np), dim=c(nr,np))
+for (i in 1:np){
+  for (j in 1:nr){
+    result <- pwr.r.test(n = NULL, r = r[j],
+    sig.level = .05, power = p[i],
+    alternative = "two.sided")
+    samsize[j,i] <- ceiling(result$n)
+  }
+}
+
+# set up graph
+xrange <- range(r)
+yrange <- round(range(samsize))
+colors <- rainbow(length(p))
+plot(xrange, yrange, type="n",
+  xlab="Correlation Coefficient (r)",
+  ylab="Sample Size (n)" )
+
+# add power curves
+for (i in 1:np){
+  lines(r, samsize[,i], type="l", lwd=2, col=colors[i])
+}
+
+# add annotation (grid lines, title, legend) 
+abline(v=0, h=seq(0,yrange[2],50), lty=2, col="grey89")
+abline(h=0, v=seq(xrange[1],xrange[2],.02), lty=2,
+   col="grey89")
+title("Sample Size Estimation for Correlation Studies\n
+  Sig=0.05 (Two-tailed)")
+legend("topright", title="Power", as.character(p),
+   fill=colors)
+```
+
+
+## Factor analysis
+
+#### Factor analysis takes data and uses internal correlations among variables to determine the inherent factors a multivariate dataset contains. Variables that are highly correlated belongs to the same factor.
+```{r}
+
+
+###  Prepare factor analysis
+
+#Factor analysis on questions
+library(psych)
+#Use "parallel" function to find a suitable number of factors, based on the assumption that the variance explained in real factors should be higher than factors obtained using a random shuffle of the data.
+parallel <- fa.parallel(Max[4:25], fm = 'minres', fa = 'fa',sim=FALSE)
+
+
+### Make factor analysis
+
+#Parallel function suggests nfact factors (see parallel$nfact), we will use minres and varimax rotation
+MaxFa <- fa(Max[4:25],nfactors = parallel$nfact,rotate = "varimax",fm="minres")
+print(MaxFa, cut=0.1, order=TRUE)
+
+```

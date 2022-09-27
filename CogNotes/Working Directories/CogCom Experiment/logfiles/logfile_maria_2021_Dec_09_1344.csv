@@ -1,0 +1,5 @@
+,time_stamp,consent,id,age,gender,fluent_in_danish,video,condition,text
+0,2021_Dec_09_1344,Ja,maria,19,Kvinde,Ja,3,No noise without video,drengen kastede frisbeen over hækken og fik en rød bold tilbage
+1,2021_Dec_09_1344,Ja,maria,19,Kvinde,Ja,2,Noise with video,
+2,2021_Dec_09_1344,Ja,maria,19,Kvinde,Ja,1,Noise without video,drengen
+3,2021_Dec_09_1344,Ja,maria,19,Kvinde,Ja,0,No noise with video,manden samlede bolden op fra under trampolinen og fik en slikkepind fra drengen

@@ -1,0 +1,132 @@
+---
+title: "The Pitch Conceptualization Experiment"
+author: "@Kristian Tylén"
+date: "10/29/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+pacman::p_load(tidyverse)
+```
+
+# The Pitch Concepotualization Experiment
+In this experiment, we investigate if participants are faster and more accurate in their judgement of the congruence between pitches and visual stimuli that represent three different metaphorical mappings: heigth, size and thickness.
+
+The overall hypothesis is that participants will be faster and more accurate in making judgements when the visual stimuli match the metaphorican representation used by their language, i.e. height for English/Danish.
+
+In this exercise you will do some exploratory ploting of the data from your own experimental logfile. Later we will do an analysis across logfiles from all participants in the class.   
+
+# Read in and preprocess the data
+
+1) Load in your experiment logfile using read_csv() 
+2) Convert the variables Stimulus, Congruent and Correct to factors
+
+```{r}
+df <- read_csv("logfiles/logfile_Laurits_2021_Oct_26_0824.csv")
+df$Stimulus <- as.factor(df$Stimulus)
+df$Congruent <- as.factor(df$Congruent)
+df$Correct <- as.factor(df$Correct)
+```
+
+# Number of correct/incorrect responses  
+
+Lets start by plotting the number of correct mapping responses as a function of the three conceptual metaphors (height, size and thickness)
+
+1) filter to get only correct responses 
+2) make a ggplot with x = Correct and fill = Stimulus
+3) add geom_bar(position="dodge")
+
+Look at the plot. What do you learn?  
+
+```{r}
+
+df %>% 
+  filter(Correct == 1) %>% 
+  ggplot(aes(Correct, fill = Stimulus)) +
+  geom_bar(position="dodge") +
+  labs(x = "Conceptualization", y = "Number of correct responses")
+  theme_classic()
+
+```
+
+# Reaction Time 
+
+First, lets look at overall reaction times as function of the conceptual metaphor.
+
+1) Make a ggplot with x = Stimulus, y = ReactionTime and fill = Stimulus
+2) add a geom_boxplot()
+
+Look at the plot. What do you learn?
+
+```{r}
+
+df %>% 
+  ggplot(aes(Stimulus, ReactionTime, fill = Stimulus)) +
+  geom_boxplot()
+
+```
+
+Now, lets divide by correct and incorrect responses
+You can do this by making the same plot again but set fill = Correct
+
+Look at the plot. What do you learn?
+
+```{r}
+# Lets divide by correct and incorrect
+df %>% 
+  ggplot(aes(Stimulus, ReactionTime,  fill = Correct)) +
+  geom_boxplot()
+
+```
+
+# Congruency 
+We can also look at responses to congruent and incongruent stimuli. 
+The prediction could be that, overall, we are a bit slower in responding to incongruent trails?  
+But this could also differ for the three conceptual metaphors
+
+1) make a ggplot with x = Congruent, y = ReactionTime, fill = Congruent
+2) add a geom_boxplot()
+
+```{r}
+
+df %>% 
+  ggplot(aes(Congruent, ReactionTime, fill = Congruent)) +
+  geom_boxplot()
+
+```
+
+Now do the same thing but filter so that you only look at correct trials 
+
+```{r}
+
+df %>%
+  filter(Correct ==1) %>% 
+  ggplot(aes(Congruent, ReactionTime, fill = Congruent)) +
+  geom_boxplot() +
+  theme_classic()
+
+```
+
+Now, let look at the same thing again but diveded by conceptual metaphor. You can do this by adding a layer to your plot with facet_wrap(~Stimulus) 
+
+```{r}
+
+df %>%
+  filter(Correct ==1) %>% 
+  ggplot(aes(Congruent, ReactionTime, fill = Congruent)) +
+  geom_boxplot() +
+  facet_wrap(~Stimulus)
+
+```
+
+# Advanced (optional) 
+
+run some regression models where you test if reaction time in correct trials is predicted by Stimulus and Congruence 
+
+```{r}
+
+```
+
+

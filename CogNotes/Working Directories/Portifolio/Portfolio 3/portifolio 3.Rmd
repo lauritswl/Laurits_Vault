@@ -1,0 +1,84 @@
+---
+title: "Portifolio"
+author: "Laurits"
+date: "11/16/2021"
+output: html_document
+---
+
+
+```{r}
+pacman::p_load(tidyverse, readbulk, lme4, ggplot2)
+
+```
+
+
+```{r}
+df <- readbulk::read_bulk("logfiles",extension=".csv",verbose=F)
+load("EN_100k.rda")
+df <- df %>% 
+  filter(word %in% rownames(EN_100k))
+
+#df1 = control
+df1 <- df %>% 
+  filter(condition == 1)
+
+test <- df1 %>% 
+  group_by(id) %>%
+  filter(word %in% rownames(EN_100k)) %>%
+  rowwise() %>% 
+  dplyr::mutate(sem_dist = distance(word, "garden", method="euclidean",tvectors=EN_100k)) %>% 
+  mutate(sem_dist=scale(sem_dist, center = F))
+
+
+df1_1 <- aggregate(test$sem_dist, list(test$id), mean)
+
+  
+  
+
+
+
+#df2 = garden
+df2 <- df %>% 
+  filter(condition == 2)
+
+test <- df2 %>% 
+  group_by(id) %>%
+  filter(word %in% rownames(EN_100k)) %>%
+  rowwise() %>% 
+  dplyr::mutate(sem_dist = distance(word, "garden", method="euclidean",tvectors=EN_100k)) %>% 
+  mutate(sem_dist=scale(sem_dist, center = F))
+
+
+df2_2 <- aggregate(test$sem_dist, list(id=test$id), mean)
+
+
+
+#df3 = crops
+df3 <- df %>% 
+  filter(condition == 3)
+
+test <- df3 %>% 
+  group_by(id) %>%
+  filter(word %in% rownames(EN_100k)) %>%
+  rowwise() %>% 
+  dplyr::mutate(sem_dist = distance(word, "garden", method="euclidean",tvectors=EN_100k)) %>% 
+  mutate(sem_dist=scale(sem_dist, center = F))
+
+
+df3_3 <- aggregate(test$sem_dist, list(test$id), mean)
+
+
+```
+
+
+```{r}
+mean(df1_1$V1)
+mean(df2_2$V1)
+mean(df3_3$V1)
+```
+
+
+
+
+
+

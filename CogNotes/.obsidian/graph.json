@@ -1,0 +1,79 @@
+{
+  "collapse-filter": false,
+  "search": "",
+  "showTags": false,
+  "showAttachments": false,
+  "hideUnresolved": true,
+  "showOrphans": false,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "tag:#🌲Evergreen",
+      "color": {
+        "a": 1,
+        "rgb": 296474
+      }
+    },
+    {
+      "query": "tag:#🌿Sprout",
+      "color": {
+        "a": 1,
+        "rgb": 7727747
+      }
+    },
+    {
+      "query": "tag:#🌱Seed",
+      "color": {
+        "a": 1,
+        "rgb": 8454141
+      }
+    },
+    {
+      "query": "tag:#🥀Missing",
+      "color": {
+        "a": 1,
+        "rgb": 15019556
+      }
+    },
+    {
+      "query": "tag:#🗂️Organization",
+      "color": {
+        "a": 1,
+        "rgb": 16763760
+      }
+    },
+    {
+      "query": "tag:#✏️Meta-Studying",
+      "color": {
+        "a": 1,
+        "rgb": 16698623
+      }
+    },
+    {
+      "query": "tag:#📑ChildNode",
+      "color": {
+        "a": 1,
+        "rgb": 15433850
+      }
+    },
+    {
+      "query": "tag:#📝Oral_exam",
+      "color": {
+        "a": 1,
+        "rgb": 8000685
+      }
+    }
+  ],
+  "collapse-display": false,
+  "showArrow": false,
+  "textFadeMultiplier": -0.5,
+  "nodeSizeMultiplier": 2.62291666666667,
+  "lineSizeMultiplier": 0.727083333333333,
+  "collapse-forces": false,
+  "centerStrength": 0.136904761904762,
+  "repelStrength": 20,
+  "linkStrength": 0.636904761904762,
+  "linkDistance": 489,
+  "scale": 0.025113543430872184,
+  "close": true
+}

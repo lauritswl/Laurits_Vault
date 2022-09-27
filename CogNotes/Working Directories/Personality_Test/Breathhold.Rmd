@@ -1,0 +1,29 @@
+---
+title: "Breathhold"
+author: "Laurits"
+date: "9/14/2021"
+output: html_document
+---
+```{r}
+setwd(".")
+df <- read.csv("personality_data_cleaned_2021.csv")
+```
+
+```{r}
+#Find mean of breathhold
+mean(df$breathhold)
+
+#SS - Sum of squared deviance
+sum((df$breathhold-mean(df$breathhold))^2)
+
+#s2 variance
+s2 <- sum(((df$breathhold-mean(df$breathhold))^2)/sqrt(48))
+s2
+
+#s standard deviation   
+
+sqrt(s2)-mean(df$breathhold)
+
+```
+
+

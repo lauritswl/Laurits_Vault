@@ -1,0 +1,386 @@
+---
+title: "Class5_notes"
+author: "Anita feat. Jonathan"
+date: "7/10/2020"
+output: html_document
+---
+
+## Welcome to Class 5!
+
+Today we will go beyond descriptive statistics in R and look at *correlations*!
+
+
+We will need libraries tidyverse and pastecs
+We will also need the small_subset.csv as an example, I recommend calling it 'df' to be consistent with my code. It's just a subset from the personality test data.
+
+```{r load/install packages/load data}
+#libraries
+pacman::p_load(tidyverse)
+pacman::p_load(pastecs)
+
+#import data
+df <- read_csv("df_sub_2021.csv")
+```
+
+
+### Part 1: Calculating Covariance and Correlation
+
+We will try to understand/repeat equations of covariance and correlation from the example of relation of shoesize to breath hold data from the personality test.
+
+#### Understanding Covariance equation
+
+            sum of all Cross-product deviations       
+cov(x,y) = ------------------------------------- 
+                  degrees of freedom                                    
+
+
+Cross-product deviation = deviation_of_x_value * deviation_of_y_value
+
+
+For the equation, we need:
+  deviation of x value from the mean and deviation of y value from the mean (for every row in our data)
+  degrees of freedom = Number of all observations - 1
+  
+Shoesize will be the x variable
+Breath hold will be the y variable
+
+```{r}
+
+my_cov_func <- function(var1, var2){
+  # 1: calculate the deviations of the two variables (variable minus mean(variable))
+  var1_dev <- var1 - mean(var1)
+  var2_dev <- var2 - mean(var2)
+ 
+  # 2: Calculate the cross-product deviations (the product of the two deviations)
+  cross_prod_dev <- var1_dev * var2_dev
+    
+  # 3: Calculate the degrees of freedom (number of observations - 1)
+  dof <- length(var1) - 1
+    
+  # Calculate covariance (sum of cross-product deviations divdided by dof)
+  covariance <- sum(cross_prod_dev)/dof
+  
+  # returns covariance (because it's the last thing that isn't assigned)
+  return(covariance)
+  
+}
+
+# Apply your function to breathhold and shoesize in your dataframe
+
+#LUCKILY, R HAS A FUNCTION FOR IT: cov(x,y)
+#try it and comapre results with manually calculated covariance
+
+my_cov_func(df$shoesize,df$breathhold)
+cov(df$shoesize,df$breathhold)
+
+```
+
+
+#### Understanding Correlation equation
+
+                       covariance                             covariance 
+correlation(x,y) = --------------------- =       -------------------------------------------------
+                  Standardisation term      standard deviation of x * standard deviation of y
+
+For the equation, we need:
+  value of covariance - we already calculated that
+  standard deviations of both variables - we can use sd() function for that
+  
+```{r}
+
+#Standardize covariance by dividing it by the product of standard deviations of both variables
+my_correlation_func <-function(var1, var2){
+  my_cov_func(var1,var2)/
+    (sd(var1)*sd(var2))
+  }  
+
+#LUCKILY, THERE IS A FUNCTION FOR IT:   cor.test(x, y, method = 'pearson')
+#try it and compare results with manually calculated correlation
+my_correlation_func(df$shoesize,df$breathhold)
+cor.test(df$shoesize,df$breathhold,method="pearson")
+
+
+  
+#Now try to store the output of cor.test(x, y, method = 'pearson') in a variable called output
+output <- cor.test(df$shoesize,df$breathhold,method="pearson")
+
+#Now try to access the estimate from the stored output by writing output$estimate, store this value in a variable called r_output
+r_output <- output$estimate
+
+
+#see if there is difference between correlation coefficients calculated manually and estimate of the cor.test() function
+
+r_output
+
+r_output^2
+my_correlation_func(df$shoesize,df$breathhold)^2
+
+
+```
+
+
+#### Testing for Pearson's Correlation assumptions 
+
+The most important assumption to check for is normality of data. You should always check normality of both variables.
+The quickest way might be to use stat.desc() function from pastecs.
+
+```{r}
+#test
+round(pastecs::stat.desc(cbind(df$shoesize, df$breathhold), basic = FALSE, norm = TRUE, desc=FALSE), digits = 2)
+
+#is it normally distributed?
+
+Shoesize != normal (normtest p is smaller than 0.05)
+Breathhold != normal (normtest p is smaller than 0.05, and skew.2SE is above 1)
+
+```
+
+
+It is not really normally distributed, so what do we do?
+
+1) We can try to transform our data to make it more normal
+  e.g.log transform definitely helps breathhold data, shoesize seems to be trickier though. We won't do it for this data now.
+
+or!
+
+2) Another way around the problem with non-normally distributed data is to use other correlation coefficients, like Spearman's rho or Kendall's tau. 
+
+```{r}
+#Running Spearman correlation test: cor.test(x,y, method = 'spearman')
+output_spearman <- cor.test(df$shoesize, df$breathhold, method = 'spearman')
+r_spearman <- output_spearman$estimate      #writing down the estimate
+
+#seeing output and result
+output_spearman
+r_spearman
+
+
+
+#Running Kendall correlation test: cor.test(x,y, method = 'kendall')
+output_kendall <- cor.test(df$shoesize, df$breathhold, method = 'kendall')
+tau <- output_kendall$estimate               #writing down the estimate
+
+#seeing output and result
+output_kendall
+tau
+
+
+#how similar are estimates for correlation using spearman's rho and kendall's tau?
+
+```
+
+--- 
+
+### Part 2: Working with Reading Experiment Data
+
+We've got some interesting data to work with!
+
+#### Prepare Reading Experiment Data
+Load the sample_logfile.csv (it should be in the same folder as this Rmd file, which is your working directory). We'll also look at the presented story 
+
+```{r}
+# Loading file 
+rdf <- read_csv("sample_logfile.csv")
+
+rdf %>% 
+  # paste all the words together separerated by a space (" ")
+  summarise(story = paste(word, collapse = " ")) %>% 
+  # Get's the summarised story vector 
+  pull(story) %>% 
+  # Wowowow you can pipe into a non-tidyverse function O.o
+  print()
+```
+
+Such beauty!
+
+We have one continuous variable in our logfile - reading time. What do you think could have affected it? Normally, the length of the word relates to the time needed to read it.
+
+
+
+
+*Mutate a new column called "word_length" to the dataframe. You can use the function nchar() to calculate the length of a string*  
+```{r}
+# Mutate here ! 
+rdf2 <- mutate(rdf,word_length=nchar(word))
+
+```
+
+
+
+
+#### Analysis of reading data 
+1. Assumptions: are your data normally distributed?
+– use stat.desc() on RT and word length
+
+2. You can try transformations:
+– Use mutate to create log(RT), sqrt(RT) and 1/RT
+– Go through through the assumptions check again: did transformation fix your data or do you need to use a correlation test for non-normally distributed data?
+
+3. Correlational test:
+– Perform a correlational test on your data using cor.test() - Can you use Pearson's test or do you need to you Spearman or Kendall?
+
+```{r}
+#1. Is data normal?
+round(
+  stat.desc(
+  cbind(rdf2$rt, rdf2$word_length),
+  basic = FALSE, norm = TRUE, desc=FALSE), 
+    digits = 2)
+
+```
+
+```{r}
+#2. Transforming the data
+rdf3 <- rdf2 %>% 
+  mutate(
+    logRT = log(rt), 
+    sqrtRT = sqrt(rt),
+    recipRT = 1/(rt))
+
+round(
+  stat.desc(
+  cbind(
+    WL = rdf3$word_length,
+    RT = rdf3$rt,
+    logRT = rdf3$logRT,
+    sqrtRT = rdf3$sqrtRT,
+    recRT = rdf3$recipRT),
+  basic = FALSE, norm = TRUE, desc=FALSE), 
+    digits = 2)
+
+```
+
+```{r}
+#3. Correlational test
+output_spearman_rdf <- cor.test(rdf2$word_length, rdf2$rt, method = 'spearman')
+output_kendall_rdf <- cor.test(rdf2$word_length, rdf2$rt, method = 'kendall')
+output_spearman_rdf
+output_kendall_rdf
+
+```
+
+
+Steps 4 and 5 continue in Part 3
+
+
+--- 
+
+### Part 3: Scatter plot and reporting results
+
+#### Visualization
+
+4. Make a scatterplot of the reaction times and word lengths and add a regression line, using the following code
+
+ggplot(dataframe,aes(x, y))+
+  geom_point()+
+  geom_smooth(method="lm")   #linear model - will draw the regression line
+  
+
+
+
+```{r}
+scatterplot <- ggplot(rdf3,aes(word_length, rt))+
+  geom_point()+
+  geom_smooth(method="lm",linetype="dashed",color="darkred")
+
+xdensity <-  ggplot(rdf3, aes(word_length, fill=gender)) + 
+  geom_density(alpha=.5) + 
+  theme(legend.position = "none")
+ydensity <- ggplot(rdf3, aes(rt, fill=gender)) + 
+  geom_density(alpha=.5) + 
+  theme(legend.position = "none")
+
+blankPlot <- ggplot()+geom_blank(aes(1,1))+
+  theme(plot.background = element_blank(), 
+   panel.grid.major = element_blank(),
+   panel.grid.minor = element_blank(), 
+   panel.border = element_blank(),
+   panel.background = element_blank(),
+   axis.title.x = element_blank(),
+   axis.title.y = element_blank(),
+   axis.text.x = element_blank(), 
+   axis.text.y = element_blank(),
+   axis.ticks = element_blank()
+     )
+
+gridExtra::grid.arrange(xdensity, blankPlot, scatterplot, ydensity,ncol=2, nrow=2, widths=c(4, 1.4), heights=c(1.4, 4))
+```
+
+
+
+#### Reporting the results
+
+5.Report the results in APA format:
+  r(degrees of freedom) = correlation coefficient estimate, p = p-value
+  Degrees of freedom are (N - 2) for correlations
+  You can also report shared variance: R2 
+
+Example:  “Reading time (RT) was found to negatively correlate with word length, r(60) = - 0.71, p = .02, R2  = 0.50”
+
+
+#No thanks, there seems to be no correlation.
+
+
+### Part 3 Working With US Arrest Data:
+
+Let's try and use our newly aqquired power for something meaningful.
+  - Crimes in the US has been on the rise the last couple of years and we wanna
+    find the best approach for counteracting measures. 
+  - A potential correlation could be between % urban population and crime rates. 
+    Lets us investigate
+```{r}
+data("USArrests")
+head(USArrests)
+```
+#### Overview of Variables
+Murder: Murder arrests (per 100,000)
+Assault: Assault arrests (per 100,000)
+UrbanPop: Percent urban population
+Rape: Rape arrests (per 100,000)
+
+
+1) Visualize the distribution of UrbanPop across states 
+```{r}
+#Check rownames 
+rownames(USArrests)
+#Make a New collumn in USArrests called "state" and being = rownames. Hint: use function from above
+
+USArrests_df2 <- USArrests %>% 
+  mutate(state=rownames(USArrests))
+
+
+#Now plot the distribution by specifying ..x.. and ..y..
+ggplot(USArrests_df2, aes(x = state, y = UrbanPop)) + 
+  geom_col() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) #This rotates the x-labels making them readable. 
+```
+
+2) Check correlation between UrbanPop and (Murder, Assault, Rape)
+```{r}
+#Murder
+cor.test(USArrests_df2$UrbanPop, USArrests_df2$Murder, method = 'pearson')
+
+#Rape
+cor.test(USArrests_df2$UrbanPop, USArrests_df2$Rape, method = 'pearson')
+
+
+#Assault
+cor.test(USArrests_df2$UrbanPop, USArrests_df2$Assault, method = 'pearson')
+
+```
+3) Check assumption for all of the cor.test and make changes if required. (Normality and outliers) 
+```{r}
+
+```
+
+4) Describe in your own words what you think the correlation tests are telling us:
+  a) UrbanPop ~ Murder
+  b) UrbanPop ~ Assault
+  c) UrbanPop ~ Rape 
+
+
+5) Imagine that you were given the UrbanPop variable of a new state called "Imaginary_State2":
+   By knowing the UrbanPop do you think you could predict the Murder, Assault and Rape rate in
+   this new state? 
+   
+   - If so why? If not then also why? 

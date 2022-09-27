@@ -1,0 +1,382 @@
+---
+title: "class_11_int_effect"
+author: "Sigurd Fyhn Sørensen"
+date: "11/19/2021"
+output: html_document
+---
+
+# Class 11 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load Packages:
+```{r}
+pacman::p_load(tidyverse)
+pacman::p_load(jtools) # for summ() function
+```
+
+Today we will be working with interaction effects both categorical:continious
+categorical:categorical and continious:continious. 
+
+
+## Exercise 1 (Categorical:Continious)
+ChickWeight Variable Description: 
+*weight:* a numeric vector giving the body weight of the chick (gm).
+
+*Time:* a numeric vector giving the number of days since birth when the measurement was made.
+
+*Chick:* an ordered factor with levels 18 < ... < 48 giving a unique identifier for the chick. The ordering of the levels groups chicks on the same diet together and orders them according to their final weight (lightest to heaviest) within diet.
+
+*Diet:* a factor with levels 1, ..., 4 indicating which experimental diet the chick received.
+
+### Load Data
+```{r}
+library(MASS)
+data("ChickWeight")
+View(ChickWeight)
+```
+
+*Visual Investigation of data*
+```{r}
+ggplot(ChickWeight, aes(x = Time, y = weight)) + geom_point() + facet_wrap(~Diet) + geom_smooth(method = lm) + labs(title = "Plot1")
+```
+It looks like that there is a linear relationship between time ~ weight. The older a chicken 
+gets the heavier it's gonna be. 
+
+```{r}
+ggplot(ChickWeight, aes(x = Diet, y = weight, fill = Diet)) + geom_boxplot() + theme_bw() + labs(main = "Plot2")
+```
+Diet also seem to have something that approahces a linear effect on weight. 
+We will now try and model (weight ~ Diet + Time). 
+
+
+```{r}
+pacman::p_load(jtools)
+summ(lm(weight ~ Diet + Time, data = ChickWeight))
+```
+*Interpret the results without interaction:*
+$\beta_0 = 10.92$ is the weight of a chicken having diet1 (first level of Diet factor)
+and at time = 0. 
+
+$\beta_1 = 16.17$ is the weight increase going from Diet1 to Diet2 regardless of 
+the value of the time variable which can range from $-\infty: + \infty$.
+
+$\beta_2 = 36.50$ is the weight increase going from Diet1 to Diet3 regar
+dless of the value of the time variable which can range from $-\infty: + \infty$.
+
+$\beta_3 = 30.23$ is the weight increase going from Diet1 to Diet4 regardless of 
+the value of the time variable which can range from $-\infty: + \infty$.
+
+$\beta_4 = 8.75$ is the weight increase by each increment on the time scale regardless of 
+your Diet level. 
+
+
+These results are all nice and dandy but in the real world we could imagine that 
+The amount of weight a chicken gains is also dependent on the diet the chick has. 
+In other words:
+  The time coefficient should vary dependeing on which Diet the chicken has.
+
+You could draw a parallel to the previous week of random effects where we allow different baselines but varying slopes. The formula (weight ~ Diet + Time) allows for Diet specific 
+baselines/intercepts. But now we also want varying slopes for each diet level.
+(weight ~ Diet * Time)... Diet*Time includes both predictors as individual effects and interaction effects. 
+
+```{r}
+model1 <- lm(weight ~ Diet * Time, data = ChickWeight)
+summ(model1)
+```
+*Interpret the results without interaction:*
+Now it is a bit more tricky to interpet coefficients of a model with interaction effects.
+But let me try and walk you through it...
+
+_Non Interaction Effects_
+$\beta_0 = 30.93$ is the weight of a chicken having diet1 (first level of Diet factor)
+and at time = 0. 
+
+$\beta_1 = -2.30$ is the weight increase going from Diet1 to Diet2. In the previous model 
+we could interpret this value regardless of where we were on the time variable,
+this is not the case now. Since there now is an interaction between Diet:Time
+we can only interpret this beta value when time = 0. 
+
+The same principle applies to the rest of the Diet coefficients. 
+
+$\beta_4 = 6.84$ is the weight increase by each increment of the time variable. But following the same principle as interpreting our non:interaction effects for Diet we can only interpret this
+beta coefficients when Diet is held at its first level (Diet1). 
+
+_Interaction Effects_
+Interaction effects is essentially the same as allowing our beta coefficients to vary depending on the given value of one of the other predictors. 
+
+$\beta_5 = 1.77$ Going from Diet1-Diet2 will increase our 
+beta coefficient for our time predictor from:  6.84 to (6.84 + 1.77 = 8.61). So now an increment of one on the time variable will result in an increase in weight of: 8.61. 
+
+Same principle applies for the rest of the interaction effect terms. 
+
+
+
+## Your Turn
+
+```{r}
+data("diamonds")
+View(diamonds)
+```
+Let us return to our diamonds data set to explore possible prediction of diamonds prices
+now including interaction effects. 
+```{r}
+#For getting an overview of the data set. 
+?diamonds
+```
+
+  i) Visually investigate the data and select a _categorial_ and a _contious_ predictor to predict *price*
+```{r}
+ggplot(diamonds, aes(x = carat, y = price)) + geom_point() + facet_wrap(~cut) + geom_smooth(method = lm) + labs(title = "Diamonds From Sierra Leon - cut")
+```
+
+  
+  ii) Do a linear model with your selected predictors and your dependent variable. 
+```{r}
+dia_model1 <- lm(price ~ carat*cut, data = diamonds)
+summ(dia_model1)
+levels(diamonds$cut)
+```
+ 
+  iii) Check if your model lives up the assumptions of the linear model. 
+```{r}
+plot(lm(price ~ carat*cut, data = diamonds))
+
+```
+  
+  iiii) If your model does not live up to the assumptions then do appropiate transformations until it does. Try and transform both/either dependent and indepedent variables. 
+  
+```{r}
+log_diamond <- diamonds %>% 
+  mutate(log_price=log(price), log_carat=log(carat))
+plot(lm(log_price ~ log_carat*cut, data = log_diamond))
+```
+```{r}
+ggplot(log_diamond, aes(x = log_carat, y = log_price)) + geom_point() + facet_wrap(~cut) + geom_smooth(method = lm) + labs(title = "Diamonds From Sierra Leon - cut")
+
+log_dia_model1 <- lm(log_price ~ log_carat*cut, data = log_diamond)
+summ(log_dia_model1)
+
+```
+
+
+
+  iiiii) Report on your final model following the APA style.
+  
+  
+
+For log-log:
+1% change in carat results in beta % increase in y  
+  
+
+
+# Exercise 2 Continious:Continious interaction. 
+We've now looked at categorical:continious interaction effects but now we move on to
+continious:continious interactions. These are a bit more difficult to conceptually wrap your mind around.
+If you understood the previous section on catgegorical:continious interactions this section will the following section
+fairly okay.
+If you DID NOT UNDERSTAND the previous section raise your hand as this is the easies introduction
+into interaction effects. 
+
+*Cont:Cont*
+Following the principle from the previous section: Interaction effect is essentially the same as saying:
+we want slopes to vary dependent on other predictors set value. 
+
+Time coefficient/slope are allowed to vary between our different levels of Diet. (1,2,3,4) 
+
+Now imagine that Diet has been transformed into a variable on the continious scale:
+Diet range = $-\infty: + \infty$.
+
+We still follow the same principle that for each value of _Diet_ there exist a specific slope for _time_.
+The only difference now being Diet doesn't have a _4 levels_ but infite _levels_. ie. continious. 
+This mean that we will have a specific slope coefficient for time per each value of Diet which is infinite many possibilities. Resulting in infinite possisble slopes for time. 
+
+### Simulate Diet as a continious variable
+```{r}
+set.seed(3)
+#Let's try and illustrate with some fake simulated continious Diet data:
+try_chick <- ChickWeight %>% 
+  mutate(diet_contin =  rnorm(nrow(ChickWeight) , mean=8, sd= 2))
+
+
+model4 <- lm(weight ~ diet_contin*Time,data = try_chick)
+summ(model4)
+```
+*diet_contin:Time* For every increment in diet_contin while holding Time at a constant would result in the Time coefficient slope 
+to decrease -0.25. 
+
+**When you have continious interaction effects that are statistically significant, do not attempt to interpret the main effects without considering the interaction effects.**
+
+Plot the different possible slopes. 
+```{r}
+#Nice way of illustarting the different possible slopes called interaction plots. 
+pacman::p_load(sjPlot, sjmisc, interactions) #package for plotting interaction effects
+
+
+interactions::interact_plot(model4, pred = Time, modx = diet_contin)
+
+
+interactions::interact_plot(model4, pred = diet_contin, modx = Time)
+```
+If you wanna read more about these kind of plots check out: https://cran.r-project.org/web/packages/interactions/vignettes/interactions.html
+
+## Your Turn. 
+Now combining logisitc regression and interaction effects continious:continious
+We will load in the _iris_ data. 
+```{r}
+data("iris")
+View(iris)
+```
+
+*Description*
+This famous (Fisher's or Anderson's) iris data set gives the measurements in centimeters of the variables sepal length and width and petal length and width, respectively, for 50 flowers from each of 3 species of iris. The species are Iris setosa, versicolor, and virginica.
+
+#Exercise 2 
+```{r}
+iris$Species <-  droplevels(iris$Species, "setosa") #removes level of setosa
+```
+
+  i) We want to predict Species. But currently our data set has 3 species. We will learn about multinomial logistic regression soon but for now we can only work with binary outcomes. For now we will only work with *"virginica" , "versicolor"* 
+Create a new data frame only containing those two Species. hint: filter()
+
+```{r}
+
+```
+
+  ii) Logistic regression need your outcome variable to be coded as 0 and 1. Currently Species are characters. Change the variable to be _0 = baseline (first type of flower)_ and _1 = What we're trying to predict = (Second Type of flower)_
+
+hint: if_else() see https://www.marsja.se/create-dummy-variables-in-r/ for help. 
+```{r}
+if_else(c(1,2,3,4,5) == c(1,1,3,3,5), 1, 0)
+```
+#### Syntax of if_else() function:
+if_else(**condition**, **output if condition = TRUE** , **output if condition = FALSE**)
+
+In the above code the function check wheter the element in the two lists are the same. If the elements are the same 
+output will be _1_ on our instructions. If the elements are not the same the output will be a _0_. 
+
+Example of how it loops through the vector and checks the condition of x1 == x2. 
+c[1] == c[1] = output: 1 
+c[2] != c[2] = output: 0 
+c[3] == c[3] = output: 1 
+c[4] != c[4] = output: 0 
+c[5] == c[5] = output: 1 
+
+  *Use this to turn your two selected flower species into either 1 or 0.* 
+```{r}
+
+```
+
+
+ ii) Make a glm() predicting species based on remaining variables in the Iris data.
+  a) 1 model without any interaction effects.
+```{r}
+
+```
+  
+  b) One model with 1 interaction term. 
+```{r}
+
+```
+  
+  c) One model with 2 interaction terms.
+```{r}
+
+```
+ 
+  d) test which model perform best by using the caret::confusionMatrix()
+hint: you've to use predict() function - check script from last week.
+```{r}
+
+```
+
+  ii) Report your best model in APA format. (Remeber coefficients are on log-odds scale)
+  
+  
+  iii) Do an interaction plot if your best model contain an interaction term. 
+  
+```{r}
+
+```
+  
+  
+  
+
+# Exercise 3 Out-of-sample predictions. 
+As we've talked about exstensively when we're training our model on a sample we are automatically also overfitting our model to that sample. So instead of evaluating our model based accuracy on which the model were trained it is a much better idea to evaluate your model performance on out-of-sample data. ie. divide your data in a _train_ partition and a _test_ partition. 
+
+
+### How to Split data into test and training data. 
+```{r}
+iris_subset <- iris %>% 
+  filter(Species == "virginica" | Species == "versicolor") %>% 
+  mutate(Species_numeric = if_else(Species == "versicolor", 1, 0)) %>% 
+  mutate(Species = as.factor(Species))
+
+pacman::p_load(caret)
+set.seed(3456)
+trainIndex <- createDataPartition(iris_subset$Species,
+                                  p = .6, #we create a partition with 60%
+                                  list = FALSE, #not a list but a data.frame
+                                  times = 1) #Times we split = 1 time. 
+Train <- iris_subset[ trainIndex,] #We subset iris_subset by our indexing variable trainIndex
+Test <- iris_subset[-trainIndex,] #Everything that is not in our trainIndex/Train will be in Test.
+```
+
+
+```{r}
+#Train the model on our Train data set.
+model_train <- glm(Species ~ Sepal.Width*Sepal.Length, data = Train, family = binomial)
+```
+
+```{r}
+#Predict based on your trained model and Test df partition. type = "reponse" because we're working with logistic regression. This changes the outcome to be probabilities and not log-odds. 
+Test$y_hat_prop <-  predict(model_train, Test, type = "response")
+```
+
+```{r}
+#Based on our Quantizer function (see slides from class 10) we predict Versiscolor or Virginica. 
+Test <- Test %>% 
+  mutate(y_hat = if_else(y_hat_prop > 0.5, "versicolor","virginica")) %>% 
+  mutate(y_hat = as.factor(y_hat)) #Turn variable into a factor
+```
+
+```{r}
+confusionMatrix(Test$Species, Test$y_hat) #Output the confusion matrix. 
+```
+
+
+
+# Your Turn
+  i) Split the subset of the iris data (containing only two Species of flowers) into Train and Test partition. 
+  
+```{r}
+
+```
+  ii) Choose your best model from Exercise2 now train your model based on the Training partition data only. 
+```{r}
+
+```
+
+  iii) Predict() based on your trained model and your Test partition. (hint: type = "response")
+```{r}
+
+```
+
+  iiii) Make a confusionMatrix and evalutate your model accuracy. 
+  a) Make the confusionMatrix
+```{r}
+
+```
+  b) Discuss if your model performed better out-of-sample or in-sample.
+  
+  c) In your own words describe why your model performed better in either or or of the conditions. 
+
+### Extra. 
+Find the best possible model predicting Species on out-of-sample predictions.
+*No polynomial regression allowed*
+  i) Do it by hand. 
+  i) Make a function so you can loop through different model versions. 
+

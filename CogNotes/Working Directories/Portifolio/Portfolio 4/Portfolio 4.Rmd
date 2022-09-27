@@ -1,0 +1,199 @@
+---
+title: "Portifolio 4"
+author: "Laurits Lyngbæk"
+date: "11/24/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+pacman::p_load(tidyverse, lme4, jtools, lmerTest, car)
+
+```
+
+# Portifolio 4
+## Loading data
+```{r}
+cake<- read_csv("cake.csv")
+head(cake)
+sapply(cake,class)
+summary(cake)
+
+```
+
+```{r}
+ggplot(cake,aes(x=temp,y=angle))+geom_point(colour=cake$replicate)
+
+cake_1 <- lmerTest::lmer(angle~temp+(1+recipe|replicate), data = cake, REML = F)
+summ(cake_1)
+summary(cake_1)
+
+
+cake_2 <- lmerTest::lmer(angle~temp+(1|replicate), data = cake, REML = F)
+summ(cake_2)
+
+
+cake_3 <- lmerTest::lmer(angle~temp*recipe+(1|replicate), data = cake, REML = F)
+summ(cake_3)
+
+cake_4 <- lmerTest::lmer(angle~temp+(1|replicate)+(1 | recipe), data = cake, REML = F)
+summ(cake_1)
+
+
+ggplot(cake, aes(x = angle, y = temp)) + geom_point() + facet_wrap(~recipe) + geom_smooth(method = lm) + labs(title = "Diamonds From Sierra Leon - cut")
+
+
+?round()
+
+```
+```{r}
+AIC(cake_1,cake_2,cake_3,cake_4)
+BIC(cake_1,cake_2,cake_3)
+```
+
+```{r}
+MuMIn::r.squaredGLMM(cake_1)
+MuMIn::r.squaredGLMM(cake_2)
+MuMIn::r.squaredGLMM(cake_3)
+MuMIn::r.squaredGLMM(cake_4)
+```
+```{r}
+plot(cake_1)
+```
+
+
+
+
+
+
+#Titanic
+
+```{r}
+titanic<- read_csv("titanic.csv")
+titanic <- titanic[-c(6:8)]
+titanic$Pclass <- as.factor(titanic$Pclass)
+titanic$Sex <- as.factor(titanic$Sex)
+  
+sapply(titanic,class)
+```
+
+```{r}
+m_tit <- glm(Survived ~ Sex + Age + Pclass, data= titanic, family = binomial)
+summary(m_tit)
+round(vif(m_tit),2)
+
+```
+### Turn Data log odds to probabillity
+```{r}
+titanic %>% 
+  group_by(Pclass,Sex) %>% 
+  summarise(
+    median_age = median(Age, na.rm = T)
+  )
+
+median_fem_1<- boot::inv.logit(3.63492+(-0.03427*35))
+median_fem_2<- boot::inv.logit(3.63492-1.19911+(-0.03427*28.5))
+median_fem_3<- boot::inv.logit(3.63492-2.45544 +(-0.03427*22))
+median_boy_1<- boot::inv.logit(3.63492-2.58872+(-0.03427*41.5))
+median_boy_2<- boot::inv.logit(3.63492-2.58872-1.19911+(-0.03427*30))
+median_boy_3<- boot::inv.logit(3.63492-2.58872-2.45544 +(-0.03427*25))
+
+names <- c("First class girl", "Second class girl","Third class girl","First class boy","Second class boy","Third class boy")
+survival <- c(median_fem_1, median_fem_2, median_fem_3, median_boy_1, median_boy_2, median_boy_3)
+
+data_frame(Names = names, Survival_chance = survival )
+
+
+```
+
+
+
+
+## Visualisation of data points:
+```{r}
+
+titanic$Survived_text <- ifelse(titanic$Survived ==0, "No","Yes") 
+  
+  
+
+  ggplot(titanic,aes(Survived,Pclass, colour = Age, shape = Sex))+
+  geom_jitter()+
+   scale_colour_gradient(low = "yellow", high = "red", na.value = NA)+
+    theme_bw()
+
+```
+
+
+
+
+
+
+## Training data setup
+```{r}
+pacman::p_load(caret)
+set.seed(666)
+trainIndex <- createDataPartition(titanic$Survived, p = 0.8,
+                                  list = FALSE,
+                                  times = 1)
+
+TrainTitanic <- titanic[trainIndex,] 
+TestTitanic <- titanic[-trainIndex,]
+
+```
+### Prediction
+```{r}
+#Train model on training data
+Trained_Model <- glm(Survived ~ Sex + Age + Pclass, data = TrainTitanic, family = binomial)
+
+
+#Predicting on test data, type = "response" is only needed for logistic regression
+TestTitanic$Prediction <- predict(Trained_Model, newdata = TestTitanic, type = "response")
+
+
+TrainR2 <- R2(TrainTitanic$Survived,Trained_Model$fitted.values)
+TestR2 <- R2(TestTitanic$Survived,TestTitanic$Prediction)
+print( paste("Train R2 =", round(TrainR2,4)))
+print(paste("Test R2 =", round(TestR2,4)))
+
+
+?R2
+
+
+```
+
+```{r}
+#Confusion Matrix
+
+TestTitanic_1_0 <- TestTitanic %>%
+  mutate(Prediction = as.factor(if_else(Prediction > 0.5,1,0))) %>% 
+  mutate(Survived = as.factor(Survived))
+
+
+
+conf_matrix <- confusionMatrix(TestTitanic_1_0$Prediction, TestTitanic_1_0$Survived, positive= "1") 
+conf_matrix
+
+
+conf_matrix$table %>% 
+  as_tibble() %>%  
+  ggplot() +
+  aes(Prediction, Reference, fill=n, label=n) +
+  geom_tile() +
+  geom_text(color="white") +
+  coord_cartesian(expand=FALSE) +
+  theme_minimal() +
+  theme(legend.position = "none")+
+  labs(title="Confusion matrix for *titanic survival training set* - Accuracy : 0.7797")
+
+```
+
+
+
+
+
+
+
+
+
+

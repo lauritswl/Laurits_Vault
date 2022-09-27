@@ -1,0 +1,219 @@
+---
+title: "Class11_notes"
+author: "Anita Kurm feat Jonathan"
+date: "12/4/2019"
+output: html_document
+---
+
+## Welcome to Class 11! *the last one :'( *
+
+Today we will practice human coding (aka data annotation) and learn how to assess inter-coder reliability in R!
+
+```{r}
+library(tidyverse)
+```
+
+
+
+### Part 1: Annotate data and import it into R
+
+1. Go to blackboard and find a file called "triangle_coder_data.csv"
+2. Find yourself a partner and decide who is coder1 and who is coder2
+3. Go to your own computer, and independently of your partner, annotate the data using coding scheme from slides. You can do the data annotation in excel :) 
+4. Once you're both done, gather your codings so each constitute a column 
+5. Import this data to R to use it later in Part 3 (you can jump straight there if you feel confident about your knowledge of inter-coder reliability)
+
+```{r}
+voresdf <- read_delim("voresdata.csv", delim = ";")
+```
+
+
+### Part 2: Assessing inter-coder reliability (just a read-through)
+
+Even though people are in general great at judging data and annotating it, there are still some concerns one might have about this kind of data. What if the coding scheme was too ambiguous and coders understood the task differently? What if some coders weren't attentive enough or were severely biased?... 
+
+The list can go on and on, and to ensure that the human-annotated data can be still safely used in your research, you can compare coders' answers witch each other. Multiple people can't be all wrong if they give the same results as others (hopefully!). If everything is alright - there is no ambiguity, no bias, no miscommunication - then different people should give the same annotations to same observations in our data, and then we can go on with our analysis.
+
+There are various ways to check how different coders' annotations compare to each other. 
+
+To show this, we will fabricate some data. Prepare yourself for a throwback to 2015... The blue or white dress debate [I can't be the only one who remembers it... There's even a wiki page about it: https://en.wikipedia.org/wiki/The_dress]. Let's imagine that participants were asked to describe what they see, and then we asked our coders to annotate descriptions given by participants.
+
+There will be a bunch of different coders that will have different answers in relation to the reference coder, the one we love and trust (maybe that is the most experienced coder who has already worked for us in the previous research project). 
+
+```{r}
+dress <- tibble(participant_described = c(rep("Blue dress", 14), "Blue dress", "White dress"),
+                        reference_coder = c(rep("Blue", 14), "Blue", "White"),      #we trust this guy, so we compare everyone with him!
+                        opposite_coder = c(rep("White", 14), "White", "Blue"),         #says the opposite 
+                        same_coder = c(rep("Blue", 14), "Blue", "White"),              #says absolutely the same
+                        one_apart_coder = c(rep("Blue", 14), "White", "White"),        #says almost the same, in exception of one answer
+                        kappa_problematic_coder = c(rep("Blue", 14), "White", "Blue")  #the coder that Kappa will struggle with
+                        )
+```
+
+
+
+#### 1) Percentage of agreement
+
+First way to check how reliable different coders are is to compare how many of their answers were identical.
+
+An easy way to get this metric is to make a separate boolean vector that tells you whether the coders' answers were the same . 
+You can then count:
+    how many 'True' i.e. same answers, there were using sum() on this vector (it will sum up all Trues as 1, and all Falses as 0)
+    how many total answers there were by using length()
+    
+    -> divide sum by length and multiply by 100 to get perecentage instead of counts 
+
+```{r}
+#Calculate agreement 
+dress %>%
+  # Summarise cuz we want just one row with values
+  summarise(
+    # find pct of agreement ("==" gives vector of TRUE/FALSE, mean gives pct (basically sum / length))
+    opposite_agreement = mean(reference_coder == opposite_coder),
+    one_apart_agreement = mean(reference_coder == one_apart_coder),
+    kappa_problematic_agreement = mean(reference_coder == kappa_problematic_coder)
+  )
+
+```
+
+Just like we fabricated our data, agreement shows 0 for opposite answers of encoders, 1 for all the same answers, and smaller percentages for coders with slight disagreements (multiply by 100 if you want an actual percentage)
+
+
+#### 2) Cohen's Kappa
+
+There has been concern, that there is always a chance that even if coders were randomly guessing, they could still get some of the answers the same, undermining the agreement metric. For instance, in our data, if two coders would  just guess 'blue' all the time, they would show agreement of 1 - and we wouldn't have noticed that their annotations are wrong/weird. I want to note, that even in other less extreme scenarios some of answers people agree on are due to chance and that's why we'd always check kappa value to make sure. 
+
+Cohen offered to account for this 'agreement by chance' by introducing Cohen's kappa for assessing inter-reliability of coders:
+
+            observed agreement - probability of agreement by chance
+  kappa = --------------------------------------------------------------- = a value from -1 (total disagreement) to 1 (total agreement)
+           1 - probability of agreement by chance (standardization term)
+
+
+Manually Cohen's kappa can be counted this way:
+          1. observed agreement - same as we calculated in the previous part: proportion of the same answers among all answers
+          2. probability of agreement by chance = (Rater 1's proportion of answer A * Rater 2's proportion of answer A) + (Rater 1's proportion of answer B * Rater 2's proportion of answer B)
+          3. Cohens Kappa = (observed agreement - probability of agreement by chance)/(1 - probability of agreement by chance)
+
+
+So, for our scenario, where two people would always guess 'Blue':
+          observed agreement would be 1 out of 1 
+          probability of agreement by chance would be (16/16 answers are 'blue' in coder 1 * 16/16 answers are 'blue' in coder2) + (0/16 'white' in coder 1 * 0/16 'white' in coder2) = 1 * 1 +0*0 = 1
+          cohen's kappa = (1-1)/(1-1) = 0/0 incalculable -> giving us an NA - alarming us that something is wrong even though agreement is 1
+      
+      in more normal scenarios, it will give us some value between -1 and 1 and a p-value to assess whether the agreement was due to chance
+          
+
+Luckily, there is a package that already has a function that does this: irr (package of Various Coefficients of Interrater Reliability and Agreement). Install and load it.
+
+```{r}
+pacman::p_load(irr)
+```
+
+We will need kappa2(matrix of coder1 and coder2 annotations, 'unweighted') command from irr package
+    It calculates Cohen's Kappa - a measure of interrater agreement between 2 raters on categorical (or ordinal) data. 
+      
+      unweighted - argument that ensures calculation of defualt/classic Cohen's Kappa
+      weighted: own weights for the various degrees of disagreement could be specified with this parameter
+  
+
+```{r}
+#Calculate Cohen’s Kappa
+kappa2(select(dress, reference_coder, one_apart_coder), "unweighted") #when coders say very similar stuff except 1 an
+```
+
+Interpreting output:
+    You're first shown the test summary: number of raters, number of subjects
+    Cohen's Kappa: a value of inter-coder reliability from -1 to 1. 
+    z-statistic - Z is the z-value, which is the approximate normal test statistic. It is used to determine the p-value.
+
+    p-value - 
+      P-value ≤ α: The inter-coder agreement is not due to chance (Reject H0)
+      P-value > α: The inter-coder agreement is due to chance (Fail to reject H0)
+
+      credit: https://support.minitab.com/en-us/minitab/18/help-and-how-to/quality-and-process-improvement/measurement-system-analysis/how-to/attribute-agreement-analysis/attribute-agreement-analysis/interpret-the-results/all-statistics-and-graphs/kappa-statistics/#z 
+
+
+
+Further Interpreting Cohen's kappa:
+Kappa values range from –1 to +1. The higher the value of kappa, the stronger the agreement, as follows:
+When Kappa = 1, perfect agreement exists.
+When Kappa = 0, agreement is the same as would be expected by chance.
+When Kappa < 0, agreement is weaker than expected by chance; this rarely occurs.
+The AIAG suggests that a kappa value of at least 0.75 indicates good agreement. However, larger kappa values, such as 0.90, are preferred.
+
+Now that we saw how to interpret kappa output, let's look at 4 of tdifferent coders comparisons using kappa!
+
+```{r}
+
+#from previous part we know that agreement was 0
+
+#Calculate Cohen’s Kappa
+kappa2(select(dress, reference_coder, opposite_coder), "unweighted") #when coders say exactly the opposite
+```
+^ When we have opposite answers, kappa becomes negative (and p-value is very small, which means the agreement between the coders is not due to chance)
+
+
+
+```{r}
+#the agreement was 1
+kappa2(select(dress, reference_coder, same_coder), "unweighted") #when coders say exactly the same
+```
+^When we have the same answers, kappa becomes 1 (or very close to it) - p-value here is also very tiny, meaning the agreement between the coders is not due to chance.
+
+
+
+
+```{r}
+#the agreement was 0.9375
+kappa2(select(dress, reference_coder, one_apart_coder), "unweighted") #when coders say very similar stuff except 1 answer
+```
+^When we have lots of agreement in our data and a bit of variation in answers, kappa stays pretty positive (0.636) - p-value here is also very tiny, meaning the agreement between the coders is not due to chance.
+
+
+
+Here is where the limitations described at wikipedia become more prominent
+```{r}
+#the agreement was 0.875
+kappa2(select(dress, reference_coder, kappa_problematic_coder), "unweighted") #when coders say very similar stuff except 2 answers
+```
+Even though *almost all of the answers are the same and agreement is high*, due to the way the very few wrong answers are located in the data and general imbalance in our 'blue' and 'white' categories, kappa for the intercoder reliability becomes wrongfully very small - even negative. The p-value becomes really big, meaning that the observed agreement could be due to chance. 
+
+    If you have majority of all responses fall into a single nominal category (in this case 'Blue') then basically any kind of reliability measurement is pretty meaningless, as agreement probability by chance becomes very high. Before that we were just "lucky" that the way these responses were allocated did not mess with kappa calculation too much.
+    
+    You can read more about it in 'Limitations' section of the wikipedia page for kappa: https://en.wikipedia.org/wiki/Cohen's_kappa
+
+**Solution** To check both kappa and agreement/disagreement percentage, investigate up-close cases with low kappa (low inter-rater reliability) :) 
+
+Note that the cohen's kappa command we just used is for checking reliability of just two coders - if you have more, there are other commands in irr package that will help you (particularly kappam.light() and kappam.fleiss() ).
+
+
+
+
+
+### Part 3: Evaluating your own inter-coder reliability 
+Remember data you imported in part 1? It's time to assess your own inter-rater reliability!
+
+```{r}
+#Calculate agreement 
+voresdf %>%
+  # Summarise cuz we want just one row with values
+  summarise(
+    # find pct of agreement ("==" gives vector of TRUE/FALSE, mean gives pct (basically sum / length))
+    Agreement = mean(`coder 1` == `coder 2`)
+  )
+
+```
+```{r}
+pacman::p_load(irr)
+kappa2(select(voresdf, "coder 1", "coder 2"), "unweighted")
+```
+
+
+
+### Optional: 
+1. Calculate cohen's kappa for your own annotated data manually.
+
+
+
+
