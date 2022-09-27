@@ -19,12 +19,8 @@
         "id": "51b9f9bdb70558e1",
         "type": "leaf",
         "state": {
-          "type": "markdown",
-          "state": {
-            "file": "Code/R/Bayesian/Bayesian.md",
-            "mode": "source",
-            "source": false
-          }
+          "type": "graph",
+          "state": {}
         }
       }
     ],
@@ -109,9 +105,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Code/R/Bayesian/Bayesian.md"
-              }
+              "state": {}
             }
           },
           {
@@ -151,7 +145,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Code/R/Bayesian/Bayesian.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -168,7 +161,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Code/R/Bayesian/Bayesian.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -183,9 +175,9 @@
   },
   "active": "51b9f9bdb70558e1",
   "lastOpenFiles": [
+    "Code/R/Bayesian/Bayesian.md",
     "Organization/203 Methods 3.md",
     "Organization/000 Index.md",
-    "Code/R/Bayesian/Bayesian.md",
     "Methods3/Assignment_1_Meth3.md",
     "Organization/201 Perception and Action.md",
     "Methods3/Back to statistical basics.md",
