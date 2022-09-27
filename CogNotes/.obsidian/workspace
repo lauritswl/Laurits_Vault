@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Organization/203 Methods 3.md",
+            "file": "Code/R/Baysiean/Baysiean.md",
             "mode": "source",
             "source": false
           }
@@ -41,7 +41,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "\"Define the formulaDefine the priors + plots plots plotsPrior predictive checksModel fitting and quality checkPosterior predictive checksParameter recoveryNo pooling, full pooling partial poolingMaking sure the model can do what we think it shouldIdentifying desired sample sizes (or alternatively acceptable effect sizes)\"",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -58,7 +58,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "8b4ae5f19c169376",
@@ -97,7 +98,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Organization/203 Methods 3.md"
+                "file": "Code/R/Baysiean/Baysiean.md"
               }
             }
           },
@@ -138,7 +139,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Organization/203 Methods 3.md",
+                "file": "Code/R/Baysiean/Baysiean.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -155,7 +156,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Organization/203 Methods 3.md",
+                "file": "Code/R/Baysiean/Baysiean.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -168,10 +169,10 @@
     "width": 280.5,
     "collapsed": true
   },
-  "active": "e81c6b430f2e0a6e",
+  "active": "4ae5d8865980f0af",
   "lastOpenFiles": [
-    "Methods3/Assignment_1_Meth3.md",
     "Organization/203 Methods 3.md",
+    "Methods3/Assignment_1_Meth3.md",
     "Methods3/Back to statistical basics.md",
     "PercAct/Exam idea.md",
     "Code/Python/(python) Variable types.md",
