@@ -58,8 +58,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 2
+        ]
       },
       {
         "id": "8b4ae5f19c169376",
@@ -166,10 +165,9 @@
       }
     ],
     "direction": "horizontal",
-    "width": 280.5,
-    "collapsed": true
+    "width": 280.5
   },
-  "active": "07846ab35d7ce872",
+  "active": "08e786ab8033a184",
   "lastOpenFiles": [
     "Test from desktop.md",
     "Code/R/Bayesian/Bayesian.md",
