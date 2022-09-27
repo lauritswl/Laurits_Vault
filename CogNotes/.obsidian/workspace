@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "000 Index.md",
+            "file": "Exam idea.md",
             "mode": "source",
             "source": false
           }
@@ -97,7 +97,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "000 Index.md"
+                "file": "Exam idea.md"
               }
             }
           },
@@ -138,7 +138,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "000 Index.md",
+                "file": "Exam idea.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -155,7 +155,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "000 Index.md",
+                "file": "Exam idea.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -170,15 +170,15 @@
   },
   "active": "e81c6b430f2e0a6e",
   "lastOpenFiles": [
-    "(python) Variable types.md",
-    "000 Index.md",
+    "Code/Python/(python) Variable types.md",
+    "Multilevel Models (MLM).md",
+    "Third semester PDFs/PP's/PercAct/Mather (2016) Chapter 13.pdf",
+    "Third semester PDFs/PP's/PercAct/Chapter 1 pp.pdf",
+    "Back to statistical basics.md",
+    "Organization/000 Index.md",
     "Politics of meaning/What is discourse.md",
     "Interacction effects in r.md",
-    "Multilevel Models (MLM).md",
     "Politics of meaning/Portifolio c (discourse).md",
-    "Politics of meaning/Foucault.md",
-    "Exam idea.md",
-    "Politics of meaning/Discourse-Historical Approach (DHA).md",
-    "Politics of meaning/Marxism through Althussers lens.md"
+    "Politics of meaning/Foucault.md"
   ]
 }
