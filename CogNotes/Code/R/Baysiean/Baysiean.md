@@ -14,40 +14,10 @@
 - Identifying desired sample sizes (or alternatively acceptable effect sizes)
 
 ## Setting up the model
-UniqueWords_f0 <
--
-bf(
-UniqueWords
-~ 1)
-
-UniqueWords_f1 <
--
-bf(
-UniqueWords
-~ 0 + Diagnosis)
-
-UniqueWords_f2 <
--
-bf(
-UniqueWords
-~ 0 + Diagnosis +
-Diagnosis:Visit
-)
-
-UniqueWords_f3 <
--
-bf(
-UniqueWords
-~ 0 + Diagnosis +
-Diagnosis:Visit
-+ (1 + Visit|
-ID))
-
-UniqueWords_f4 <
--
-bf(
-UniqueWords
-~ 0 + Diagnosis +
-Diagnosis:Visit
-+ (1 + Visit|
-gr(ID, by = Diagnosis)))
+- UniqueWords_f0 <- bf(UniqueWords ~ 1)
+- UniqueWords_f1 <- bf(UniqueWords ~ 0 + Diagnosis)
+- UniqueWords_f2 <- bf(UniqueWords ~ 0 + Diagnosis + Diagnosis:Visit)
+- UniqueWords_f3 <- bf(UniqueWords ~ 0 + Diagnosis + Diagnosis:Visit - (1 + Visit|ID))
+	- Add effect (all intercept are different for each child)
+- UniqueWords_f4 <- bf(UniqueWords ~ 0 + Diagnosis + Diagnosis:Visit - (1 + Visit|gr(ID, by = Diagnosis)))
+	- 
