@@ -9,7 +9,7 @@ ___
 [[Multilevel Models (MLM)]]
 
 
-Notes on assignment
+Notes on assignment:
 [[Assignment_1_Meth3]]
 
 ___
