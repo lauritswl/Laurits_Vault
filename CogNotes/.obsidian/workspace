@@ -7,8 +7,12 @@
         "id": "0bf793281c6701d3",
         "type": "leaf",
         "state": {
-          "type": "empty",
-          "state": {}
+          "type": "markdown",
+          "state": {
+            "file": "Organization/203 Methods 3.md",
+            "mode": "source",
+            "source": false
+          }
         }
       }
     ],
@@ -55,7 +59,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       },
       {
         "id": "8b4ae5f19c169376",
@@ -93,7 +97,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "Organization/203 Methods 3.md"
+              }
             }
           },
           {
@@ -133,6 +139,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Organization/203 Methods 3.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -149,6 +156,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Organization/203 Methods 3.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -163,15 +171,15 @@
   },
   "active": "0bf793281c6701d3",
   "lastOpenFiles": [
-    "Code/R/Baysiean/Baysiean.md",
+    "Organization/000 Index.md",
+    "Code/R/Bayesian/Bayesian.md",
     "Organization/203 Methods 3.md",
     "Methods3/Assignment_1_Meth3.md",
+    "Organization/201 Perception and Action.md",
     "Methods3/Back to statistical basics.md",
     "PercAct/Exam idea.md",
     "Code/Python/(python) Variable types.md",
     "Methods3/Multilevel Models (MLM).md",
-    "Third semester PDFs/PP's/PercAct/Mather (2016) Chapter 13.pdf",
-    "Third semester PDFs/PP's/PercAct/Chapter 1 pp.pdf",
-    "Organization/000 Index.md"
+    "Third semester PDFs/PP's/PercAct/Mather (2016) Chapter 13.pdf"
   ]
 }

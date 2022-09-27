@@ -21,4 +21,3 @@
 	- Add effect (all intercept are different for each child)
 - UniqueWords_f4 <- bf(UniqueWords ~ 0 + Diagnosis + Diagnosis:Visit - (1 + Visit|gr(ID, by = Diagnosis)))
 	- We group ID by diagnosis, so the model doesn't shrink the autistic children further towards the mean, as their difference is a *marker* of the *autistic learning curves variety*
-	- 

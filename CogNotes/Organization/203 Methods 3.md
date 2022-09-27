@@ -7,7 +7,7 @@ ___
 [[Recap of general method ideas]]
 [[Back to statistical basics]]
 [[Multilevel Models (MLM)]]
-
+[[Bayesian]]
 
 Notes on assignment:
 [[Assignment_1_Meth3]]
