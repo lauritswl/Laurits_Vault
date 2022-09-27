@@ -4,15 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "e81c6b430f2e0a6e",
+        "id": "0bf793281c6701d3",
         "type": "leaf",
         "state": {
-          "type": "markdown",
-          "state": {
-            "file": "Code/R/Baysiean/Baysiean.md",
-            "mode": "source",
-            "source": false
-          }
+          "type": "empty",
+          "state": {}
         }
       }
     ],
@@ -41,7 +37,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "\"Define the formulaDefine the priors + plots plots plotsPrior predictive checksModel fitting and quality checkPosterior predictive checksParameter recoveryNo pooling, full pooling partial poolingMaking sure the model can do what we think it shouldIdentifying desired sample sizes (or alternatively acceptable effect sizes)\"",
+                "query": "",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -97,9 +93,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Code/R/Baysiean/Baysiean.md"
-              }
+              "state": {}
             }
           },
           {
@@ -139,7 +133,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Code/R/Baysiean/Baysiean.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -156,7 +149,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Code/R/Baysiean/Baysiean.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -169,8 +161,9 @@
     "width": 280.5,
     "collapsed": true
   },
-  "active": "4ae5d8865980f0af",
+  "active": "0bf793281c6701d3",
   "lastOpenFiles": [
+    "Code/R/Baysiean/Baysiean.md",
     "Organization/203 Methods 3.md",
     "Methods3/Assignment_1_Meth3.md",
     "Methods3/Back to statistical basics.md",
@@ -179,7 +172,6 @@
     "Methods3/Multilevel Models (MLM).md",
     "Third semester PDFs/PP's/PercAct/Mather (2016) Chapter 13.pdf",
     "Third semester PDFs/PP's/PercAct/Chapter 1 pp.pdf",
-    "Organization/000 Index.md",
-    "Politics of meaning/What is discourse.md"
+    "Organization/000 Index.md"
   ]
 }
