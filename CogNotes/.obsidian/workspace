@@ -9,7 +9,19 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Exam idea.md",
+            "file": "Organization/203 Methods 3.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      },
+      {
+        "id": "666c16547721e7e7",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "Methods3/Assignment_1_Meth3.md",
             "mode": "source",
             "source": false
           }
@@ -97,7 +109,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Exam idea.md"
+                "file": "Organization/203 Methods 3.md"
               }
             }
           },
@@ -138,7 +150,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Exam idea.md",
+                "file": "Organization/203 Methods 3.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -155,7 +167,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Exam idea.md",
+                "file": "Organization/203 Methods 3.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -168,17 +180,17 @@
     "width": 280.5,
     "collapsed": true
   },
-  "active": "e81c6b430f2e0a6e",
+  "active": "08e786ab8033a184",
   "lastOpenFiles": [
+    "Methods3/Assignment_1_Meth3.md",
+    "Organization/203 Methods 3.md",
+    "Methods3/Back to statistical basics.md",
+    "PercAct/Exam idea.md",
     "Code/Python/(python) Variable types.md",
-    "Multilevel Models (MLM).md",
+    "Methods3/Multilevel Models (MLM).md",
     "Third semester PDFs/PP's/PercAct/Mather (2016) Chapter 13.pdf",
     "Third semester PDFs/PP's/PercAct/Chapter 1 pp.pdf",
-    "Back to statistical basics.md",
     "Organization/000 Index.md",
-    "Politics of meaning/What is discourse.md",
-    "Interacction effects in r.md",
-    "Politics of meaning/Portifolio c (discourse).md",
-    "Politics of meaning/Foucault.md"
+    "Politics of meaning/What is discourse.md"
   ]
 }
