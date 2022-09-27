@@ -4,11 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "fa29d03ed38f3944",
+        "id": "07846ab35d7ce872",
         "type": "leaf",
         "state": {
-          "type": "empty",
-          "state": {}
+          "type": "markdown",
+          "state": {
+            "file": "Organization/203 Methods 3.md",
+            "mode": "source",
+            "source": false
+          }
         }
       }
     ],
@@ -93,7 +97,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "Organization/203 Methods 3.md"
+              }
             }
           },
           {
@@ -133,6 +139,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Organization/203 Methods 3.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -149,6 +156,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Organization/203 Methods 3.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -161,8 +169,9 @@
     "width": 280.5,
     "collapsed": true
   },
-  "active": "fa29d03ed38f3944",
+  "active": "07846ab35d7ce872",
   "lastOpenFiles": [
+    "Test from desktop.md",
     "Code/R/Bayesian/Bayesian.md",
     "Organization/203 Methods 3.md",
     "Organization/000 Index.md",
@@ -171,7 +180,6 @@
     "Methods3/Back to statistical basics.md",
     "PercAct/Exam idea.md",
     "Code/Python/(python) Variable types.md",
-    "Methods3/Multilevel Models (MLM).md",
-    "Third semester PDFs/PP's/PercAct/Mather (2016) Chapter 13.pdf"
+    "Methods3/Multilevel Models (MLM).md"
   ]
 }
