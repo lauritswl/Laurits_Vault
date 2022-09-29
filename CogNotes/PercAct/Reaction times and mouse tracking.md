@@ -16,4 +16,3 @@ Freely available and easy to use: standard computer + mouse § Freeware (for bot
 The **dynamic model** still advocates for "*two systems*" but the secondary system 2 just slowly grows in strength, instead of completely overwriting after x amount of time.
 The nuance can be seen in **this model**:
 ![[Pasted image 20220929125449.png]]
-
