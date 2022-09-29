@@ -9,7 +9,7 @@ ___
 [[Multilevel Models (MLM)]]
 [[Bayesian]]
 
-Hej fra hjemmefronten
+
 
 
 Notes on assignment:
