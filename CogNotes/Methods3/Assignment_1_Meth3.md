@@ -12,7 +12,7 @@
 - Average individual deviation: 20
 - log(50)–log(50-20)
 
-- Mean increase: 20% (0.2)
+- Mean increase: 20% (0.2)![[Priors for assignment 1.png]]
 - Average individual deviation: 0.03
 
 
