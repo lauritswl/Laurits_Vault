@@ -1,6 +1,4 @@
-
-
-
+# Bayesian workflow
 ## Setting up the analysis
 - Define the **formula**
 - Define the *priors* + plots plots plots
