@@ -97,13 +97,29 @@ ___
 ## The brain areas of action processing
 Execution of actions require an intact functional loop:
 the **frontal cortex** , the **premotor and motor cortices** , the **basal ganglia** , and the **cerebellum**
+
+#### Distinctions: 
+*Movement vs Action*
+**Movement**: Muscle activations, can be involuntary
+**Action**: Goal-directed, partially under voluntary control
+
+*Distal- vs Proximal goals*
+**Distal goals:**
+The changes in the environment we expect or desire, e.g. holding the glass in your hand 
+**Proximal goals:**
+The steps required to fulfill the distal goals, e.g. specific muscles to be activated and movement paths to follow
+
 ### Action Specific Neurons
 Much like [[906 Encyclopedia#For making mouseover definitions#Feature Specific Neurons|Feature Specific Neuron]] follows the **principle of distributed coding** of features, *distributed coding* is also present in **various features of action**. It has been shown
 in *monkeys*, for example, that the **direction, expenditure of energy, and range of a
 movement** are *coded in a distributed manner*.
+As seen in [[#Monkeys eating cortex]] these neurons are not responsible for a single muscle, but rather a movement.
+
 
 **Overview of motor specific areas:**
 ![[Action Specific Cortexes.png]]
+**Dorsolateral prefrontal cortex (DLPFC)** is *responsible* for action goal representation and activation, implementation, and configuration of executive control.
+
 
 ### Monkeys eating cortex:
 ```ad-info
@@ -112,12 +128,27 @@ Graziano et al. ( 2002 ) electrically stimulated various areas within the primar
 Instead of *contractions of single muscles*, **they evoked fluent, spatially and temporally well-coordinated movements** that were directed at **spatial goals** under these conditions. The *stimulation of a specific area*, for example, led the monkey to close its finger, move its hand to its head, and then open its mouth. This movement sequence occurred reliably, **independent of the hand’s position when stimulation was commenced**.
 
 ```
-
+![[Movement by M1 stimulation.png]]
 **Mirror Neurons:**
 ![[Emotions and Cognition#^MirrorNeuron]]
 
+### Primary motor cortex (M1)
+*Main function*: controlling execution of motor commands from other areas
+**Motor homunculus vs soma-sensory homunculus**:
+![[Motor homunculus vs somasensory homunculus.png]]
 
-### Supplementary Motor Area (BA6 Medial)
+
+### Premotor Cortex (PM)
+```ad-cite
+title: Wikipedia citation of Premotor Cortex (PM)
+The **premotor cortex** is an area of the [motor cortex](https://en.wikipedia.org/wiki/Motor_cortex "Motor cortex") lying within the [frontal lobe](https://en.wikipedia.org/wiki/Frontal_lobe "Frontal lobe") of the [brain](https://en.wikipedia.org/wiki/Brain "Brain") just anterior to the [primary motor cortex](https://en.wikipedia.org/wiki/Primary_motor_cortex "Primary motor cortex"). It occupies part of Brodmann's area 6. It has been studied mainly in primates, including monkeys and humans.
+...
+It *may also play a role* in **planning movement, in the spatial guidance of movement, in the sensory guidance of movement, in understanding the actions of others, and in using abstract rules to perform specific tasks.**
+		- https://en.wikipedia.org/wiki/Premotor_cortex
+
+```
+
+### Supplementary Motor Area (SMA - BA6 Medial)
 The *SMA is* the medial part of the premotor cortex and is *important* for the **selection,
 planning, and sequencing** of *goal-directed actions*.
 **Tanji and Shima ( 1994 )** were able to demonstrate the existence of **different types
@@ -127,6 +158,4 @@ of neurons** in the *SMA of monkeys*:
 - Neurons that appeared to represent the succession of single movements
 
 SMA is also involved significantly with the **encoding of intentions** and **action goals** and the **selection of intentional actions**.
-
-
 
