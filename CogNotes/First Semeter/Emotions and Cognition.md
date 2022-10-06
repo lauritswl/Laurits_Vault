@@ -117,6 +117,7 @@ The most effective sites for self stimulation fell along the trajectory of dopam
 ## Empathy
 An emotional reaction to another person’s feelings.
 ### Mirror Neurons
+Mirror neurons are **a class of neuron that modulate their activity both when an individual executes a specific motor act and when they observe the same or similar act performed by another individual**. ^MirrorNeuron
 #### Monkey research
 **Mirror Neuron System:** (found in motor areas)
 - Formed of neurons activated when animals perform an action and when they observe another performing the same action

@@ -90,3 +90,24 @@ ___
 3. **Method of constant stimuli**:
    **Example**: Light is repeatedly presented at several intensities, indicate when it is visible or invisible
 
+___
+**Chapter 5**: NEUROBIOLOGICAL FOUNDATIONS
+*How (and where) the brain processes action*
+# NEUROBIOLOGICAL FOUNDATIONS
+## The brain areas of action processing
+Execution of actions require an intact functional loop:
+the **frontal cortex** , the **premotor and motor cortices** , the **basal ganglia** , and the **cerebellum**
+### Action Specific Neurons
+Much like [[906 Encyclopedia#For making mouseover definitions#Feature Specific Neurons|Feature Specific Neuron]] follows the **principle of distributed coding** of features, *distributed coding* is also present in **various features of action**. It has been shown
+in *monkeys*, for example, that the **direction, expenditure of energy, and range of a
+movement** are *coded in a distributed manner*.
+
+
+
+
+
+
+
+**Mirror Neuron:**
+![[Emotions and Cognition#^MirrorNeuron]]
+
