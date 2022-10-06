@@ -159,3 +159,12 @@ of neurons** in the *SMA of monkeys*:
 
 SMA is also involved significantly with the **encoding of intentions** and **action goals** and the **selection of intentional actions**.
 
+## Motor control
+### Forward models
+**Predictive control** speeds up this process: *Motor commands* are issued **not** on the basis of actual **sensory input** *but* based on **predicted sensory input**
+Forward models allow prediction of the next sensorimotor state.
+![[Forward Model.png]]
+If the **actual next state** *is not according* to the desired *next state*, the motor system **can adjust**:
+### The sensorimotor loop
+By **comparing** to *actual sensory feedback* with the *prediction of the internal forward models*, ongoing **actions can be corrected** based on the **error signal** *between predicted and actual sensory feedback*.
+![[Sensorimotor loop.png]]
