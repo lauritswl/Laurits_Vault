@@ -102,12 +102,31 @@ Much like [[906 Encyclopedia#For making mouseover definitions#Feature Specific N
 in *monkeys*, for example, that the **direction, expenditure of energy, and range of a
 movement** are *coded in a distributed manner*.
 
+**Overview of motor specific areas:**
+![[Action Specific Cortexes.png]]
 
+### Monkeys eating cortex:
+```ad-info
+title: Monkeys 'Eating' Cortex
+Graziano et al. ( 2002 ) electrically stimulated various areas within the primary motor and premotor cortex of two monkeys. Unlike the classical studies by Penfield, in which stimulation of short durations was used (ca. 50 ms), these authors stimulated the neurons of the motor cortex for 500 ms. 
+Instead of *contractions of single muscles*, **they evoked fluent, spatially and temporally well-coordinated movements** that were directed at **spatial goals** under these conditions. The *stimulation of a specific area*, for example, led the monkey to close its finger, move its hand to its head, and then open its mouth. This movement sequence occurred reliably, **independent of the hand’s position when stimulation was commenced**.
 
+```
 
-
-
-
-**Mirror Neuron:**
+**Mirror Neurons:**
 ![[Emotions and Cognition#^MirrorNeuron]]
+
+
+### Supplementary Motor Area (BA6 Medial)
+The *SMA is* the medial part of the premotor cortex and is *important* for the **selection,
+planning, and sequencing** of *goal-directed actions*.
+**Tanji and Shima ( 1994 )** were able to demonstrate the existence of **different types
+of neurons** in the *SMA of monkeys*:
+- Neurons that fired during the **preparation of a movement sequence**
+- Neurons that were only active in the interval **between two movements**
+- Neurons that appeared to represent the succession of single movements
+
+SMA is also involved significantly with the **encoding of intentions** and **action goals** and the **selection of intentional actions**.
+
+
 
