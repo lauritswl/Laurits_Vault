@@ -168,3 +168,8 @@ If the **actual next state** *is not according* to the desired *next state*, the
 ### The sensorimotor loop
 By **comparing** to *actual sensory feedback* with the *prediction of the internal forward models*, ongoing **actions can be corrected** based on the **error signal** *between predicted and actual sensory feedback*.
 ![[Sensorimotor loop.png]]
+### Motor learning
+	Flexibility to act in a changing, unpredictable world 
+	Learning of social conventions and skills, e.g. writing or dancing 
+	Changes of body physiology during child development 
+	Plasticity to accommodate later body changes, e.g. after accidents or diseases
