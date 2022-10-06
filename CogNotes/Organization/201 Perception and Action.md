@@ -173,3 +173,4 @@ By **comparing** to *actual sensory feedback* with the *prediction of the intern
 	Learning of social conventions and skills, e.g. writing or dancing 
 	Changes of body physiology during child development 
 	Plasticity to accommodate later body changes, e.g. after accidents or diseases
+
