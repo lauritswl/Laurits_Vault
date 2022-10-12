@@ -19,6 +19,8 @@ ___
 
 Notes on assignment:
 [[Assignment_1_Meth3]]
+[[Assignment_2_Meth3]]
+
 
 ___
 #🗂️Organization 
