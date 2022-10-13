@@ -174,3 +174,7 @@ By **comparing** to *actual sensory feedback* with the *prediction of the intern
 	Changes of body physiology during child development 
 	Plasticity to accommodate later body changes, e.g. after accidents or diseases
 
+
+___
+**Chapter 6**: *Common representational codes:*
+
