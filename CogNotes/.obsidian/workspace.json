@@ -1,0 +1,168 @@
+{
+  "main": {
+    "id": "f859f0ae0ec45a1c",
+    "type": "split",
+    "children": [
+      {
+        "id": "db3aa5b6752d34b4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "99fef4ad4e92c3fc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Organization/201 Perception and Action.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "179d7952d9d01635",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.0.0"
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "2f7d7cabc89911be",
+    "type": "split",
+    "children": [
+      {
+        "id": "d6c35c01651c20ad",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "12b09b28132b92e9",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "0946bcf61f970fc6",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "feature specific",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "79f3d47f0d87e696",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "right": {
+    "id": "76b58327de6676c2",
+    "type": "split",
+    "children": [
+      {
+        "id": "23fa3790978d23ba",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "368ed50894e3d5a9",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Organization/201 Perception and Action.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "27ea2db8159dfd02",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Organization/201 Perception and Action.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "7ee3c41b0b7f2d07",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "8b56852378d679a0",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Organization/201 Perception and Action.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "ribbon": {
+    "mostRecentAction": ""
+  },
+  "active": "179d7952d9d01635",
+  "lastOpenFiles": [
+    "Organization/203 Methods 3.md",
+    "Assignment_2_Meth3.md",
+    "Untitled 1.md",
+    "Organization/201 Perception and Action.md",
+    "Organization/904 Workbench.md",
+    "906 Encyclopedia.md",
+    "Untitled.md",
+    "First Semeter/Emotions and Cognition.md",
+    "Methods3/Assignment_1_Meth3.md",
+    "First Semeter/The representation of concepts in the brain.md"
+  ]
+}

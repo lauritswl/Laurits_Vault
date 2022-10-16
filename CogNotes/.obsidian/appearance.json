@@ -3,5 +3,6 @@
   "cssTheme": "Primary",
   "theme": "moonstone",
   "translucency": false,
-  "enabledCssSnippets": []
+  "enabledCssSnippets": [],
+  "accentColor": ""
 }
