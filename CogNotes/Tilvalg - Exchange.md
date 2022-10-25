@@ -37,3 +37,11 @@ Apply for pre-approval at AU MoveON. - you only get the MoveON spot if you apply
 
 
 LISE HANSEN - International cordinator
+
+
+**What do you take with you from the talk today:**
+Deadlines, think about what master you wanna do, mabye exchange in master is better.
+**What tilvalg-options do you consider at the moment:**
+ITTU and normal tilvalg
+What is your next step:
+look at masters
