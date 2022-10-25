@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "db3aa5b6752d34b4",
+        "id": "5ce17f64b2226d95",
         "type": "tabs",
         "children": [
           {
-            "id": "99fef4ad4e92c3fc",
+            "id": "1e85e56de03fa61d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Organization/201 Perception and Action.md",
+                "file": "Organization/203 Methods 3.md",
                 "mode": "source",
                 "source": false
               }
@@ -87,7 +87,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Organization/201 Perception and Action.md",
+                "file": "Organization/203 Methods 3.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Organization/201 Perception and Action.md",
+                "file": "Organization/203 Methods 3.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -127,7 +127,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Organization/201 Perception and Action.md"
+                "file": "Organization/203 Methods 3.md"
               }
             }
           }
@@ -141,7 +141,7 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "99fef4ad4e92c3fc",
+  "active": "1e85e56de03fa61d",
   "lastOpenFiles": [
     "Organization/201 Perception and Action.md",
     "Organization/203 Methods 3.md",

@@ -13,6 +13,20 @@ Fitting multi level modelling to simulated data
 [[Bayesian]]
 [[Simulated vs Real Data]]
 
+
+#### Machine learning:
+**Multilevel modeling and generalizability of patterns**
+The machine learning approach: *classification problems*
+We start by understanding the *logistic regression*, due to its simplicity. Logistic regression is easily replaced with whatever.
+
+Bayesian multilevel modelling is an attempt at inferring more generalizable patterns
+- Combining information across clusters (e.g. participants) to "correct" the noisy raw data within participant.
+
+
+
+
+
+
 ___
 
 
