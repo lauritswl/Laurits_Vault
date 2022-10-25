@@ -18,19 +18,8 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "179d7952d9d01635",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.0.0"
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -152,12 +141,12 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "179d7952d9d01635",
+  "active": "99fef4ad4e92c3fc",
   "lastOpenFiles": [
+    "Organization/201 Perception and Action.md",
     "Organization/203 Methods 3.md",
     "Assignment_2_Meth3.md",
     "Untitled 1.md",
-    "Organization/201 Perception and Action.md",
     "Organization/904 Workbench.md",
     "906 Encyclopedia.md",
     "Untitled.md",
