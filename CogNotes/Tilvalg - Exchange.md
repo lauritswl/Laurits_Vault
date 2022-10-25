@@ -34,3 +34,6 @@ When going abroad you go via ITTU.
 15 ECTS tilvalg at ARTS 15 april.
 30 ETCS at a university outside of denmark.
 Apply for pre-approval at AU MoveON. - you only get the MoveON spot if you apply afterwards.
+
+
+LISE HANSEN - International cordinator
