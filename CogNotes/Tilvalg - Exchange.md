@@ -36,7 +36,7 @@ When going abroad you go via ITTU.
 Apply for pre-approval at AU MoveON. - you only get the MoveON spot if you apply afterwards.
 
 
-LISE HANSEN - International cordinator
+LISE HANSEN - International coordinator
 
 
 **What do you take with you from the talk today:**
