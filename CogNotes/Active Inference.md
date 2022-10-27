@@ -13,6 +13,10 @@ Any **thing** will *look as if it minimizes free energy*.
 Information theoretic surprisal
 **Free energy** > surprisal
 
+The brain as Bayesian prior posterior machine.
+Explore <-> Exploit
+Temporal depth (how many steps you think ahead)
+
 ## Active Inference
 ### Theory
 ### Implementing models
