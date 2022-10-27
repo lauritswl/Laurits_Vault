@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "\"Mirror neurons\"",
+                "query": "comfort",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -129,13 +129,21 @@
                 "file": "Organization/201 Perception and Action.md"
               }
             }
+          },
+          {
+            "id": "09340a61597b2e51",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {}
+            }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "ribbon": {
     "mostRecentAction": ""

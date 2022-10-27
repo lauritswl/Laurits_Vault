@@ -185,6 +185,11 @@ The same would happen by observing other human moving the blocks, but not when t
 ### Mirror Neurons
 [[Emotions and Cognition#Mirror Neurons|Mirror neurons]] are often regarded as the *neuronal implementation* of the **ideomotor theory**: a mechanism connecting perception and action, guided by goal representations
 
-
+**KEY TAKE-AWAYS**:
+- Theories like **common coding and internal model** theory also have implications for social action:  *Perception of others’ actions activates own motor representations*.
+- The **human mirror neuron system** is regarded as a *key component in its neural implementation*.
+- After an initial “hype” around the discovery of mirror neurons, there is now an ongoing, long-standing debate about what level of others’ actions they encode - motor goals? Motor intentions? Distal action intentions? Social intentions?
+- Kinematic analyses show that different action intentions lead to different early kinematic traces in an actor. Observers are sensitive to these cues.
+- Deception (like in many sports) exploits our high-level, well-trained prediction mechanism.
 
 
