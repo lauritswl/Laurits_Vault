@@ -11,8 +11,12 @@
             "id": "2807b9125936c755",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "Organization/201 Perception and Action.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -44,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "feature specific",
+                "query": "\"Mirror neurons\"",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -66,8 +70,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "76b58327de6676c2",
@@ -83,6 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Organization/201 Perception and Action.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,6 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Organization/201 Perception and Action.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -120,7 +125,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "Organization/201 Perception and Action.md"
+              }
             }
           }
         ]
@@ -133,7 +140,7 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "2807b9125936c755",
+  "active": "0946bcf61f970fc6",
   "lastOpenFiles": [
     "Tilvalg - Exchange.md",
     "t.md",

@@ -176,5 +176,15 @@ By **comparing** to *actual sensory feedback* with the *prediction of the intern
 
 
 ___
-**Chapter 6**: *Common representational codes:*
+**Chapter 7**: *Decoding action intentions :*
+## Goal anticipation in others’ actions
+**Eye movements** anticipate own action performance. Your movement lags behind eye-movement, e.g. see this block-stacking task:
+When stacking blocks by yourself eye-movement would lead movement.
+The same would happen by observing other human moving the blocks, but not when the blocks moved by machine.
+![[Block-stacking-experiment.png]]
+### Mirror Neurons
+[[Emotions and Cognition#Mirror Neurons|Mirror neurons]] are often regarded as the *neuronal implementation* of the **ideomotor theory**: a mechanism connecting perception and action, guided by goal representations
+
+
+
 
