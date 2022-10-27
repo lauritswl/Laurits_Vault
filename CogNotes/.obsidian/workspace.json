@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "70b7f318d471bcb3",
+        "id": "3d77380ba6a80a41",
         "type": "tabs",
         "children": [
           {
-            "id": "971dfb8be6c99467",
+            "id": "2807b9125936c755",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Tilvalg - Exchange.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -87,7 +83,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Tilvalg - Exchange.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +99,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Tilvalg - Exchange.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,9 +120,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Tilvalg - Exchange.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -141,10 +133,10 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "971dfb8be6c99467",
+  "active": "2807b9125936c755",
   "lastOpenFiles": [
-    "t.md",
     "Tilvalg - Exchange.md",
+    "t.md",
     "Organization/203 Methods 3.md",
     "Untitled 2.md",
     "Organization/201 Perception and Action.md",
