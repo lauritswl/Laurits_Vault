@@ -23,6 +23,7 @@ Bayesian multilevel modelling is an attempt at inferring more generalizable patt
 - Combining information across clusters (e.g. participants) to "correct" the noisy raw data within participant.
 
 
+#### Neural Networks
 
 
 
