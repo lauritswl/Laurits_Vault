@@ -28,6 +28,12 @@ Multiple layers of **non-linear** processing
 Many psychiatric conditions alter the voice, voice recoding is cheap and non-invasive. 
 
 
+**Courses:**
+NYU Deep Learning Course 2020 & 2021:
+[Pratical python ai course :)](https://course.fast.ai/)
+https://huggingface.co/
+
+
 
 ___
 

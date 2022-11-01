@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "0000b5b2aa2ff785",
+        "id": "1e139821a9bc0475",
         "type": "tabs",
         "children": [
           {
-            "id": "cbdbab722f7ab351",
+            "id": "ac3273a1ba75bb3b",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -148,17 +148,17 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "cbdbab722f7ab351",
+  "active": "ac3273a1ba75bb3b",
   "lastOpenFiles": [
+    "course.fast.ai.md",
+    "Organization/203 Methods 3.md",
     "Active Inference.md",
     "Organization/201 Perception and Action.md",
     "Tilvalg - Exchange.md",
     "t.md",
-    "Organization/203 Methods 3.md",
     "Untitled 2.md",
     "Assignment_2_Meth3.md",
     "Untitled 1.md",
-    "Organization/904 Workbench.md",
-    "906 Encyclopedia.md"
+    "Organization/904 Workbench.md"
   ]
 }
