@@ -24,7 +24,7 @@ Bayesian multilevel modelling is an attempt at inferring more generalizable patt
 
 
 #### Neural Networks
-
+Multiple layers of **non-linear** processing
 
 
 
