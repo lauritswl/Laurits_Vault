@@ -11,4 +11,5 @@ Skills:
 Competences:
 * justify choice of experimental design, measurement devices, and statistical models, in one’s own and in others’ studies on perception and action
 ___
-1. Mouse tracking on joint guidance of rectangle through maze
+
+Crossmodal Correspondences Mouse Tracking
