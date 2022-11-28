@@ -18,21 +18,8 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "c1b3b778a21ef051",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "PercAct/Exam idea.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -99,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "PercAct/Exam idea.md",
+                "file": "Organization/201 Perception and Action.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "PercAct/Exam idea.md",
+                "file": "Organization/201 Perception and Action.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "PercAct/Exam idea.md"
+                "file": "Organization/201 Perception and Action.md"
               }
             }
           },
@@ -158,8 +145,9 @@
     "direction": "horizontal",
     "width": 300
   },
-  "active": "c1b3b778a21ef051",
+  "active": "e62d172c8266b39d",
   "lastOpenFiles": [
+    "PercAct/Exam idea.md",
     "Organization/201 Perception and Action.md",
     "First Semeter/IntoCog/IntoCog Notes/Chapter 16 Cognitive Science The Social and Emotional Brain.md",
     "Organization/203 Methods 3.md",
@@ -168,7 +156,6 @@
     "Tilvalg - Exchange.md",
     "t.md",
     "Untitled 2.md",
-    "Assignment_2_Meth3.md",
-    "Untitled 1.md"
+    "Assignment_2_Meth3.md"
   ]
 }
