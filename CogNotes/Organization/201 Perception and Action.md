@@ -209,4 +209,9 @@ The eyes are often a marker for our attentional fixation.
 
 For good eye tracking data you should always have an equal amount of fixation and saccades (movements).
 
-
+### The value of eye tracking
+Provides unbiased, objective and quantifiable data
+Very high temporal and spatial resolution
+High ecological validity
+More or less affordable
+can enhance other biometric data
