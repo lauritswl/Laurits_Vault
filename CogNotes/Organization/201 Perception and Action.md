@@ -222,3 +222,20 @@ can enhance other biometric data
 - Micromovements: tremors, micro saccades, glissades, drift
 - Smooth pursuits
 - (Blinks)
+
+### Eye Tracking Measures
+- **Movement Measures**
+	- Properties of eye movements through space in a time window
+		- e.g. direction, amplitude, duration, velocity, acceleration, shape, scanpath comparison, dwell time at AOI (area of interest).
+
+- **Position Measures**
+	- What is/isn't fixated, properties of eye-movements at location X:
+		- e.g. Basic position, position dispersion (how focused was gaze at a position), position similarity, position duration, position dilation (pupil dilation at the position).
+- **Numerosity Measures**
+	- number, proportion, or rate of any countable eye-movement events
+		- e.g. Amount of saccades, amount of glissades, amount of blinks.
+- **Latency/distance Measures**
+	- Time and space values in relation to other events:
+		- e.g. Saccadic latency, Pupil dilation latence, Entry time
+
+**All measures are derived from x, y and time coordinates**
