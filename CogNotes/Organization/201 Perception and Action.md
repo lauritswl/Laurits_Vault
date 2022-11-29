@@ -202,3 +202,9 @@ A window into dynamic perceptual processing...
 
 Eye-tracking is a look into perhaps the most used perceptual human sensory system. 
 The eyes are often a marker for our attentional fixation.
+**Cognition is dynamic** - activation states happen in parallel and influence each other.
+*Eye tracking can reveal unobservable data* - [Eye gaze] provides data during the course of cognitive processing, not merely after processing is complete.
+	**Eye-tracking helps show competing mental states.**
+	The continuity of the mind - we need to use continuous measures for a continuous mind.
+
+
