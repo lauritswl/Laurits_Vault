@@ -215,3 +215,10 @@ Very high temporal and spatial resolution
 High ecological validity
 More or less affordable
 can enhance other biometric data
+
+### Eye Tracking Events:
+- Fixations
+- Saccades
+- Micromovements: tremors, micro saccades, glissades, drift
+- Smooth pursuits
+- (Blinks)
