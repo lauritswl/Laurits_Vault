@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "867fd78a404af0ee",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "PercAct/Exam idea.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -86,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Organization/201 Perception and Action.md",
+                "file": "PercAct/Exam idea.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +116,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Organization/201 Perception and Action.md",
+                "file": "PercAct/Exam idea.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Organization/201 Perception and Action.md"
+                "file": "PercAct/Exam idea.md"
               }
             }
           },
@@ -145,10 +158,10 @@
     "direction": "horizontal",
     "width": 300
   },
-  "active": "e62d172c8266b39d",
+  "active": "867fd78a404af0ee",
   "lastOpenFiles": [
-    "PercAct/Exam idea.md",
     "Organization/201 Perception and Action.md",
+    "PercAct/Exam idea.md",
     "First Semeter/IntoCog/IntoCog Notes/Chapter 16 Cognitive Science The Social and Emotional Brain.md",
     "Organization/203 Methods 3.md",
     "course.fast.ai.md",
