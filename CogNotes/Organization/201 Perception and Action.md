@@ -207,4 +207,6 @@ The eyes are often a marker for our attentional fixation.
 	**Eye-tracking helps show competing mental states.**
 	The continuity of the mind - we need to use continuous measures for a continuous mind.
 
+For good eye tracking data you should always have an equal amount of fixation and saccades (movements).
+
 
