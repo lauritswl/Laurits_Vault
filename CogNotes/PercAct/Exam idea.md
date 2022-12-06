@@ -20,3 +20,4 @@ The sound of size Crossmodal binding in pitch-size synesthesia: A combined TMS, 
 
 ### Auditory Stimuli:
 Auditory stimuli consisted of high (4500 Hz at 63 dB) or low (250 Hz at 72 dB) pitched pure tones, lasting for 200 ms. Sound levels were chosen in accordance with equal loudness curves (Suzuki and Takeshima, 2004),
+
