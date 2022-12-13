@@ -27,4 +27,3 @@ Auditory stimuli consisted of high (4500 Hz at 63 dB) or low (250 Hz at 72 dB) p
 
 
 ____
-[[  ]]
