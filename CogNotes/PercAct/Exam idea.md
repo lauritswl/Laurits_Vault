@@ -27,3 +27,6 @@ Auditory stimuli consisted of high (4500 Hz at 63 dB) or low (250 Hz at 72 dB) p
 
 
 ____
+
+[[Spence_C_2013_How_automatic_are_crossmodal_correspondences]]
+Audiovisiual correspondences are argued to opprate as if they are "coupling priors" in Bayesian Decision Theory models of multisensory intergration (Spence, 2011)
