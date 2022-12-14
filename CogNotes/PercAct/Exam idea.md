@@ -2,7 +2,7 @@
 Knowledge: 
 * explain the cognitive processes involved in sensation, perception, movement, and action 
 * explain the relationships between cognitive processes involved in perception and action 
-
+s
 Skills:
 * design studies to investigate cognitive processes involved in perception and action 
 * analyse data from specialised measurement devices 

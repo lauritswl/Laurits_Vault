@@ -1,0 +1,153 @@
+{
+  "main": {
+    "id": "f859f0ae0ec45a1c",
+    "type": "split",
+    "children": [
+      {
+        "id": "680767139d48dbc2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0cab0cc24340ae6d",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "2f7d7cabc89911be",
+    "type": "split",
+    "children": [
+      {
+        "id": "d6c35c01651c20ad",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "12b09b28132b92e9",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "0946bcf61f970fc6",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "79f3d47f0d87e696",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "76b58327de6676c2",
+    "type": "split",
+    "children": [
+      {
+        "id": "23fa3790978d23ba",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "368ed50894e3d5a9",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "27ea2db8159dfd02",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "7ee3c41b0b7f2d07",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "8b56852378d679a0",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {}
+            }
+          },
+          {
+            "id": "09340a61597b2e51",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {}
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "active": "0cab0cc24340ae6d",
+  "lastOpenFiles": [
+    "PercAct/Exam idea.md",
+    "Organization/201 Perception and Action.md",
+    "First Semeter/IntoCog/IntoCog Notes/Chapter 16 Cognitive Science The Social and Emotional Brain.md",
+    "Organization/203 Methods 3.md",
+    "course.fast.ai.md",
+    "Active Inference.md",
+    "Tilvalg - Exchange.md",
+    "t.md",
+    "Untitled 2.md",
+    "Assignment_2_Meth3.md"
+  ]
+}
