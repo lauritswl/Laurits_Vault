@@ -4,28 +4,30 @@
     "type": "split",
     "children": [
       {
-        "id": "449449f903a4507f",
+        "id": "32b02cfc35daa507",
         "type": "tabs",
         "children": [
           {
-            "id": "867fd78a404af0ee",
+            "id": "1b230a5aa66181c0",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "First Semeter/The representation of concepts in the brain.md",
+                "file": "Organization/201 Perception and Action.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "cd12268444f75649",
+            "id": "f8c2c73d76ed4d41",
             "type": "leaf",
             "state": {
-              "type": "release-notes",
+              "type": "markdown",
               "state": {
-                "currentVersion": "1.1.9"
+                "file": "PercAct/Exam idea.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -97,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "First Semeter/The representation of concepts in the brain.md",
+                "file": "PercAct/Exam idea.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +116,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "First Semeter/The representation of concepts in the brain.md",
+                "file": "PercAct/Exam idea.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -137,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "First Semeter/The representation of concepts in the brain.md"
+                "file": "PercAct/Exam idea.md"
               }
             }
           },
@@ -170,17 +172,17 @@
       "random-note:Open random note": false
     }
   },
-  "active": "cd12268444f75649",
+  "active": "f8c2c73d76ed4d41",
   "lastOpenFiles": [
+    "Organization/201 Perception and Action.md",
+    "First Semeter/The representation of concepts in the brain.md",
+    "Untitled.canvas",
     "First Semeter/IntoCog/IntoCog Notes/Chapter 4 Cognitive Science Attention.md",
     "First Semeter/IntoCog/IntoCog Notes/Attention.md",
     "PercAct/Exam idea.md",
     "First Semeter/002 IntoCog.md",
     "First Semeter/IntoCog/IntoCog Notes/Perception.md",
-    "Organization/201 Perception and Action.md",
     "First Semeter/IntoCog/IntoCog Notes/Chapter 16 Cognitive Science The Social and Emotional Brain.md",
-    "Organization/203 Methods 3.md",
-    "course.fast.ai.md",
-    "Active Inference.md"
+    "Organization/203 Methods 3.md"
   ]
 }
