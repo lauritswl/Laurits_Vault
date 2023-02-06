@@ -4,28 +4,28 @@
     "type": "split",
     "children": [
       {
-        "id": "32b02cfc35daa507",
+        "id": "0dfd742a9b73cba0",
         "type": "tabs",
         "children": [
           {
-            "id": "1b230a5aa66181c0",
+            "id": "d1d150b705c7633e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Organization/201 Perception and Action.md",
+                "file": "Organization/000 Index.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "f8c2c73d76ed4d41",
+            "id": "8f0d29a664c0e918",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "PercAct/Exam idea.md",
+                "file": "301  Social Cognition.md",
                 "mode": "source",
                 "source": false
               }
@@ -99,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "PercAct/Exam idea.md",
+                "file": "301  Social Cognition.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +116,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "PercAct/Exam idea.md",
+                "file": "301  Social Cognition.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "PercAct/Exam idea.md"
+                "file": "301  Social Cognition.md"
               }
             }
           },
@@ -172,17 +172,17 @@
       "random-note:Open random note": false
     }
   },
-  "active": "f8c2c73d76ed4d41",
+  "active": "8f0d29a664c0e918",
   "lastOpenFiles": [
+    "Organization/000 Index.md",
+    "PercAct/Exam idea.md",
     "Organization/201 Perception and Action.md",
     "First Semeter/The representation of concepts in the brain.md",
     "Untitled.canvas",
     "First Semeter/IntoCog/IntoCog Notes/Chapter 4 Cognitive Science Attention.md",
     "First Semeter/IntoCog/IntoCog Notes/Attention.md",
-    "PercAct/Exam idea.md",
     "First Semeter/002 IntoCog.md",
     "First Semeter/IntoCog/IntoCog Notes/Perception.md",
-    "First Semeter/IntoCog/IntoCog Notes/Chapter 16 Cognitive Science The Social and Emotional Brain.md",
-    "Organization/203 Methods 3.md"
+    "First Semeter/IntoCog/IntoCog Notes/Chapter 16 Cognitive Science The Social and Emotional Brain.md"
   ]
 }
