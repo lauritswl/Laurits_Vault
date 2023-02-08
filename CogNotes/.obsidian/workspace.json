@@ -11,8 +11,12 @@
             "id": "fe42a2da5c9afa86",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "SociCog/301  Social Cognition.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -81,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Methods3/Simulated vs Real Data.md",
+                "file": "SociCog/301  Social Cognition.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -98,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Methods3/Simulated vs Real Data.md",
+                "file": "SociCog/301  Social Cognition.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -121,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Methods3/Simulated vs Real Data.md"
+                "file": "SociCog/301  Social Cognition.md"
               }
             }
           },
@@ -154,7 +158,7 @@
       "random-note:Open random note": false
     }
   },
-  "active": "12b09b28132b92e9",
+  "active": "fe42a2da5c9afa86",
   "lastOpenFiles": [
     "Tilvalg - Exchange.md",
     "Assignment_2_Meth3.md",
@@ -163,7 +167,7 @@
     "Untitled 2.md",
     "What to learn for methods.md",
     "t.md",
-    "301  Social Cognition.md",
+    "SociCog/301  Social Cognition.md",
     "Organization/000 Index.md",
     "PercAct/Exam idea.md"
   ]
