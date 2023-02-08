@@ -4,35 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "0dfd742a9b73cba0",
+        "id": "d4715d671eed1014",
         "type": "tabs",
         "children": [
           {
-            "id": "d1d150b705c7633e",
+            "id": "fe42a2da5c9afa86",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Organization/000 Index.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8f0d29a664c0e918",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "301  Social Cognition.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -78,12 +61,11 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "right": {
     "id": "76b58327de6676c2",
@@ -99,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "301  Social Cognition.md",
+                "file": "Methods3/Simulated vs Real Data.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +98,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "301  Social Cognition.md",
+                "file": "Methods3/Simulated vs Real Data.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +121,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "301  Social Cognition.md"
+                "file": "Methods3/Simulated vs Real Data.md"
               }
             }
           },
@@ -172,17 +154,17 @@
       "random-note:Open random note": false
     }
   },
-  "active": "8f0d29a664c0e918",
+  "active": "12b09b28132b92e9",
   "lastOpenFiles": [
-    "Organization/000 Index.md",
-    "PercAct/Exam idea.md",
-    "Organization/201 Perception and Action.md",
-    "First Semeter/The representation of concepts in the brain.md",
+    "Tilvalg - Exchange.md",
+    "Assignment_2_Meth3.md",
     "Untitled.canvas",
-    "First Semeter/IntoCog/IntoCog Notes/Chapter 4 Cognitive Science Attention.md",
-    "First Semeter/IntoCog/IntoCog Notes/Attention.md",
-    "First Semeter/002 IntoCog.md",
-    "First Semeter/IntoCog/IntoCog Notes/Perception.md",
-    "First Semeter/IntoCog/IntoCog Notes/Chapter 16 Cognitive Science The Social and Emotional Brain.md"
+    "Untitled.md",
+    "Untitled 2.md",
+    "What to learn for methods.md",
+    "t.md",
+    "301  Social Cognition.md",
+    "Organization/000 Index.md",
+    "PercAct/Exam idea.md"
   ]
 }
