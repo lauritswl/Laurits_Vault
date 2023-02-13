@@ -8,60 +8,24 @@
         "type": "tabs",
         "children": [
           {
-            "id": "fe42a2da5c9afa86",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "SociCog/301  Social Cognition.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "5923fb5b71a5a141",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "SociCog/Anthropomorphism.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "ee433c5993131ae2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "SociCog/General intelligence hypothesis.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "2d4d8fd5bf2d0667",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "SociCog/General intelligence hypothesis.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "ad5d351b704c7800",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
                 "file": "SociCog/301  Social Cognition.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "72b49d020739fb38",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "SociCog/Theory of Mind (ToM).md",
                 "mode": "source",
                 "source": false
               }
@@ -79,8 +43,7 @@
               }
             }
           }
-        ],
-        "currentTab": 5
+        ]
       }
     ],
     "direction": "vertical"
@@ -146,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SociCog/Anthropomorphism.md",
+                "file": "SociCog/301  Social Cognition.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -163,7 +126,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "SociCog/Anthropomorphism.md",
+                "file": "SociCog/301  Social Cognition.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -186,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SociCog/Anthropomorphism.md"
+                "file": "SociCog/301  Social Cognition.md"
               }
             }
           },
@@ -219,17 +182,17 @@
       "random-note:Open random note": false
     }
   },
-  "active": "5633f63234dd6f35",
+  "active": "ad5d351b704c7800",
   "lastOpenFiles": [
+    "SociCog/Theory of Mind (ToM).md",
     "SociCog/301  Social Cognition.md",
-    "SociCog/Untitled.md",
     "SociCog/Anthropomorphism.md",
     "SociCog/General intelligence hypothesis.md",
+    "SociCog/Untitled.md",
     "SociCog/Social- or Cultural Intelligence hypothesis.md",
     "Tilvalg - Exchange.md",
     "Assignment_2_Meth3.md",
     "Untitled.canvas",
-    "Untitled.md",
-    "Untitled 2.md"
+    "Untitled.md"
   ]
 }
