@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SociCog/Theory of Mind (ToM).md",
+                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
                 "mode": "source",
                 "source": false
               }
@@ -109,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SociCog/Theory of Mind (ToM).md",
+                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -126,7 +126,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "SociCog/Theory of Mind (ToM).md",
+                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SociCog/Theory of Mind (ToM).md"
+                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md"
               }
             }
           },
@@ -182,17 +182,17 @@
       "random-note:Open random note": false
     }
   },
-  "active": "ad5d351b704c7800",
+  "active": "12b09b28132b92e9",
   "lastOpenFiles": [
-    "SociCog/301  Social Cognition.md",
-    "SociCog/Theory of Mind (ToM).md",
-    "SociCog/Anthropomorphism.md",
-    "SociCog/General intelligence hypothesis.md",
-    "SociCog/Untitled.md",
-    "SociCog/Social- or Cultural Intelligence hypothesis.md",
+    "What to learn for methods.md",
+    "906 Encyclopedia.md",
+    "Active Inference.md",
     "Tilvalg - Exchange.md",
     "Assignment_2_Meth3.md",
-    "Untitled.canvas",
-    "Untitled.md"
+    "SociCog/Theory of Mind (ToM).md",
+    "SociCog/301  Social Cognition.md",
+    "SociCog/Anthropomorphism.md",
+    "SociCog/General intelligence hypothesis.md",
+    "SociCog/Untitled.md"
   ]
 }
