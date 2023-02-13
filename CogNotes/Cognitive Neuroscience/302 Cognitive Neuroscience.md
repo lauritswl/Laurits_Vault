@@ -9,7 +9,14 @@ If multiple [[synaptic transmission|synaptic transmissions]]  interact with the 
 
 ### [[neurotransmitter]]
 There are in general two different types of neurotransmitters - 
-Inhibitory and exitatory
+Inhibitory and excitatory
+
+
+
+## The
+[[Anatomical Reference]]
+[[Central Nervous System (CNS)]]
+[[Peripheral Nervous System (PNS)]]
 
 
 
