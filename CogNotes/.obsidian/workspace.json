@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "0eae8e6db89dc3d3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Anatomical Reference.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
+                "file": "Anatomical Reference.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
+                "file": "Anatomical Reference.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md"
+                "file": "Anatomical Reference.md"
               }
             }
           },
@@ -159,10 +172,10 @@
       "random-note:Open random note": false
     }
   },
-  "active": "ad5d351b704c7800",
+  "active": "0eae8e6db89dc3d3",
   "lastOpenFiles": [
-    "Anatomical Reference.md",
     "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
+    "Anatomical Reference.md",
     "Peripheral Nervous System (PNS).md",
     "Cognitive Neuroscience/synaptic transmission.md",
     "Central Nervous System (CNS).md",
