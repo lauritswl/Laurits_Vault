@@ -9,7 +9,7 @@ ___
 ## Drugs
 **Drugs**: are substances, natural or synthetic, that produce physiological
 changes when taken into the body.
-**Psychoactive drugs** alter activity at nervous system synapses. Drugs can impact [[Neurons#^659999| Neurotransmitters]] either directly or indirectly. An **agonist** increases the action of a given neurotransmitter whereas an **antagonist** decreases or blocks it.
+**Psychoactive drugs** alter activity at nervous system synapses. Drugs can impact [[Neuron#^659999| Neurotransmitters]] either directly or indirectly. An **agonist** increases the action of a given neurotransmitter whereas an **antagonist** decreases or blocks it.
 
 ### Social Drugs
 Social drugs are everyday use drugs like caffeine, alcohol and nicotine.

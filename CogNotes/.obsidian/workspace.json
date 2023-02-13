@@ -20,30 +20,31 @@
             }
           },
           {
-            "id": "72b49d020739fb38",
+            "id": "e0cf4f6af180539c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SociCog/Theory of Mind (ToM).md",
+                "file": "Cognitive Neuroscience/synaptic transmission.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "5633f63234dd6f35",
+            "id": "780530472eaa736d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SociCog/Anthropomorphism.md",
+                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -166,7 +167,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -182,17 +184,17 @@
       "random-note:Open random note": false
     }
   },
-  "active": "12b09b28132b92e9",
+  "active": "780530472eaa736d",
   "lastOpenFiles": [
-    "What to learn for methods.md",
-    "906 Encyclopedia.md",
-    "Active Inference.md",
-    "Tilvalg - Exchange.md",
-    "Assignment_2_Meth3.md",
-    "SociCog/Theory of Mind (ToM).md",
-    "SociCog/301  Social Cognition.md",
+    "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
+    "Cognitive Neuroscience/neurotransmitter.md",
+    "Cognitive Neuroscience/synaptic transmission.md",
+    "Cognitive Neuroscience/synaptic integration.md",
+    "Cognitive Neuroscience/Action Potential.md",
     "SociCog/Anthropomorphism.md",
-    "SociCog/General intelligence hypothesis.md",
-    "SociCog/Untitled.md"
+    "SociCog/Theory of Mind (ToM).md",
+    "First Semeter/IntoCog/IntoCog Notes/Neuron.md",
+    "Neuron.md",
+    "What to learn for methods.md"
   ]
 }
