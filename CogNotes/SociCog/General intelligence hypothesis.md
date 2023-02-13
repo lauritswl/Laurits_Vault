@@ -1,0 +1,2 @@
+Foraging demands supported the evolution of increased basic cognitive abilities (e.g. working memory).
+The increased needs of cognitive demands could be the need to figure out seasons of food and using tools to get food.
