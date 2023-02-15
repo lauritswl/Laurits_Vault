@@ -7,6 +7,9 @@ Social cognition regards individuals doing information processing about:
 * information with another people (dialogically extended mind)
 
 
+[[Discussion Question]]
+
+
 
 The increased brain size of humans have been attributed to two hypotheses:
 	- [[General intelligence hypothesis]]
