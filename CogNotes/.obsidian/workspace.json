@@ -4,59 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "d4715d671eed1014",
+        "id": "fc58b5ed2f1a496c",
         "type": "tabs",
         "children": [
           {
-            "id": "ad5d351b704c7800",
+            "id": "00a05f7793e0cd4e",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "0eae8e6db89dc3d3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Cognitive Neuroscience/Anatomical Reference.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "57349bc117cafd06",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "SociCog/301  Social Cognition.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "ead571c694160634",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "SociCog/Discussion Question.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "vertical"
@@ -122,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SociCog/Discussion Question.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "SociCog/Discussion Question.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -161,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "SociCog/Discussion Question.md"
-              }
+              "state": {}
             }
           },
           {
@@ -196,14 +151,14 @@
       "random-note:Open random note": false
     }
   },
-  "active": "ead571c694160634",
+  "active": "00a05f7793e0cd4e",
   "lastOpenFiles": [
+    "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
+    "Cognitive Neuroscience/Anatomical Reference.md",
     "SociCog/301  Social Cognition.md",
     "SociCog/Discussion Question.md",
     "Cognitive Neuroscience/Peripheral Nervous System (PNS).md",
-    "Cognitive Neuroscience/Anatomical Reference.md",
     "Active Inference.md",
-    "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
     "Cognitive Neuroscience/synaptic transmission.md",
     "Cognitive Neuroscience/Central Nervous System (CNS).md",
     "Cognitive Neuroscience/neurotransmitter.md",
