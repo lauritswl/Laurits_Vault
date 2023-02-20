@@ -20,6 +20,18 @@
             }
           },
           {
+            "id": "0425e289e9cfd006",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "SociCog/Agent Based Modeling (ABM).md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "468c349bfdc53daa",
             "type": "leaf",
             "state": {
@@ -32,7 +44,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -174,6 +186,7 @@
   },
   "active": "468c349bfdc53daa",
   "lastOpenFiles": [
+    "SociCog/Agent Based Modeling (ABM).md",
     "SociCog/301  Social Cognition.md",
     "SociCog/logic of teamwork.md",
     "SociCog/Social- or Cultural Intelligence hypothesis.md",
@@ -182,7 +195,6 @@
     "Cognitive Neuroscience/Anatomical Reference.md",
     "SociCog/Discussion Question.md",
     "Cognitive Neuroscience/Peripheral Nervous System (PNS).md",
-    "Active Inference.md",
-    "Cognitive Neuroscience/synaptic transmission.md"
+    "Active Inference.md"
   ]
 }
