@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "468c349bfdc53daa",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "SociCog/logic of teamwork.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SociCog/301  Social Cognition.md",
+                "file": "SociCog/logic of teamwork.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "SociCog/301  Social Cognition.md",
+                "file": "SociCog/logic of teamwork.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SociCog/301  Social Cognition.md"
+                "file": "SociCog/logic of teamwork.md"
               }
             }
           },
@@ -159,17 +172,17 @@
       "random-note:Open random note": false
     }
   },
-  "active": "00a05f7793e0cd4e",
+  "active": "468c349bfdc53daa",
   "lastOpenFiles": [
-    "SociCog/Social- or Cultural Intelligence hypothesis.md",
     "SociCog/301  Social Cognition.md",
+    "SociCog/logic of teamwork.md",
+    "SociCog/Social- or Cultural Intelligence hypothesis.md",
     "SociCog/Theory of Mind (ToM).md",
     "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
     "Cognitive Neuroscience/Anatomical Reference.md",
     "SociCog/Discussion Question.md",
     "Cognitive Neuroscience/Peripheral Nervous System (PNS).md",
     "Active Inference.md",
-    "Cognitive Neuroscience/synaptic transmission.md",
-    "Cognitive Neuroscience/Central Nervous System (CNS).md"
+    "Cognitive Neuroscience/synaptic transmission.md"
   ]
 }

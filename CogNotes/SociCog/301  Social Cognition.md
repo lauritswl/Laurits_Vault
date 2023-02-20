@@ -16,10 +16,15 @@ The increased brain size of humans have been attributed to two hypotheses:
 	- [[Social- or Cultural Intelligence hypothesis]]
 [[Anthropomorphism]] is also a problem when looking at a group of people
 
+[[logic of teamwork]]
 
-(Active / Passive) 
-(Individual / Collective)
 
+
+Social cognition as the processing of information related to others 
+- Observational vs. active 
+- Explicit vs implicit 
+- Specific vs. generic 
+- Individual vs. interpersonal
 
 
 
