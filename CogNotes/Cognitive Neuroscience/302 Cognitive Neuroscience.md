@@ -13,7 +13,7 @@ Inhibitory and excitatory
 
 
 
-## The
+## The 
 [[Anatomical Reference]]
 [[Central Nervous System (CNS)]]
 [[Peripheral Nervous System (PNS)]]
