@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
+                "file": "Second semester PDFs/Second semester notes/To-read.md",
                 "mode": "source",
                 "source": false
               }
@@ -110,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
+                "file": "Second semester PDFs/Second semester notes/To-read.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
+                "file": "Second semester PDFs/Second semester notes/To-read.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md"
+                "file": "Second semester PDFs/Second semester notes/To-read.md"
               }
             }
           },
@@ -186,10 +186,10 @@
   },
   "active": "468c349bfdc53daa",
   "lastOpenFiles": [
+    "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
     "Cognitive Neuroscience/Anatomical Reference.md",
     "Cognitive Neuroscience/Action Potential.md",
     "Cognitive Neuroscience/Central Nervous System (CNS).md",
-    "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
     "SociCog/logic of teamwork.md",
     "SociCog/Agent Based Modeling (ABM).md",
     "SociCog/301  Social Cognition.md",
