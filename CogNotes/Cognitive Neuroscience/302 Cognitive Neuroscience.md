@@ -24,7 +24,8 @@ Inhibitory and excitatory
 What are the problems to be solved?
 Nothing but electromagnetic energy (light rays) if different wavelengths and amplitudes --> as a result of light rays interacting with the environment, but we still see colour, shapes and movement .
 
-We have two eyes, that see two different combinations of lights rays, but we still merge the two visual modalities into one perception.
+We have two eyes, that see two different combinations of lights rays, but we still merge the two visual modalities into one perception..
+
 
 
 Voltage- and transmitter gated channels.
