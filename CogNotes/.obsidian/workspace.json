@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SociCog/301  Social Cognition.md",
+                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
                 "mode": "source",
                 "source": false
               }
@@ -43,8 +43,7 @@
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -110,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Second semester PDFs/Second semester notes/To-read.md",
+                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +126,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Second semester PDFs/Second semester notes/To-read.md",
+                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Second semester PDFs/Second semester notes/To-read.md"
+                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md"
               }
             }
           },
@@ -184,17 +183,17 @@
       "random-note:Open random note": false
     }
   },
-  "active": "468c349bfdc53daa",
+  "active": "00a05f7793e0cd4e",
   "lastOpenFiles": [
+    "SociCog/301  Social Cognition.md",
+    "Second semester PDFs/Second semester notes/To-read.md",
     "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
     "Cognitive Neuroscience/Anatomical Reference.md",
     "Cognitive Neuroscience/Action Potential.md",
     "Cognitive Neuroscience/Central Nervous System (CNS).md",
     "SociCog/logic of teamwork.md",
     "SociCog/Agent Based Modeling (ABM).md",
-    "SociCog/301  Social Cognition.md",
     "SociCog/Social- or Cultural Intelligence hypothesis.md",
-    "SociCog/Theory of Mind (ToM).md",
-    "SociCog/Discussion Question.md"
+    "SociCog/Theory of Mind (ToM).md"
   ]
 }
