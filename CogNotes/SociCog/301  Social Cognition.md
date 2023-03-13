@@ -18,7 +18,7 @@ The increased brain size of humans have been attributed to two hypotheses:
 
 [[logic of teamwork]]
 [[Agent Based Modeling (ABM)]]
-
+[[Networks]]
 
 Social cognition as the processing of information related to others 
 - Observational vs. active 

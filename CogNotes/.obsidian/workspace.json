@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
+                "file": "SociCog/301  Social Cognition.md",
                 "mode": "source",
                 "source": false
               }
@@ -109,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
+                "file": "SociCog/301  Social Cognition.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -126,7 +126,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
+                "file": "SociCog/301  Social Cognition.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md"
+                "file": "SociCog/301  Social Cognition.md"
               }
             }
           },
@@ -185,14 +185,14 @@
   },
   "active": "00a05f7793e0cd4e",
   "lastOpenFiles": [
+    "SociCog/Agent Based Modeling (ABM).md",
     "SociCog/301  Social Cognition.md",
-    "Second semester PDFs/Second semester notes/To-read.md",
     "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
+    "Second semester PDFs/Second semester notes/To-read.md",
     "Cognitive Neuroscience/Anatomical Reference.md",
     "Cognitive Neuroscience/Action Potential.md",
     "Cognitive Neuroscience/Central Nervous System (CNS).md",
     "SociCog/logic of teamwork.md",
-    "SociCog/Agent Based Modeling (ABM).md",
     "SociCog/Social- or Cultural Intelligence hypothesis.md",
     "SociCog/Theory of Mind (ToM).md"
   ]
