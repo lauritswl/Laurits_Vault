@@ -30,3 +30,10 @@ We have two eyes, that see two different combinations of lights rays, but we sti
 
 Voltage- and transmitter gated channels.
 
+## Hearing
+The first stages of the basic auditory pathway look like this:
+Sound wave moves the tympanic membrane. →
+  Tympanic membrane moves the ossicles. →
+    Ossicles move the membrane at the oval window. →
+	  Motion at the oval window moves fluid in the cochlea. →
+		Movement of fluid in the cochlea causes a response in sensory neurons.

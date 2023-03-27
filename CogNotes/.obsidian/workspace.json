@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Networks.md",
+                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
                 "mode": "source",
                 "source": false
               }
@@ -122,7 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Networks.md",
+                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +139,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Networks.md",
+                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -162,7 +162,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Networks.md"
+                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md"
               }
             }
           },
@@ -198,8 +198,8 @@
   },
   "active": "366c4bacddcd9618",
   "lastOpenFiles": [
-    "SociCog/301  Social Cognition.md",
     "Networks.md",
+    "SociCog/301  Social Cognition.md",
     "SociCog/Agent Based Modeling (ABM).md",
     "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
     "Second semester PDFs/Second semester notes/To-read.md",
