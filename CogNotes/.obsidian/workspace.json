@@ -20,6 +20,18 @@
             }
           },
           {
+            "id": "366c4bacddcd9618",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Networks.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "0425e289e9cfd006",
             "type": "leaf",
             "state": {
@@ -43,7 +55,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -109,7 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SociCog/301  Social Cognition.md",
+                "file": "Networks.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -126,7 +139,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "SociCog/301  Social Cognition.md",
+                "file": "Networks.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,7 +162,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SociCog/301  Social Cognition.md"
+                "file": "Networks.md"
               }
             }
           },
@@ -183,10 +196,11 @@
       "random-note:Open random note": false
     }
   },
-  "active": "00a05f7793e0cd4e",
+  "active": "366c4bacddcd9618",
   "lastOpenFiles": [
-    "SociCog/Agent Based Modeling (ABM).md",
     "SociCog/301  Social Cognition.md",
+    "Networks.md",
+    "SociCog/Agent Based Modeling (ABM).md",
     "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
     "Second semester PDFs/Second semester notes/To-read.md",
     "Cognitive Neuroscience/Anatomical Reference.md",
