@@ -30,7 +30,11 @@ We have two eyes, that see two different combinations of lights rays, but we sti
 
 Voltage- and transmitter gated channels.
 
-## Hearing
+## Hearing (Audition)
+
+
+
+
 The first stages of the basic auditory pathway look like this:
 Sound wave moves the tympanic membrane. →
   Tympanic membrane moves the ossicles. →
