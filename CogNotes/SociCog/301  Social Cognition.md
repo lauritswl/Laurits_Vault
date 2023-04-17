@@ -29,5 +29,8 @@ Social cognition as the processing of information related to others
 
 
 # Cultural transmission and evolution:
+### Culture can be defined as:
+> Information or behaviour - shared by a population or subpopulation - which is acquired from conspecifics through some form of social learning
+- Rendell and Whitehead, 2001
 
 
