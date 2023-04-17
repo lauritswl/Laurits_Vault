@@ -44,6 +44,25 @@ Sound wave moves the tympanic membrane. →
 
 
 
+# Emotion
+#### James-Lange Theory
+We experience emotions *in* response to physiological changes in our body. That is, we begin to cry and feel sad as a causal emotional reaction.  
+	the problem with this theory is that it implies that we can only feel feelings that are expressed in our physiological domain.
+#### Cannon-Bard Theory
+Emotions can occur independently from physiological responses. 
+	In this paradigm the Thalamus is central for affective experience.  This is also the problem of this thinking, even though the thalamus is important for emotion, it is not solely responsible.
+
+ ## Papez circuit
+ The Papez circuit is a brain circuit involved in emotional processing and regulation. It is composed of interconnected brain regions that work together to integrate information related to emotional experiences and bodily responses.
+
+When we experience a stimulus, such as seeing a scary movie, the information is processed by the hippocampus, which is involved in memory formation. From there, the information is sent to the cingulate gyrus, which regulates emotional responses and behaviors.
+
+The cingulate gyrus then sends the information to the anterior thalamic nuclei, which is involved in processing and relaying information between different brain regions. This information is then sent to the hypothalamus, which plays a role in regulating autonomic functions such as heart rate and blood pressure.
+
+Finally, the information is sent back to the hippocampus, completing the circuit. This loop-like circuit allows for the integration of emotional experiences, memory, and bodily responses, resulting in the experience of emotions and the appropriate bodily responses.
+
+Dysfunction of the Papez circuit has been associated with various psychiatric and neurological disorders, such as depression and anxiety disorders.
+
 
 # Movement
 Movement muscles 
