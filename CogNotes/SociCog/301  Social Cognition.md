@@ -34,3 +34,8 @@ Social cognition as the processing of information related to others
 - Rendell and Whitehead, 2001
 
 
+Cumulative cultural evoultion (CCE)
+- Gradual accumulation of knowledge over time
+- Cultural transmission as a **framework to investigate** certain behavioural phenomena 
+	- e.g. broken whisper game - where a sentence changes greatly after a few chain links.
+- Social 
