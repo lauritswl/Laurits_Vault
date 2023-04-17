@@ -28,3 +28,6 @@ Social cognition as the processing of information related to others
 
 
 
+# Cultural transmission and evolution:
+
+

@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
+                "file": "SociCog/301  Social Cognition.md",
                 "mode": "source",
                 "source": false
               }
@@ -122,7 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
+                "file": "SociCog/301  Social Cognition.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +139,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
+                "file": "SociCog/301  Social Cognition.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -162,7 +162,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md"
+                "file": "SociCog/301  Social Cognition.md"
               }
             }
           },
@@ -198,10 +198,11 @@
   },
   "active": "366c4bacddcd9618",
   "lastOpenFiles": [
+    "Politics of meaning/Discourse (Althusser).md",
+    "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
     "Networks.md",
     "SociCog/301  Social Cognition.md",
     "SociCog/Agent Based Modeling (ABM).md",
-    "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
     "Second semester PDFs/Second semester notes/To-read.md",
     "Cognitive Neuroscience/Anatomical Reference.md",
     "Cognitive Neuroscience/Action Potential.md",
