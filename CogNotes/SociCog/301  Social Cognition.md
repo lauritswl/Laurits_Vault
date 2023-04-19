@@ -39,3 +39,11 @@ Cumulative cultural evoultion (CCE)
 - Cultural transmission as a **framework to investigate** certain behavioural phenomena 
 	- e.g. broken whisper game - where a sentence changes greatly after a few chain links.
 - Social 
+
+
+
+
+
+# Tylén 2020
+What research questions do you think they were trying to address? How do the methods used enrich our understanding of the evolution of symbolic behaviour? 
+Consider what questions and methods you would use if you were going to design an experiment on a similar topic that used materials from the archaeological record.

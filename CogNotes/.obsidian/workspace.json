@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "fc58b5ed2f1a496c",
+        "id": "934b627f5097f006",
         "type": "tabs",
         "children": [
           {
-            "id": "00a05f7793e0cd4e",
+            "id": "0339e6247fc41570",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -18,45 +18,8 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "366c4bacddcd9618",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "0425e289e9cfd006",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "SociCog/Agent Based Modeling (ABM).md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "468c349bfdc53daa",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Second semester PDFs/Second semester notes/To-read.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -122,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
+                "file": "SociCog/301  Social Cognition.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
+                "file": "SociCog/301  Social Cognition.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -162,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md"
+                "file": "SociCog/301  Social Cognition.md"
               }
             }
           },
@@ -196,18 +159,20 @@
       "random-note:Open random note": false
     }
   },
-  "active": "366c4bacddcd9618",
+  "active": "0339e6247fc41570",
   "lastOpenFiles": [
+    "SociCog/Untitled.md",
+    "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
+    "Networks.md",
+    "Untitled.md",
+    "Second semester PDFs/Second semester notes/To-read.md",
+    "SociCog/Agent Based Modeling (ABM).md",
     "SociCog/301  Social Cognition.md",
     "Politics of meaning/Discourse-Historical Approach (DHA).md",
     "Politics of meaning/From linguistics to ideology (Saussure).md",
     "Politics of meaning/Marxism through Althussers lens.md",
     "Politics of meaning/Myth today (Roland Barthes).md",
     "Politics of meaning/Discourse (Althusser).md",
-    "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
-    "Networks.md",
-    "SociCog/Agent Based Modeling (ABM).md",
-    "Second semester PDFs/Second semester notes/To-read.md",
     "Cognitive Neuroscience/Anatomical Reference.md",
     "Cognitive Neuroscience/Action Potential.md",
     "Cognitive Neuroscience/Central Nervous System (CNS).md",
