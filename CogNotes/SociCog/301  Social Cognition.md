@@ -47,3 +47,19 @@ Cumulative cultural evoultion (CCE)
 # Tylén 2020
 What research questions do you think they were trying to address? How do the methods used enrich our understanding of the evolution of symbolic behaviour? 
 Consider what questions and methods you would use if you were going to design an experiment on a similar topic that used materials from the archaeological record.
+
+
+
+# Social Learning / 
+#### Social learning strategies: modelling devices:
+Simplest possible model is the contagion model -> copy other based on a certain threshold of exposure.
+Otherwise more complex contagion models can be used:
+	- Success bias
+	- Prestige bias
+	- Similarity bias
+
+**Social learning: underused or overhyped?**
+*Rendell*: Copying other is the best strategy, and therefore beats asocial-individual learning in most conditions.
+
+Chains of transmission - information flow is very depending on the structure of the network.
+If the network is to connected the network will tend to exploit the information-space to early, and loose the chance to explore cultural inventions that allow for better exploitation. 
