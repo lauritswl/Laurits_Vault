@@ -6,6 +6,8 @@ Social cognition regards individuals doing information processing about:
 * information in a social context (social simon effect)
 * information with another people (dialogically extended mind)
 
+[[SocCult Exam]]
+
 
 [[Discussion Question]]
 
@@ -63,3 +65,9 @@ Otherwise more complex contagion models can be used:
 
 Chains of transmission - information flow is very depending on the structure of the network.
 If the network is to connected the network will tend to exploit the information-space to early, and loose the chance to explore cultural inventions that allow for better exploitation. 
+
+
+
+
+
+

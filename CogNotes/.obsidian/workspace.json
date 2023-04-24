@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "3eb6a1dd66f470ef",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "SocCult Exam.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SociCog/301  Social Cognition.md",
+                "file": "SocCult Exam.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "SociCog/301  Social Cognition.md",
+                "file": "SocCult Exam.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SociCog/301  Social Cognition.md"
+                "file": "SocCult Exam.md"
               }
             }
           },
@@ -159,15 +172,16 @@
       "random-note:Open random note": false
     }
   },
-  "active": "0339e6247fc41570",
+  "active": "3eb6a1dd66f470ef",
   "lastOpenFiles": [
+    "SociCog/301  Social Cognition.md",
+    "SocCult Exam.md",
     "SociCog/Untitled.md",
     "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
     "Networks.md",
     "Untitled.md",
     "Second semester PDFs/Second semester notes/To-read.md",
     "SociCog/Agent Based Modeling (ABM).md",
-    "SociCog/301  Social Cognition.md",
     "Politics of meaning/Discourse-Historical Approach (DHA).md",
     "Politics of meaning/From linguistics to ideology (Saussure).md",
     "Politics of meaning/Marxism through Althussers lens.md",
