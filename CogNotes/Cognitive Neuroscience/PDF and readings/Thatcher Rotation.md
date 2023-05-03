@@ -30,3 +30,5 @@ Each trial began with the presentation of a fixation cross in the center of the 
 For face-name matches, the same button had to be pressed irrespective of orientation or Thatcherization. For non-matches, the ‘‘different’’ button had to be pressed. Index fingers of both hands were used for responding. Both speed and accuracy were stressed. The face stimulus was masked by a random dot pattern for 366 ms or 200 ms for the short and long presentation time, respectively. Note that these different mask durations provided the same offset of visual stimulation for both target presentation times at 400 ms after face stimulus onset. The interval between maskoffset and the onset of the next trial was 2000 ms. The time course of a trial is illustrated in Fig. 2.
 ![[Pasted image 20230503134928.png]]
 
+**Describing Cap position:**
+The electroencephalogram (EEG) was recorded with sintered Ag/AgCl electrodes mounted in an electrode cap (Easy-Capi) at the scalp positions Fz, Cz, Pz, Iz, Fp1, Fp2, F3, F4, C3, C4, P3, P4, O1, O2, F7, F8, T7, T8, P7, P8, FT9, FT10, P9, P10, PO9, PO10, F9,VF10, V TP9 and TP10.
