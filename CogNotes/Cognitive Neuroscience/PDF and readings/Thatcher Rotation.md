@@ -1,7 +1,7 @@
 # The Thatcher illusion seen by the brain: 
 ## An event-related brain potentials study
 ##### Claus-Christian Carbona, Stefan R. Schweinbergerc,  Jurgen M. Kaufmannc , Helmut Ledera
-
+![[Thatcher_Rotation_ERP.pdf]]
 
 ## Participants
 Participants Sixteen participants (11 women and 5 men) aged between 18 and 27 years (M = 20.1 years, SD = 2.4 years) were paid £15 to contribute data to this study. All participants were undergraduate students at the University of Glasgow, Scotland. They all reported normal or corrected-to-normal visual acuity and were right-handers as measured by the Edinburgh Inventory.
@@ -32,3 +32,10 @@ For face-name matches, the same button had to be pressed irrespective of orienta
 
 **Describing Cap position:**
 The electroencephalogram (EEG) was recorded with sintered Ag/AgCl electrodes mounted in an electrode cap (Easy-Capi) at the scalp positions Fz, Cz, Pz, Iz, Fp1, Fp2, F3, F4, C3, C4, P3, P4, O1, O2, F7, F8, T7, T8, P7, P8, FT9, FT10, P9, P10, PO9, PO10, F9,VF10, V TP9 and TP10.
+
+
+## Analysis
+**3.4. Event-related brain potentials**
+Mean ERP amplitudes to target faces were analyzed for the time segments 100 – 140 ms, 170 –190 ms, 200– 300 ms and 300 –500 ms, relative to a 200-ms prestimulus baseline. The first two segments were chosen to capture the P1 and N170, respectively. The 200 –300 ms time segment was chosen for a comparison with the P250 as reported by Milivojevic et al.. Finally, the 300– 500 ms time segment was chosen arbitrarily and will be called the ‘‘late component’’ in the following.
+**Statistical methods**
+We quantified ERPs for eight electrodes situated in the temporal –occipital areas (P7, P8, TP9, TP10, P9, P10, PO9, PO10). For every time segment, ANOVAs were performed with repeated measures on the within-subjects factors hemisphere (LH vs. RH), site (P7/P8, TP9/TP10, P9/P10, PO9/PO10), presentation time (pt; short: 34 ms vs. long: 200 ms), class (Original vs. Thatcherized) and orientation (up, ninety, inv). This kind of analysis will be referred to as region-specific analysis below. Furthermore, as we were particularly interested in the N170 component, we analyzed the data for this time window in more detail. If we found any interactions of the factor site with any of the experimental factors for the N170, we analyzed the data for each symmetric pair of electrodes. This kind of analysis will be referred to as electrode-specific analysis below.
