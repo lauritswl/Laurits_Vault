@@ -4,57 +4,35 @@
     "type": "split",
     "children": [
       {
-        "id": "934b627f5097f006",
+        "id": "a025119f69e80fb9",
         "type": "tabs",
         "children": [
           {
-            "id": "0339e6247fc41570",
+            "id": "223f9e9b12c5dc0f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SociCog/301  Social Cognition.md",
+                "file": "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "3eb6a1dd66f470ef",
+            "id": "0a5d0b0f6e5eb00a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SocCult Exam.md",
+                "file": "Cognitive Neuroscience/PDF and readings/Thatcher Rotation.md",
                 "mode": "source",
                 "source": false
-              }
-            }
-          },
-          {
-            "id": "0cf81859a6457e3a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "SocCult Exam Workflow.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "fb46dad16b53e4d8",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.2.7"
               }
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -128,7 +106,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SocCult Exam Workflow.md",
+                "file": "Cognitive Neuroscience/PDF and readings/Thatcher Rotation.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -145,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "SocCult Exam Workflow.md",
+                "file": "Cognitive Neuroscience/PDF and readings/Thatcher Rotation.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -168,7 +146,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SocCult Exam Workflow.md"
+                "file": "Cognitive Neuroscience/PDF and readings/Thatcher Rotation.md"
               }
             }
           },
@@ -202,13 +180,16 @@
       "random-note:Open random note": false
     }
   },
-  "active": "fb46dad16b53e4d8",
+  "active": "0a5d0b0f6e5eb00a",
   "lastOpenFiles": [
-    "SocCult Exam.md",
+    "Pasted Pictures/Pasted image 20230503134928.png",
+    "Cognitive Neuroscience/PDF and readings/Exam_Neuro.md",
+    "Cognitive Neuroscience/PDF and readings/Thatcher Rotation.md",
+    "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
     "SocCult Exam Workflow.md",
+    "SocCult Exam.md",
     "SociCog/301  Social Cognition.md",
     "SociCog/Untitled.md",
-    "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
     "Networks.md",
     "Untitled.md",
     "Second semester PDFs/Second semester notes/To-read.md",
