@@ -1,0 +1,5 @@
+- [ ] Define the output that I want from my agents interacting as a network matrix and a  array of personality information + cultural accusation.
+- [ ] Create a framework ABM, where agents all start equal, but interacts with an parent figure and (mabye) friends at school. 
+- [ ] Make the agents save their knowledge, and make sure it grows over generations.
+- [ ] Make the agents draw a sociality index and a learning-ability index from two normal distributions - and define the chance to meet other agents as a function of sociality and how much information they gather as a function of their learning-ability.
+- [ ] If all this works, then do a prototype network and data analysis, by factoring the agents into social networks, 
