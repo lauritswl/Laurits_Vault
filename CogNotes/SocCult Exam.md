@@ -26,3 +26,9 @@ https://towardsdatascience.com/intro-to-agent-based-modeling-3eea6a070b72
 A suitable form of measuring integration from a social network perspective represents the social cognitive mapping (Cairns, Cairns, Neckerman, Gest, & Gariépy, 1988), which was applied to and validated within the context of school classes (Gest et al., 2003; Kindermann & Skinner, 2009; Rodkin, Wilson, & Ahn, 2007).
 
 
+
+
+
+
+
+# [[Formation of homophily in academic performance Students change their friends rather than performance]]

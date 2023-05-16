@@ -1,0 +1,1 @@
+7 Dec 2017: The PLOS ONE Staff (2017) Correction: Formation of homophily in academic performance: Students change their friends rather than performance. PLOS ONE 12(12): e0189564. [https://doi.org/10.1371/journal.pone.0189564](https://doi.org/10.1371/journal.pone.0189564)
