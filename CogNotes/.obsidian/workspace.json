@@ -28,6 +28,18 @@
             }
           },
           {
+            "id": "78817c2bf4c30fc2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "FAIR and CARE Guidelines for DATA.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "912aa6802c03f230",
             "type": "leaf",
             "state": {
@@ -36,7 +48,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -110,6 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "FAIR and CARE Guidelines for DATA.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -126,6 +139,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "FAIR and CARE Guidelines for DATA.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -147,7 +161,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "FAIR and CARE Guidelines for DATA.md"
+              }
             }
           },
           {
@@ -180,8 +196,9 @@
       "random-note:Open random note": false
     }
   },
-  "active": "3c494fb590973e77",
+  "active": "78817c2bf4c30fc2",
   "lastOpenFiles": [
+    "FAIR and CARE Guidelines for DATA.md",
     "Formation of homophily in academic performance Students change their friends rather than performance.md",
     "SocCult Exam.md",
     "Cognitive Neuroscience/302 Cognitive Neuroscience.md",
@@ -192,7 +209,6 @@
     "SociCog/301  Social Cognition.md",
     "SociCog/Untitled.md",
     "Networks.md",
-    "Untitled.md",
     "Second semester PDFs/Second semester notes/To-read.md",
     "SociCog/Agent Based Modeling (ABM).md",
     "Politics of meaning/Discourse-Historical Approach (DHA).md",
