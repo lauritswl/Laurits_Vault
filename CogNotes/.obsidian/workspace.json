@@ -40,6 +40,16 @@
             }
           },
           {
+            "id": "3bf2118d9539d49b",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.4.13"
+              }
+            }
+          },
+          {
             "id": "912aa6802c03f230",
             "type": "leaf",
             "state": {
@@ -48,7 +58,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -196,7 +206,7 @@
       "random-note:Open random note": false
     }
   },
-  "active": "78817c2bf4c30fc2",
+  "active": "3bf2118d9539d49b",
   "lastOpenFiles": [
     "FAIR and CARE Guidelines for DATA.md",
     "Formation of homophily in academic performance Students change their friends rather than performance.md",
